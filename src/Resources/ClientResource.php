@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources;
 
+use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -12,8 +13,10 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Passport\Client;
@@ -22,14 +25,37 @@ use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationsh
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
-use BezhanSalleh\PluginEssentials\Concerns\Plugin as Essentials;
+use UnitEnum;
 
 class ClientResource extends Resource
 {
     use HasResourceFormComponents;
-    use Essentials\HasNavigation;
-    use Essentials\HasLabels;
-    use Essentials\HasGlobalSearch;
+
+    protected static ?string $recordTitleAttribute = 'name';
+    protected static string|\UnitEnum|null $navigationGroup = 'filament-passport-ui:filament-passport-ui.navigation.group';
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedKey;
+    protected static ?string $modelLabel = 'OAuth Client';
+    protected static ?string $pluralModelLabel = 'OAuth Clients';
+
+    public static function getModelLabel(): string
+    {
+        return __('filament-passport-ui:filament-passport-ui.client_resource.model_label');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('filament-passport-ui:filament-passport-ui.client_resource.plural_model_label');
+    }
+
+    public static function getNavigationGroup(): string|UnitEnum|null
+    {
+        return config('filament-passport-ui.navigation.client_resource.group', static::$navigationGroup);
+    }
+
+    public static function getNavigationIcon(): string|BackedEnum|Htmlable|null
+    {
+        return config('filament-passport-ui.navigation.client_resource.icon', static::$navigationIcon);
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -65,7 +91,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.owner'))

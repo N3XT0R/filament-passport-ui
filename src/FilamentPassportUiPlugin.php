@@ -3,14 +3,10 @@
 namespace N3XT0R\FilamentPassportUi;
 
 use Filament\Contracts\Plugin as FilamentPlugin;
-use BezhanSalleh\PluginEssentials\Concerns\Plugin as Essentials;
 use Filament\Panel;
 
 class FilamentPassportUiPlugin implements FilamentPlugin
 {
-    use Essentials\HasGlobalSearch;
-    use Essentials\HasLabels;
-    use Essentials\HasNavigation;
 
     public function getId(): string
     {
@@ -40,22 +36,5 @@ class FilamentPassportUiPlugin implements FilamentPlugin
         $plugin = filament(app(static::class)->getId());
 
         return $plugin;
-    }
-
-    protected function getPluginDefaults(): array
-    {
-        return [
-            'navigationGroup' => __('filament-shield::filament-shield.navigation.group'),
-            'navigationIcon' => 'heroicon-o-lock-closed',
-            'resources' => [
-                Resources\ClientResource::class => [
-                    'modelLabel' => __('filament-passport-ui:filament-passport-ui.client_resource.model_label'),
-                    'pluralModelLabel' => __(
-                        'filament-passport-ui:filament-passport-ui.client_resource.plural_model_label'
-                    ),
-                    'navigationIcon' => 'heroicon-o-users',
-                ],
-            ],
-        ];
     }
 }

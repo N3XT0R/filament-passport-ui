@@ -24,7 +24,6 @@
     ],
     "require": {
         "php": "^8.4",
-        "bezhansalleh/filament-plugin-essentials": "^1.0",
         "filament/filament": "^4.0",
         "laravel/passport": "^13.0",
         "spatie/laravel-activitylog": "^4.0",

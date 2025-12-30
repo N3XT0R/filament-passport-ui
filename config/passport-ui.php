@@ -1,5 +1,7 @@
 <?php
 
+use Filament\Support\Icons\Heroicon;
+
 return [
     /**
      * Model used as the owner of the OAuth2 clients.
@@ -11,4 +13,14 @@ return [
      * Whether to use database stored scopes.
      */
     'use_database_scopes' => true,
+
+    /**
+     * Navigation settings for the ClientResource.
+     */
+    'navigation' => [
+        'client_resource' => [
+            'group' => 'filament-passport-ui:filament-passport-ui.navigation.group',
+            'icon' => Heroicon::OutlinedKey,
+        ],
+    ],
 ];
