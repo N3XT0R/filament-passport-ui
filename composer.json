@@ -65,7 +65,7 @@
         "laravel": {
             "providers": [
                 "N3XT0R\\FilamentPassportUi\\FilamentPassportUiServiceProvider",
-                "N3XT0R\\FilamentPassportUi\\PassportServiceProvider"
+                "N3XT0R\\FilamentPassportUi\\Providers\\PassportServiceProvider"
             ],
             "aliases": {
                 "FilamentPassportUi": "N3XT0R\\FilamentPassportUi\\Facades\\FilamentPassportUi"
