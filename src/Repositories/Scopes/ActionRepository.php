@@ -9,11 +9,19 @@ use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 
 class ActionRepository
 {
+    /**
+     * Get all scope actions.
+     * @return Collection<PassportScopeAction>
+     */
     public function all(): Collection
     {
         return PassportScopeAction::query()->get();
     }
 
+    /**
+     * Get all active scope actions.
+     * @return Collection<PassportScopeAction>
+     */
     public function active(): Collection
     {
         return PassportScopeAction::query()
@@ -21,6 +29,11 @@ class ActionRepository
             ->get();
     }
 
+    /**
+     * Find a scope action by its name.
+     * @param string $name
+     * @return PassportScopeAction|null
+     */
     public function findByName(string $name): ?PassportScopeAction
     {
         return PassportScopeAction::query()
