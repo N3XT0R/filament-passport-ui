@@ -38,6 +38,15 @@ readonly class ClientService
         $client->owner()->associate($user);
         $client->saveOrFail();
 
+        activity('oauth')
+            ->performedOn($client)
+            ->causedBy($user)
+            ->withProperties([
+                'name' => $client->getAttribute('name'),
+                'grant_types' => $client->getAttribute('grant_types'),
+            ])
+            ->log('OAuth client created');
+
         return $client;
     }
 }
