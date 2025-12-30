@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Traits;
 
-use Filament\Forms\Components\CheckboxList;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
-use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
-use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
+use N3XT0R\FilamentPassportUi\Support\Builder\ScopeFormSectionBuilder;
 
 trait HasResourceFormComponents
 {
@@ -25,46 +21,11 @@ trait HasResourceFormComponents
             Section::make(__('filament-passport-ui:filament-passport-ui.common.scopes'))
                 ->schema([
                     Grid::make()
-                        ->schema($this->buildScopeSections()),
+                        ->schema(
+                            app(ScopeFormSectionBuilder::class)->buildSections()
+                        ),
                 ])
                 ->collapsible(),
         ];
-    }
-
-    protected function buildScopeSections(): array
-    {
-        $scopes = app(ScopeRegistryService::class)->allScopeNames();
-
-        return $scopes
-            ->groupBy(fn(ScopeDTO $dto) => $dto->resource)
-            ->map(fn(Collection $group, string $resource) => $this->buildScopeSection($resource, $group)
-            )
-            ->values()
-            ->all();
-    }
-
-    protected function buildScopeSection(string $resource, Collection $scopes): Section
-    {
-        return Section::make($resource)
-            ->schema([
-                CheckboxList::make('scopes')
-                    ->options(
-                        $scopes->mapWithKeys(
-                            fn(ScopeDTO $dto) => [
-                                $dto->scope => $dto->scope,
-                            ]
-                        )
-                    )
-                    ->descriptions(
-                        $scopes->mapWithKeys(
-                            fn(ScopeDTO $dto) => [
-                                $dto->scope => $dto->description,
-                            ]
-                        )->filter()
-                    )
-                    ->columns(3)
-                    ->bulkToggleable(),
-            ])
-            ->collapsible();
     }
 }
