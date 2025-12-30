@@ -6,11 +6,10 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-latest ]
         php: [ 8.4, 8.5 ]
         laravel: [ 12 ]
         stability: [ prefer-stable ]
@@ -20,7 +19,7 @@ jobs:
             carbon: 3.*
             collision: 8.*
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -52,13 +51,13 @@ jobs:
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         with:
-          name: clover-coverage-${{ matrix.laravel }}-${{ matrix.php }}-${{ matrix.os }}
+          name: clover-coverage-${{ matrix.laravel }}-${{ matrix.php }}
           path: coverage/clover.xml
 
       - name: Upload HTML coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report-${{ matrix.laravel }}-${{ matrix.php }}-${{ matrix.os }}
+          name: coverage-report-${{ matrix.laravel }}-${{ matrix.php }}
           path: report/
 
       - name: Send coverage to Qlty
