@@ -17,6 +17,7 @@ use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
+use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 
 class ClientResource extends Resource
 {
@@ -72,5 +73,12 @@ class ClientResource extends Resource
     public static function getModel(): string
     {
         return Passport::clientModel();
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'create' => Pages\CreateClient::route('/create'),
+        ];
     }
 }
