@@ -15,6 +15,9 @@ use Illuminate\Support\Str;
 use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
 use Filament\Tables\Columns\TextColumn;
+use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
+use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersUseCase;
+use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 
 class ClientResource extends Resource
@@ -33,15 +36,7 @@ class ClientResource extends Resource
                 Select::make('owner')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.field.owner'))
                     ->options(function (): array {
-                        /** @var class-string<Model> $modelClass */
-                        $modelClass = config('filament-passport-ui.owner_model');
-                        $keyName = (new $modelClass)->getKeyName();
-
-                        return $modelClass::query()
-                            ->pluck(
-                                config('filament-passport-ui.owner_label_attribute', 'name'),
-                                $keyName,
-                            )
+                        return app(GetAllOwnersRelationshipUseCase::class)
                             ->toArray();
                     })
                     ->saveRelationshipsUsing(function (Client $record, array $data): void {
