@@ -13,7 +13,6 @@ class FilamentPassportUiPlugin implements FilamentPlugin
     use Essentials\HasGlobalSearch;
     use Essentials\HasLabels;
     use Essentials\HasNavigation;
-    use Essentials\HasPluginDefaults;
 
     public function getId(): string
     {
