@@ -10,7 +10,6 @@ use Filament\Support\Icons\Heroicon;
 class FilamentPassportUiPlugin implements FilamentPlugin
 {
 
-    use Essentials\BelongsToParent;
     use Essentials\HasGlobalSearch;
     use Essentials\HasLabels;
     use Essentials\HasNavigation;
