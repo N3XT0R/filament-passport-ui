@@ -49,4 +49,19 @@ readonly class ClientService
 
         return $client;
     }
+
+    /**
+     * Change the owner of the given client to the new owner.
+     * @param Client $client
+     * @param OAuthenticatable $newOwner
+     * @return Client
+     * @throws Throwable
+     */
+    public function changeOwnerOfClient(Client $client, OAuthenticatable $newOwner): Client
+    {
+        $client->owner()->associate($newOwner);
+        $client->saveOrFail();
+
+        return $client;
+    }
 }
