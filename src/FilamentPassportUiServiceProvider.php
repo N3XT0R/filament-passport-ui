@@ -146,6 +146,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
     {
         return [
             'create_passport_scope_resources_table',
+            'create_passport_scope_actions_table',
         ];
     }
 }
