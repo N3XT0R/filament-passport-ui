@@ -14,6 +14,12 @@ readonly class ClientService
     {
     }
 
+    /**
+     * Create a personal access client for the given user with the specified name.
+     * @param OAuthenticatable $user
+     * @param string $name
+     * @return Client|null
+     */
     public function createPersonalAccessClientForUser(OAuthenticatable $user, string $name): ?Client
     {
         if ($this->clientRepository->findByName($name)) {
