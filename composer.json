@@ -63,7 +63,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "N3XT0R\\FilamentPassportUi\\FilamentPassportUiServiceProvider"
+                "N3XT0R\\FilamentPassportUi\\FilamentPassportUiServiceProvider",
+                "N3XT0R\\FilamentPassportUi\\PassportServiceProvider"
             ],
             "aliases": {
                 "FilamentPassportUi": "N3XT0R\\FilamentPassportUi\\Facades\\FilamentPassportUi"
