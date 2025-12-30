@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Providers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\ClientRepository as BaseClientRepository;
 use Laravel\Passport\Passport;
@@ -25,6 +26,10 @@ class PassportServiceProvider extends ServiceProvider
     protected function bootScopes(): void
     {
         $scopeRegistryService = app(ScopeRegistryService::class);
+        if (false === $scopeRegistryService->isMigrated()) {
+            return;
+        }
+
         Passport::tokensCan($scopeRegistryService->all()->toArray());
     }
 }
