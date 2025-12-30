@@ -22,10 +22,14 @@ use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationsh
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
+use BezhanSalleh\PluginEssentials\Concerns\Plugin as Essentials;
 
 class ClientResource extends Resource
 {
     use HasResourceFormComponents;
+    use Essentials\HasNavigation;
+    use Essentials\HasLabels;
+    use Essentials\HasPluginDefaults;
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -63,7 +67,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.owner'))
