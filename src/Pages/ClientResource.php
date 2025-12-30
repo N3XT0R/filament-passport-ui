@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Pages;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -25,7 +26,13 @@ class ClientResource extends Resource
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
                     ->unique('clients', 'name')
                     ->required()
-                    ->maxLength(255)
+                    ->maxLength(255),
+                Select::make('owner')
+                    ->label(__('filament-passport-ui:filament-passport-ui.client_resource.field.owner'))
+                    ->relationship('owner', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
             ]);
     }
 
