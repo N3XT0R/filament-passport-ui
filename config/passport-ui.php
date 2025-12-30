@@ -19,7 +19,7 @@ return [
      */
     'navigation' => [
         'client_resource' => [
-            'group' => 'filament-passport-ui:filament-passport-ui.navigation.group',
+            'group' => 'filament-passport-ui::passport-ui.navigation.group',
             'icon' => Heroicon::OutlinedKey,
         ],
     ],
