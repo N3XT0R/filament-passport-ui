@@ -4,9 +4,6 @@
 return [
     'navigation' => [
         'group' => 'API Management',
-        'clients' => [
-            'label' => 'Clients'
-        ],
     ],
     'common' => [
         'updated_at' => 'updated at',
@@ -15,7 +12,7 @@ return [
     ],
     'client_resource' => [
         'model_label' => 'Client',
-        'model_label_plural' => 'Clients',
+        'plural_model_label' => 'Clients',
         'column' => [
             'name' => 'Name',
             'owner' => 'Owner',
