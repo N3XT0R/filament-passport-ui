@@ -11,14 +11,15 @@ class ScopeName
 {
     private function __construct(
         private readonly string $value
-    ) {}
+    ) {
+    }
 
     public static function from(
         PassportScopeResource $resource,
         PassportScopeAction $action
     ): self {
         return new self(
-            $resource->name . '.' . $action->name
+            $resource->getAttribute('name') . '.' . $action->getAttribute('name')
         );
     }
 
