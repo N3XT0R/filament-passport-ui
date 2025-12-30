@@ -9,6 +9,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
@@ -31,7 +32,7 @@ class ClientResource extends Resource
                     ->maxLength(255),
                 Select::make('owner')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.field.owner'))
-                    ->options(function (): array {
+                    ->options(function (): Collection {
                         return app(GetAllOwnersRelationshipUseCase::class)->execute();
                     })
                     ->saveRelationshipsUsing(function (Client $record, array $data): void {
@@ -49,7 +50,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.owner'))
