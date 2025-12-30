@@ -49,7 +49,7 @@ class ClientResource extends Resource
 
     public static function getNavigationGroup(): string|UnitEnum|null
     {
-        return config('filament-passport-ui.navigation.client_resource.group', static::$navigationGroup);
+        return __(config('filament-passport-ui.navigation.client_resource.group', static::$navigationGroup));
     }
 
     public static function getNavigationIcon(): string|BackedEnum|Htmlable|null
@@ -91,7 +91,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
