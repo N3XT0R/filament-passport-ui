@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 
 readonly class GetAllOwnersRelationshipUseCase extends GetAllOwnersUseCase
 {
+    /**
+     * Get All Owners as relationship options
+     * @return Collection
+     */
     public function execute(): Collection
     {
         /** @var class-string<Model> $modelClass */

@@ -13,6 +13,10 @@ readonly class GetAllOwnersUseCase
     {
     }
 
+    /**
+     * Get All Owners
+     * @return Collection
+     */
     public function execute(): Collection
     {
         return $this->ownerRepository->all();
