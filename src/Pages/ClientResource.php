@@ -36,8 +36,7 @@ class ClientResource extends Resource
                 Select::make('owner')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.field.owner'))
                     ->options(function (): array {
-                        return app(GetAllOwnersRelationshipUseCase::class)
-                            ->toArray();
+                        return app(GetAllOwnersRelationshipUseCase::class)->execute();
                     })
                     ->saveRelationshipsUsing(function (Client $record, array $data): void {
                         app(ClientService::class)->changeOwnerOfClient($record, $data['owner']);
