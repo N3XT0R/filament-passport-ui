@@ -11,7 +11,6 @@ use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 
 trait HasResourceFormComponents
 {
-
     public static function getResourceFormComponentsStatic(): array
     {
         return new static()->getResourceFormComponents();
