@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Application\UseCases\Owners;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
