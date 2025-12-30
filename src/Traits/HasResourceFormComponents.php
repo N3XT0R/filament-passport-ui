@@ -13,7 +13,7 @@ trait HasResourceFormComponents
     public static function getResourceFormComponents(): array
     {
         return [
-            Section::make(__('filament-passport-ui:filament-passport-ui.common.scopes'))
+            Section::make(__('filament-passport-ui::passport-ui.common.scopes'))
                 ->schema([
                     Grid::make()
                         ->schema(

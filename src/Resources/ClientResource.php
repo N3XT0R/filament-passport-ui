@@ -32,19 +32,19 @@ class ClientResource extends Resource
     use HasResourceFormComponents;
 
     protected static ?string $recordTitleAttribute = 'name';
-    protected static string|\UnitEnum|null $navigationGroup = 'filament-passport-ui:filament-passport-ui.navigation.group';
+    protected static string|\UnitEnum|null $navigationGroup = 'filament-passport-ui::passport-ui.navigation.group';
     protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedKey;
     protected static ?string $modelLabel = 'OAuth Client';
     protected static ?string $pluralModelLabel = 'OAuth Clients';
 
     public static function getModelLabel(): string
     {
-        return __('filament-passport-ui:filament-passport-ui.client_resource.model_label');
+        return __('filament-passport-ui::passport-ui.client_resource.model_label');
     }
 
     public static function getPluralLabel(): ?string
     {
-        return __('filament-passport-ui:filament-passport-ui.client_resource.plural_model_label');
+        return __('filament-passport-ui::passport-ui.client_resource.plural_model_label');
     }
 
     public static function getNavigationGroup(): string|UnitEnum|null
@@ -62,12 +62,12 @@ class ClientResource extends Resource
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
+                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
                     ->unique('clients', 'name')
                     ->required()
                     ->maxLength(255),
                 Select::make('owner')
-                    ->label(__('filament-passport-ui:filament-passport-ui.client_resource.field.owner'))
+                    ->label(__('filament-passport-ui::passport-ui.client_resource.field.owner'))
                     ->options(function (): Collection {
                         return app(GetAllOwnersRelationshipUseCase::class)->execute();
                     })
@@ -90,17 +90,17 @@ class ClientResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
+                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
                     ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
-                    ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.owner'))
+                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
                     ->searchable(),
                 TextColumn::make('created_at')
-                    ->label(__('filament-passport-ui:filament-passport-ui.common.created_at'))
+                    ->label(__('filament-passport-ui::passport-ui.common.created_at'))
                     ->dateTime(),
                 TextColumn::make('updated_at')
-                    ->label(__('filament-passport-ui:filament-passport-ui.common.updated_at'))
+                    ->label(__('filament-passport-ui::passport-ui.common.updated_at'))
                     ->dateTime(),
             ])
             ->recordActions([
