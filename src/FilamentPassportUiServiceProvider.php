@@ -55,7 +55,9 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
         }
     }
 
-    public function packageRegistered(): void {}
+    public function packageRegistered(): void
+    {
+    }
 
     public function packageBooted(): void
     {
@@ -83,7 +85,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
         }
 
         // Testing
-        Testable::mixin(new TestsFilamentPassportUi);
+        Testable::mixin(new TestsFilamentPassportUi());
     }
 
     protected function getAssetPackageName(): ?string
