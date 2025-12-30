@@ -41,7 +41,7 @@ class ClientResource extends Resource
                     })
                     ->saveRelationshipsUsing(function (Client $record, array $data): void {
                         app(SaveOwnershipRelationUseCase::class)
-                            ->changeOwnerOfClient($record, $data['owner'], auth()->user());
+                            ->execute($record, $data['owner'], auth()->user());
                     })
                     ->searchable()
                     ->required(),
