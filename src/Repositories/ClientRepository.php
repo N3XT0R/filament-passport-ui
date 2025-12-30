@@ -7,8 +7,9 @@ namespace N3XT0R\FilamentPassportUi\Repositories;
 use Illuminate\Support\Collection;
 use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
+use Laravel\Passport\ClientRepository as BaseRepository;
 
-class ClientRepository
+class ClientRepository extends BaseRepository
 {
     /**
      * @return Collection<Client>
