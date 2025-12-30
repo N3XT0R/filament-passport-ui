@@ -55,7 +55,9 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
         }
     }
 
-    public function packageRegistered(): void {}
+    public function packageRegistered(): void
+    {
+    }
 
     public function packageBooted(): void
     {
@@ -143,7 +145,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_filament-passport-ui_table',
+            'create_passport_scope_resources_table',
         ];
     }
 }
