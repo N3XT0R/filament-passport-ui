@@ -52,13 +52,13 @@ jobs:
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         with:
-          name: nightly-coverage-report
+          name: clover-coverage-${{ matrix.laravel }}-${{ matrix.php }}-${{ matrix.os }}
           path: coverage/clover.xml
 
       - name: Upload HTML coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: html-coverage-report
+          name: coverage-report-${{ matrix.laravel }}-${{ matrix.php }}-${{ matrix.os }}
           path: report/
 
       - name: Send coverage to Qlty
