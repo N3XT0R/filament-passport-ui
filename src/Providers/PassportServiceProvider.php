@@ -12,7 +12,6 @@ use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 
 class PassportServiceProvider extends ServiceProvider
 {
-
     public function register(): void
     {
         $this->app->singleton(BaseClientRepository::class, ClientRepository::class);
