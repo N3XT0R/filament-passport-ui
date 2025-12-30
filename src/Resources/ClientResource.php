@@ -23,6 +23,7 @@ use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
+use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
 use UnitEnum;
@@ -124,5 +125,10 @@ class ClientResource extends Resource
             'edit' => Pages\EditClient::route('/{record}/edit'),
             'create' => Pages\CreateClient::route('/create'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string)app(ClientRepository::class)->count();
     }
 }

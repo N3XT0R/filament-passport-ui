@@ -23,4 +23,9 @@ class ClientRepository extends BaseRepository
     {
         return Passport::clientModel()::where('name', $name)->first();
     }
+
+    public function count(): int
+    {
+        return Passport::clientModel()::count();
+    }
 }
