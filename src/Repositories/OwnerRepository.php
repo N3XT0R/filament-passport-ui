@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\Contracts\OAuthenticatable;
 
@@ -32,5 +33,10 @@ class OwnerRepository
         $owner = $this->getBaseQuery()->find($key);
 
         return $owner;
+    }
+
+    public function all(): Collection
+    {
+        return $this->getBaseQuery()->get();
     }
 }
