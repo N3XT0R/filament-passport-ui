@@ -24,11 +24,11 @@ class PassportServiceProvider extends ServiceProvider
 
     protected function bootScopes(): void
     {
-        $scopeRegistryService = app(ScopeRegistryService::class);
         if (false === (bool)config('passport-ui.use_database_scopes', false)) {
             return;
         }
 
+        $scopeRegistryService = app(ScopeRegistryService::class);
         if (false === $scopeRegistryService->isMigrated()) {
             return;
         }
