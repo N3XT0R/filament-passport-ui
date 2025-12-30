@@ -16,6 +16,10 @@ readonly class ClientService
 
     public function createPersonalAccessClientForUser(OAuthenticatable $user, string $name): ?Client
     {
+        if (!$this->clientRepository->findByName($name)) {
+            return null;
+        }
+
         $client = $this->clientRepository->createPersonalAccessGrantClient($name);
         $client->owner = $user;
         return $client->save() ? $client : null;

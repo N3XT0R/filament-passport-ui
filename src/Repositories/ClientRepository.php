@@ -18,4 +18,9 @@ class ClientRepository extends BaseRepository
     {
         return Passport::clientModel()::all();
     }
+
+    public function findByName(string $name): ?Client
+    {
+        return Passport::clientModel()::where('name', $name)->first();
+    }
 }
