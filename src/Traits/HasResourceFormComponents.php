@@ -10,12 +10,7 @@ use N3XT0R\FilamentPassportUi\Support\Builder\ScopeFormSectionBuilder;
 
 trait HasResourceFormComponents
 {
-    public static function getResourceFormComponentsStatic(): array
-    {
-        return new static()->getResourceFormComponents();
-    }
-
-    public function getResourceFormComponents(): array
+    public static function getResourceFormComponents(): array
     {
         return [
             Section::make(__('filament-passport-ui:filament-passport-ui.common.scopes'))
