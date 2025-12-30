@@ -79,3 +79,7 @@ Install the package via Composer:
 ```bash
 composer require n3xt0r/filament-passport-ui
 ```
+
+```bash
+php artisan migrate
+`` 
