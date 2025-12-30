@@ -11,7 +11,9 @@ use Laravel\Passport\Client;
 
 class OAuthClientCreated
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public function __construct(public Client $channel)
     {

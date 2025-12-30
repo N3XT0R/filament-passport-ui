@@ -6,5 +6,4 @@ namespace N3XT0R\FilamentPassportUi\Events\Scopes;
 
 class ScopeDeactivated
 {
-
 }
