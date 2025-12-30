@@ -2,19 +2,16 @@
 
 namespace N3XT0R\FilamentPassportUi;
 
-use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
-use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
+use N3XT0R\FilamentPassportUi\Commands\FilamentPassportUiCommand;
+use N3XT0R\FilamentPassportUi\Testing\TestsFilamentPassportUi;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use N3XT0R\FilamentPassportUi\Commands\FilamentPassportUiCommand;
-use N3XT0R\FilamentPassportUi\Testing\TestsFilamentPassportUi;
 
 class FilamentPassportUiServiceProvider extends PackageServiceProvider
 {
@@ -58,7 +55,9 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
         }
     }
 
-    public function packageRegistered(): void {}
+    public function packageRegistered(): void
+    {
+    }
 
     public function packageBooted(): void
     {
