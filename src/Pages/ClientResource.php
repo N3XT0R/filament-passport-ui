@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Pages;
 
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
@@ -37,7 +38,7 @@ class ClientResource extends Resource
                     })
                     ->saveRelationshipsUsing(function (Client $record, array $data): void {
                         app(SaveOwnershipRelationUseCase::class)
-                            ->execute($record, $data['owner'], auth()->user());
+                            ->execute($record, $data['owner'], Filament::auth()->user());
                     })
                     ->searchable()
                     ->required(),
