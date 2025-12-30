@@ -29,6 +29,7 @@ class ClientResource extends Resource
     use HasResourceFormComponents;
     use Essentials\HasNavigation;
     use Essentials\HasLabels;
+    use Essentials\HasGlobalSearch;
 
     public static function form(Schema $schema): Schema
     {
