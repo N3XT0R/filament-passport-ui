@@ -29,7 +29,6 @@ class ClientResource extends Resource
     use HasResourceFormComponents;
     use Essentials\HasNavigation;
     use Essentials\HasLabels;
-    use Essentials\HasPluginDefaults;
 
     public static function form(Schema $schema): Schema
     {
@@ -65,7 +64,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.owner'))
