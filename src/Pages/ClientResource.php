@@ -32,7 +32,7 @@ class ClientResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->components([
+            ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
                     ->formatStateUsing(fn(string $state): string => Str::headline($state))
