@@ -15,6 +15,14 @@ readonly class SaveOwnershipRelationUseCase
     {
     }
 
+    /**
+     * Save ownership relation between client and owner
+     * @param Client $client
+     * @param int $ownerId
+     * @param Authenticatable|null $actor
+     * @return void
+     * @throws \Throwable
+     */
     public function execute(Client $client, int $ownerId, ?Authenticatable $actor = null): void
     {
         $owner = $this->ownerRepository->findByKey($ownerId);
