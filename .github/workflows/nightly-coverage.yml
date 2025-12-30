@@ -11,10 +11,11 @@ jobs:
       fail-fast: true
       matrix:
         php: [ 8.4, 8.5 ]
-        laravel: [ 12 ]
+        laravel: [ "12.*" ]
         stability: [ prefer-stable ]
         include:
           - laravel: 12.*
+            laravel_label: "12"
             testbench: 10.*
             carbon: 3.*
             collision: 8.*
@@ -39,7 +40,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:^${{ matrix.laravel }}".0 "orchestra/testbench:${{ matrix.testbench }}" "nesbot/carbon:${{ matrix.carbon }}" --no-interaction --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "nesbot/carbon:${{ matrix.carbon }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: List Installed Dependencies
@@ -51,13 +52,13 @@ jobs:
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         with:
-          name: clover-coverage-${{ matrix.laravel }}-${{ matrix.php }}
+          name: clover-coverage-${{ matrix.laravel_label }}-${{ matrix.php }}
           path: coverage/clover.xml
 
       - name: Upload HTML coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report-${{ matrix.laravel }}-${{ matrix.php }}
+          name: coverage-report-${{ matrix.laravel_label }}-${{ matrix.php }}
           path: report/
 
       - name: Send coverage to Qlty
