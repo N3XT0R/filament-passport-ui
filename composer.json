@@ -5,7 +5,8 @@
         "N3XT0R",
         "laravel",
         "filamentphp",
-        "filament-passport-ui"
+        "filament-passport-ui",
+        "laravel-passport"
     ],
     "homepage": "https://github.com/n3xt0r/filament-passport-ui",
     "support": {
