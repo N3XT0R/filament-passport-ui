@@ -5,6 +5,7 @@ return [
     'common' => [
         'updated_at' => 'Aktualisiert am',
         'created_at' => 'Erstellt am',
+        'scopes' => 'Berechtigungen',
     ],
     'client_resource' => [
         'column' => [

@@ -5,6 +5,7 @@ return [
     'common' => [
         'updated_at' => 'updated at',
         'created_at' => 'created at',
+        'scopes' => 'scopes',
     ],
     'client_resource' => [
         'column' => [
