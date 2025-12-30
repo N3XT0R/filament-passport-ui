@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Services;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\Client;
 use Laravel\Passport\Contracts\OAuthenticatable;
 use N3XT0R\FilamentPassportUi\Exceptions\Domain\ClientAlreadyExists;
@@ -51,16 +53,29 @@ readonly class ClientService
     }
 
     /**
-     * Change the owner of the given client to the new owner.
+     * Change the owner of the given client to the new owner
      * @param Client $client
      * @param OAuthenticatable $newOwner
+     * @param Authenticatable|null $actor
      * @return Client
      * @throws Throwable
      */
-    public function changeOwnerOfClient(Client $client, OAuthenticatable $newOwner): Client
-    {
+    public function changeOwnerOfClient(
+        Client $client,
+        OAuthenticatable $newOwner,
+        ?Authenticatable $actor = null
+    ): Client {
         $client->owner()->associate($newOwner);
         $client->saveOrFail();
+
+        activity('oauth')
+            ->performedOn($client)
+            ->causedBy($actor)
+            ->withProperties([
+                'name' => $client->getAttribute('name'),
+                'new_owner_id' => $newOwner->getAuthIdentifier(),
+            ])
+            ->log('OAuth client ownership changed');
 
         return $client;
     }

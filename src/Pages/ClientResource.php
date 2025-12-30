@@ -17,6 +17,7 @@ use Laravel\Passport\Passport;
 use Filament\Tables\Columns\TextColumn;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersUseCase;
+use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
 use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 
@@ -39,7 +40,7 @@ class ClientResource extends Resource
                         return app(GetAllOwnersRelationshipUseCase::class)->execute();
                     })
                     ->saveRelationshipsUsing(function (Client $record, array $data): void {
-                        app(ClientService::class)->changeOwnerOfClient($record, $data['owner']);
+                        app(SaveOwnershipRelationUseCase::class)->changeOwnerOfClient($record, $data['owner']);
                     })
                     ->searchable()
                     ->required(),
