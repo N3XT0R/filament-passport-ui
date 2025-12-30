@@ -4,11 +4,21 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Repositories;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\Contracts\OAuthenticatable;
 
 class OwnerRepository
 {
+
+    private function getBaseQuery(): Builder
+    {
+        /** @var class-string<Model&OAuthenticatable> $modelClass */
+        $modelClass = config('filament-passport-ui.owner_model', 'App\\Models\\User');
+
+        return $modelClass::query();
+    }
+
     /**
      * Find an owner by its primary key.
      * @param $key
@@ -16,12 +26,10 @@ class OwnerRepository
      */
     public function findOwnerByKey($key): (Model&OAuthenticatable)|null
     {
-        /** @var class-string<Model&OAuthenticatable> $modelClass */
-        $modelClass = config('filament-passport-ui.owner_model', 'App\\Models\\User');
         /**
          * @var (OAuthenticatable&Model)|null $owner
          */
-        $owner = $modelClass::query()->find($key);
+        $owner = $this->getBaseQuery()->find($key);
 
         return $owner;
     }
