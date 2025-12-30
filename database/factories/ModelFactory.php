@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Database\Factories;
+namespace N3XT0R\FilamentPassportUi\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

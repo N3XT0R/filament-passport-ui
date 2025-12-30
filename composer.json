@@ -1,30 +1,28 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "n3xt0r/filament-passport-ui",
+    "description": "Filament admin UI for managing Laravel Passport OAuth clients, tokens, and scopes.",
     "keywords": [
-        ":vendor_name",
+        "N3XT0R",
         "laravel",
         "filamentphp",
-        ":package_slug"
+        "filament-passport-ui"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/n3xt0r/filament-passport-ui",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/n3xt0r/filament-passport-ui/issues",
+        "source": "https://github.com/n3xt0r/filament-passport-ui"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Ilya Beliaev",
+            "email": "info@php-dev.info",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.4",
         "filament/filament": "^4.0",
-        "filament/forms": "^4.0",
-        "filament/tables": "^4.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
@@ -45,13 +43,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "N3XT0R\\FilamentPassportUi\\": "src/",
+            "N3XT0R\\FilamentPassportUi\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "N3XT0R\\FilamentPassportUi\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -66,10 +64,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "N3XT0R\\FilamentPassportUi\\FilamentPassportUiServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "FilamentPassportUi": "N3XT0R\\FilamentPassportUi\\Facades\\FilamentPassportUi"
             }
         }
     },
