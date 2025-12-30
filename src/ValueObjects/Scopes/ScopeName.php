@@ -11,8 +11,7 @@ class ScopeName
 {
     private function __construct(
         private readonly string $value
-    ) {
-    }
+    ) {}
 
     public static function from(
         PassportScopeResource $resource,

@@ -14,8 +14,7 @@ readonly class ScopeRegistryService
     public function __construct(
         private ResourceRepository $resourceRepository,
         private ActionRepository $actionRepository
-    ) {
-    }
+    ) {}
 
     /**
      * @return Collection<string, string>
