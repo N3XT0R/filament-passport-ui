@@ -8,6 +8,7 @@ use Laravel\Passport\Client;
 use Laravel\Passport\Contracts\OAuthenticatable;
 use N3XT0R\FilamentPassportUi\Exceptions\Domain\ClientAlreadyExists;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
+use Throwable;
 
 readonly class ClientService
 {
@@ -17,19 +18,23 @@ readonly class ClientService
 
     /**
      * Create a personal access client for the given user with the specified name.
-     * @param OAuthenticatable $user
-     * @param string $name
+     * @param OAuthenticatable $user The user to associate the client with
+     * @param string $name Name of the personal access client
+     * @param string|null $provider Optional user provider
      * @return Client
-     * @throws ClientAlreadyExists|\Throwable
+     * @throws ClientAlreadyExists|Throwable
      */
-    public function createPersonalAccessClientForUser(OAuthenticatable $user, string $name): Client
-    {
+    public function createPersonalAccessClientForUser(
+        OAuthenticatable $user,
+        string $name,
+        ?string $provider = null
+    ): Client {
         if ($this->clientRepository->findByName($name)) {
             throw new ClientAlreadyExists($name);
         }
 
 
-        $client = $this->clientRepository->createPersonalAccessGrantClient($name);
+        $client = $this->clientRepository->createPersonalAccessGrantClient($name, $provider);
         $client->owner()->associate($user);
         $client->saveOrFail();
 
