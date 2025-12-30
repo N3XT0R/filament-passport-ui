@@ -6,6 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Services;
 
 use Laravel\Passport\Client;
 use Laravel\Passport\Contracts\OAuthenticatable;
+use N3XT0R\FilamentPassportUi\Exceptions\Domain\ClientAlreadyExists;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 
 readonly class ClientService
@@ -19,11 +20,12 @@ readonly class ClientService
      * @param OAuthenticatable $user
      * @param string $name
      * @return Client|null
+     * @throws ClientAlreadyExists
      */
     public function createPersonalAccessClientForUser(OAuthenticatable $user, string $name): ?Client
     {
         if ($this->clientRepository->findByName($name)) {
-            return null;
+            throw new ClientAlreadyExists($name);
         }
 
 
