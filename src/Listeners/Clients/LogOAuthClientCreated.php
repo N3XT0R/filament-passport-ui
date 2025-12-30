@@ -14,7 +14,7 @@ class LogOAuthClientCreated
             ->performedOn($event->client)
             ->causedBy($event->actor)
             ->withProperties([
-                'name' => $event->client->name,
+                'name' => $event->client->getAttribute('name'),
             ])
             ->log('OAuth client created');
     }
