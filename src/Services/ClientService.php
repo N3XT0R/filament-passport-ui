@@ -19,10 +19,10 @@ readonly class ClientService
      * Create a personal access client for the given user with the specified name.
      * @param OAuthenticatable $user
      * @param string $name
-     * @return Client|null
-     * @throws ClientAlreadyExists
+     * @return Client
+     * @throws ClientAlreadyExists|\Throwable
      */
-    public function createPersonalAccessClientForUser(OAuthenticatable $user, string $name): ?Client
+    public function createPersonalAccessClientForUser(OAuthenticatable $user, string $name): Client
     {
         if ($this->clientRepository->findByName($name)) {
             throw new ClientAlreadyExists($name);
@@ -31,6 +31,8 @@ readonly class ClientService
 
         $client = $this->clientRepository->createPersonalAccessGrantClient($name);
         $client->owner()->associate($user);
-        return $client->save() ? $client : null;
+        $client->saveOrFail();
+
+        return $client;
     }
 }
