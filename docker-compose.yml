@@ -1,6 +1,5 @@
 services:
   db:
-    container_name: db
     image: mysql:8.0
     ports:
       - "3333:3306"
@@ -17,7 +16,6 @@ services:
       start_period: 30s
   php:
     user: "${UID:-1000}:${GID:-1000}"
-    container_name: php
     build:
       context: .
       dockerfile: app.Dockerfile
