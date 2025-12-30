@@ -18,6 +18,7 @@ readonly class ScopeRegistryService
     }
 
     /**
+     * Get all active scopes in the system.
      * @return Collection<string, string>
      */
     public function all(): Collection
