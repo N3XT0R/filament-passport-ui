@@ -24,9 +24,9 @@ readonly class ScopeFormSectionBuilder
     {
         return $this->scopeRegistryService
             ->allScopeNames()
-            ->groupBy(fn(ScopeDTO $dto) => $dto->resource)
+            ->groupBy(fn (ScopeDTO $dto) => $dto->resource)
             ->map(
-                fn(Collection $scopes, string $resource) => $this->buildSection($resource, $scopes)
+                fn (Collection $scopes, string $resource) => $this->buildSection($resource, $scopes)
             )
             ->values()
             ->all();
@@ -39,14 +39,14 @@ readonly class ScopeFormSectionBuilder
                 CheckboxList::make('scopes')
                     ->options(
                         $scopes->mapWithKeys(
-                            fn(ScopeDTO $dto) => [
+                            fn (ScopeDTO $dto) => [
                                 $dto->scope => $dto->scope,
                             ]
                         )
                     )
                     ->descriptions(
                         $scopes->mapWithKeys(
-                            fn(ScopeDTO $dto) => [
+                            fn (ScopeDTO $dto) => [
                                 $dto->scope => $dto->description,
                             ]
                         )->filter()
