@@ -14,6 +14,8 @@ return [
         'scopes' => 'scopes',
     ],
     'client_resource' => [
+        'model_label' => 'Client',
+        'model_label_plural' => 'Clients',
         'column' => [
             'name' => 'Name',
             'owner' => 'Owner',

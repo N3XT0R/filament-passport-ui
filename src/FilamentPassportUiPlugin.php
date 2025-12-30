@@ -50,8 +50,16 @@ class FilamentPassportUiPlugin implements FilamentPlugin
     {
         return [
             'navigationGroup' => __('filament-shield::filament-shield.navigation.group'),
-            'navigationLabel' => __('filament-shield::filament-shield.navigation.clients.label'),
             'navigationIcon' => 'heroicon-o-lock-closed',
+            'resources' => [
+                Resources\ClientResource::class => [
+                    'modelLabel' => __('filament-passport-ui:filament-passport-ui.client_resource.model_label'),
+                    'pluralModelLabel' => __(
+                        'filament-passport-ui:filament-passport-ui.client_resource.plural_model_label'
+                    ),
+                    'navigationIcon' => 'heroicon-o-users',
+                ],
+            ],
         ];
     }
 }
