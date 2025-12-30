@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources;
 
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -56,7 +59,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.owner'))
@@ -67,6 +70,13 @@ class ClientResource extends Resource
                 TextColumn::make('updated_at')
                     ->label(__('filament-passport-ui:filament-passport-ui.common.updated_at'))
                     ->dateTime(),
+            ])
+            ->recordActions([
+                EditAction::class,
+                DeleteAction::class,
+            ])
+            ->toolbarActions([
+                DeleteBulkAction::class,
             ]);
     }
 
