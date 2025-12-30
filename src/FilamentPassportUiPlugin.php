@@ -8,7 +8,6 @@ use Filament\Panel;
 
 class FilamentPassportUiPlugin implements FilamentPlugin
 {
-
     use Essentials\HasGlobalSearch;
     use Essentials\HasLabels;
     use Essentials\HasNavigation;
