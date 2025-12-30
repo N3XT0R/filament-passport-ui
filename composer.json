@@ -57,7 +57,7 @@
         "analyse": "phpstan analyse",
         "lint": "pint",
         "refactor": "rector",
-        "test": "./vendor/bin/phpunit",
+        "test": "vendor/bin/phpunit --no-coverage",
         "test:lint": "pint --test",
         "test:refactor": "rector --dry-run"
     },
