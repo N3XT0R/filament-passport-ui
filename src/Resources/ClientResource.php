@@ -31,8 +31,6 @@ class ClientResource extends Resource
     use Essentials\HasLabels;
     use Essentials\HasPluginDefaults;
 
-    protected static ?string $recordTitleAttribute = 'name';
-
     public static function form(Schema $schema): Schema
     {
         return $schema
