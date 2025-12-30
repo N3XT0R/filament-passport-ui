@@ -5,7 +5,6 @@ namespace N3XT0R\FilamentPassportUi;
 use Filament\Contracts\Plugin as FilamentPlugin;
 use BezhanSalleh\PluginEssentials\Concerns\Plugin as Essentials;
 use Filament\Panel;
-use Filament\Support\Icons\Heroicon;
 
 class FilamentPassportUiPlugin implements FilamentPlugin
 {
