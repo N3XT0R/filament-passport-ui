@@ -20,8 +20,9 @@ readonly class ClientService
             return null;
         }
 
+
         $client = $this->clientRepository->createPersonalAccessGrantClient($name);
-        $client->owner = $user;
+        $client->owner()->associate($user);
         return $client->save() ? $client : null;
     }
 }
