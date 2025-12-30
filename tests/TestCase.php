@@ -15,6 +15,7 @@ use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Laravel\Passport\PassportServiceProvider;
 use Livewire\LivewireServiceProvider;
 use N3XT0R\FilamentPassportUi\FilamentPassportUiServiceProvider;
 use Orchestra\Testbench\Attributes\WithMigration;
@@ -42,6 +43,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         $providers = [
+            PassportServiceProvider::class,
             ActionsServiceProvider::class,
             BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
