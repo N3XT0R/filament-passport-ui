@@ -24,7 +24,7 @@ class OwnerRepository
      * @param $key
      * @return (OAuthenticatable&Model)|null
      */
-    public function findOwnerByKey($key): (Model&OAuthenticatable)|null
+    public function findByKey($key): (Model&OAuthenticatable)|null
     {
         /**
          * @var (OAuthenticatable&Model)|null $owner
