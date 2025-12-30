@@ -12,7 +12,7 @@ class LogOAuthClientCreated
     {
         activity('oauth')
             ->performedOn($event->client)
-            //->causedBy($event->actor)
+            ->causedBy($event->actor)
             ->withProperties([
                 'name' => $event->client->name,
             ])
