@@ -37,12 +37,15 @@ class ClientResource extends Resource
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
                     ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
-                TextColumn::make('id')
-                    ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.id'))
+                TextColumn::make('owner.name')
+                    ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.owner'))
                     ->searchable(),
-                TextColumn::make('secret')
-                    ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.secret'))
-                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->label(__('filament-passport-ui:filament-passport-ui.common.created_at'))
+                    ->dateTime(),
+                TextColumn::make('updated_at')
+                    ->label(__('filament-passport-ui:filament-passport-ui.common.updated_at'))
+                    ->dateTime(),
             ]);
     }
 

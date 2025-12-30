@@ -2,11 +2,14 @@
 
 // translations for N3XT0R/FilamentPassportUi
 return [
+    'common' => [
+        'updated_at' => 'Aktualisiert am',
+        'created_at' => 'Erstellt am',
+    ],
     'client_resource' => [
         'column' => [
             'name' => 'Name',
-            'created_at' => 'Erstellt am',
-            'updated_at' => 'Aktualisiert am',
+            'owner' => 'Eigentümer',
         ],
     ],
 ];
