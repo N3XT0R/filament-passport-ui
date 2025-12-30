@@ -4,12 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('passport_scope_resources', static function (Blueprint $table) {
             $table->id();
-            //resource name (e.g., account, billing, orders)
+            // resource name (e.g., account, billing, orders)
             $table->string('name')->unique();
             $table->string('description')->nullable();
             $table->boolean('is_active')->default(true);

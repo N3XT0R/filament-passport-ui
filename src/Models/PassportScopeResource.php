@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class PassportScopeResource extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'passport_scope_resources';
 
     protected $fillable = [
