@@ -16,7 +16,7 @@ class OAuthClientCreated
     use InteractsWithSockets;
     use SerializesModels;
 
-    public function __construct(public Client $channel, public ?Authenticatable $actor = null)
+    public function __construct(public Client $client, public ?Authenticatable $actor = null)
     {
     }
 }
