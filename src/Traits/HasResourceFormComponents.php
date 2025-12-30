@@ -9,8 +9,13 @@ use Filament\Schemas\Components\Section;
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 
-class HasResourceFormComponents
+trait HasResourceFormComponents
 {
+
+    public static function getResourceFormComponentsStatic(): array
+    {
+        return new static()->getResourceFormComponents();
+    }
 
     public function getResourceFormComponents(): array
     {

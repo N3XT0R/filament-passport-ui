@@ -21,9 +21,13 @@ use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
+use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
 
 class ClientResource extends Resource
 {
+
+    use HasResourceFormComponents;
+
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
@@ -50,6 +54,7 @@ class ClientResource extends Resource
                     })
                     ->searchable()
                     ->required(),
+                static::getResourceFormComponentsStatic(),
             ]);
     }
 
