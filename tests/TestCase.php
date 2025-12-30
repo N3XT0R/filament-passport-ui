@@ -33,9 +33,9 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'N3XT0R\\FilamentPassportUi\\Database\\Factories\\' . class_basename(
-                $modelName
-            ) . 'Factory'
+            static fn(string $modelName) => 'N3XT0R\\FilamentPassportUi\\Database\\Factories\\' . class_basename(
+                    $modelName
+                ) . 'Factory'
         );
     }
 
