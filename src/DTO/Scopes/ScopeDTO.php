@@ -8,6 +8,7 @@ class ScopeDTO
 {
     public function __construct(
         public readonly string $scope,
+        public readonly ?string $resource = null,
         public readonly ?string $description = null,
     ) {
     }
@@ -16,15 +17,8 @@ class ScopeDTO
     {
         return new self(
             scope: $data['scope'],
+            resource: $data['resource'] ?? null,
             description: $data['description'] ?? null,
-        );
-    }
-
-    public static function fromStrings(string $scope, ?string $description = null): self
-    {
-        return new self(
-            scope: $scope,
-            description: $description,
         );
     }
 }

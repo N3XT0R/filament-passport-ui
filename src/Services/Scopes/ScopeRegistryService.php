@@ -44,6 +44,10 @@ readonly class ScopeRegistryService
         return $scopes;
     }
 
+    /**
+     * Get all active scope names with descriptions.
+     * @return Collection<ScopeDTO>
+     */
     public function allScopeNames(): Collection
     {
         $resources = $this->resourceRepository->active();
@@ -54,11 +58,13 @@ readonly class ScopeRegistryService
         foreach ($resources as $resource) {
             foreach ($actions as $action) {
                 $scopeName = ScopeName::from($resource, $action);
-                $scopeDTO = ScopeDTO::fromStrings(
-                    $scopeName->value(),
-                    $action->getAttribute('description')
+                $scopeNames->push(
+                    new ScopeDTO(
+                        scope: $scopeName->value(),
+                        resource: $resource->getAttribute('name'),
+                        description: $action->getAttribute('description')
+                    )
                 );
-                $scopeNames->push($scopeName);
             }
         }
 
