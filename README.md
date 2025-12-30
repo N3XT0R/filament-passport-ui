@@ -33,6 +33,36 @@ administration without maintaining custom internal tooling.
 
 ---
 
+## Why this exists
+
+Laravel Passport provides a solid and standards-compliant OAuth2 implementation.  
+It intentionally focuses on protocol mechanics and leaves administrative concerns to the application.
+
+In practice, this often leads to recurring problems:
+
+- OAuth clients are created once via CLI and then forgotten
+- Client ownership is unclear, especially for `client_credentials` grants
+- Scopes are either not used at all or defined ad-hoc in code without structure
+- There is no central place to review, manage, or reason about OAuth configuration
+
+This package exists to fill that gap.
+
+**Filament Passport UI adds an administrative and domain-oriented layer on top of Laravel Passport**, without changing
+its behavior or assumptions. It does not replace Passport, nor does it attempt to redefine OAuth flows. Instead, it
+provides structure, visibility, and responsibility where Passport intentionally remains neutral.
+
+Key principles behind this package:
+
+- OAuth clients should have explicit ownership
+- Scopes should be composable, understandable, and centrally managed
+- Administrative actions should be visible, reviewable, and auditable
+- OAuth configuration should be manageable without embedding governance logic in application code
+
+By integrating with Filament, this package offers a practical and predictable way to manage OAuth clients and scopes in
+real-world applications, especially in systems with multiple integrations, services, or teams.
+
+---
+
 ## Requirements
 
 - PHP ^8.4
