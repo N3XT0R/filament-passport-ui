@@ -38,7 +38,11 @@ class ClientResource extends Resource
                     })
                     ->saveRelationshipsUsing(function (Client $record, array $data): void {
                         app(SaveOwnershipRelationUseCase::class)
-                            ->execute($record, $data['owner'], Filament::auth()->user());
+                            ->execute(
+                                client: $record,
+                                ownerId: $data['owner'],
+                                actor: Filament::auth()->user()
+                            );
                     })
                     ->searchable()
                     ->required(),
@@ -51,7 +55,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui:filament-passport-ui.client_resource.column.owner'))
