@@ -6,7 +6,8 @@
         "laravel",
         "filamentphp",
         "filament-passport-ui",
-        "laravel-passport"
+        "laravel-passport",
+        "passport-ui"
     ],
     "homepage": "https://github.com/n3xt0r/filament-passport-ui",
     "support": {
