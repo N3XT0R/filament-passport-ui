@@ -11,7 +11,6 @@ use Laravel\Passport\Contracts\OAuthenticatable;
 
 class OwnerRepository
 {
-
     private function getBaseQuery(): Builder
     {
         /** @var class-string<Model&OAuthenticatable> $modelClass */

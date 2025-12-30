@@ -11,7 +11,6 @@ use N3XT0R\FilamentPassportUi\Services\ClientService;
 
 readonly class SaveOwnershipRelationUseCase
 {
-
     public function __construct(private OwnerRepository $ownerRepository, private ClientService $clientService)
     {
     }

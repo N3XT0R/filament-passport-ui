@@ -13,7 +13,7 @@ readonly class GetAllOwnersRelationshipUseCase extends GetAllOwnersUseCase
     {
         /** @var class-string<Model> $modelClass */
         $modelClass = config('filament-passport-ui.owner_model');
-        $keyName = (new $modelClass)->getKeyName();
+        $keyName = (new $modelClass())->getKeyName();
 
         return parent::execute()->pluck(
             config('filament-passport-ui.owner_label_attribute', 'name'),
