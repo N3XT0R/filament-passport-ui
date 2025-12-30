@@ -14,7 +14,9 @@ class FilamentPassportUiPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        //
+        $panel->resources([
+            Resources\ClientResource::class,
+        ]);
     }
 
     public function boot(Panel $panel): void
