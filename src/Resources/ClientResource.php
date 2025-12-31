@@ -58,6 +58,11 @@ class ClientResource extends Resource
         return config('filament-passport-ui.navigation.client_resource.icon', static::$navigationIcon);
     }
 
+    /**
+     * Build the form schema for the resource.
+     * @param Schema $schema
+     * @return Schema
+     */
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -86,6 +91,11 @@ class ClientResource extends Resource
             ]);
     }
 
+    /**
+     * Build the table for the resource.
+     * @param Table $table
+     * @return Table
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -113,6 +123,10 @@ class ClientResource extends Resource
             ]);
     }
 
+    /**
+     * Get the model class for the resource from Passport.
+     * @return string
+     */
     public static function getModel(): string
     {
         return Passport::clientModel();
@@ -127,6 +141,10 @@ class ClientResource extends Resource
         ];
     }
 
+    /**
+     * Get the amount of clients for the navigation badge.
+     * @return string|null
+     */
     public static function getNavigationBadge(): ?string
     {
         return (string)app(ClientRepository::class)->count();
