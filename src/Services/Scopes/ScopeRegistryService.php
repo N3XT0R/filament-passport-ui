@@ -62,6 +62,7 @@ readonly class ScopeRegistryService
                 $scopeNames->push(
                     new ScopeDTO(
                         scope: $scopeName->value(),
+                        isGlobal: $action->resource_id === null,
                         resource: $resource->getAttribute('name'),
                         description: $action->getAttribute('description')
                     )
@@ -81,7 +82,7 @@ readonly class ScopeRegistryService
     private function actionsForResource(PassportScopeResource $resource, Collection $actions): Collection
     {
         return $actions->filter(
-            fn ($action) => $action->resource_id === null
+            fn($action) => $action->resource_id === null
                 || $action->resource_id === $resource->getKey()
         );
     }
