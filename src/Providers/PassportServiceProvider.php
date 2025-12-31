@@ -51,10 +51,11 @@ class PassportServiceProvider extends ServiceProvider
             function (Application $app, array $params = []) {
                 $repository = $app->make(ActionRepository::class);
 
-                if (($params['cache'] ?? false) || true === (bool)config('passport-ui.cache.enabled', false)) {
-                    $repository = new CachedActionRepositoryDecorator(
-                        innerRepository: $repository,
-                    );
+                $useCache = $params['cache']
+                    ?? config('passport-ui.cache.enabled', false);
+
+                if ($useCache) {
+                    $repository = new CachedActionRepositoryDecorator($repository);
                 }
 
                 return $repository;
@@ -66,10 +67,11 @@ class PassportServiceProvider extends ServiceProvider
             function (Application $app, array $params = []) {
                 $repository = $app->make(ResourceRepository::class);
 
-                if (($params['cache'] ?? false) || true === (bool)config('passport-ui.cache.enabled', false)) {
-                    $repository = new CachedResourceRepositoryDecorator(
-                        innerRepository: $repository,
-                    );
+                $useCache = $params['cache']
+                    ?? config('passport-ui.cache.enabled', false);
+
+                if ($useCache) {
+                    $repository = new CachedResourceRepositoryDecorator($repository);
                 }
 
                 return $repository;
