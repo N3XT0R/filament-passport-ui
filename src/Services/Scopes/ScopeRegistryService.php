@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Services\Scopes;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
@@ -82,9 +83,16 @@ readonly class ScopeRegistryService
     private function actionsForResource(PassportScopeResource $resource, Collection $actions): Collection
     {
         return $actions->filter(
-            fn ($action) => $action->resource_id === null
+            fn($action) => $action->resource_id === null
                 || $action->resource_id === $resource->getKey()
         );
     }
 
+    public function clearCache(): void
+    {
+        Cache::tags([
+            'passport',
+            'passport.scopes',
+        ])->flush();
+    }
 }
