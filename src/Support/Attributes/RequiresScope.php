@@ -13,7 +13,7 @@ final readonly class RequiresScope
      * @param string[] $scopes
      */
     public function __construct(
-        public readonly array $scopes
+        public array $scopes
     ) {
     }
 }
