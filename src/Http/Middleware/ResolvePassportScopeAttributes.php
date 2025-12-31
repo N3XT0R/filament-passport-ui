@@ -7,11 +7,9 @@ namespace N3XT0R\FilamentPassportUi\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
-use Laravel\Passport\Http\Middleware\CheckToken;
 use N3XT0R\FilamentPassportUi\Support\Attributes\RequiresAnyScope;
 use N3XT0R\FilamentPassportUi\Support\Attributes\RequiresScope;
 use N3XT0R\FilamentPassportUi\Support\Passport\Traits\HasPassportScopes;
-use N3XT0R\FilamentPassportUi\Support\Passport\Traits\HasPassportScopesTrait;
 use ReflectionMethod;
 
 final class ResolvePassportScopeAttributes
