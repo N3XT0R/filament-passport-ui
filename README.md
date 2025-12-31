@@ -81,5 +81,5 @@ composer require n3xt0r/filament-passport-ui
 ```
 
 ```bash
-php artisan migrate
+php artisan filament-passport-ui:install
 `` 
