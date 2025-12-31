@@ -77,7 +77,7 @@ class PassportServiceProvider extends ServiceProvider
      * @param class-string<TDecorator> $decoratorClass
      * @throws BindingResolutionException
      */
-    private function makeRepository(
+    protected function makeRepository(
         Application $app,
         array $params,
         string $repositoryClass,
