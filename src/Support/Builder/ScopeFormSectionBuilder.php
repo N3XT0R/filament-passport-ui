@@ -24,10 +24,10 @@ readonly class ScopeFormSectionBuilder
     {
         return $this->scopeRegistryService
             ->allScopeNames()
-            ->groupBy(fn (ScopeDTO $dto) => $dto->resource)
-            ->filter(fn (Collection $scopes) => $scopes->isNotEmpty())
+            ->groupBy(fn(ScopeDTO $dto) => $dto->resource)
+            ->filter(fn(Collection $scopes) => $scopes->isNotEmpty())
             ->map(
-                fn (Collection $scopes, string $resource) => $this->buildSection($resource, $scopes)
+                fn(Collection $scopes, string $resource) => $this->buildSection($resource, $scopes)
             )
             ->values()
             ->all();
@@ -40,14 +40,14 @@ readonly class ScopeFormSectionBuilder
                 CheckboxList::make('scopes')
                     ->options(
                         $scopes->mapWithKeys(
-                            fn (ScopeDTO $dto) => [
+                            fn(ScopeDTO $dto) => [
                                 $dto->scope => $dto->scope,
                             ]
                         )
                     )
                     ->descriptions(
                         $scopes->mapWithKeys(
-                            fn (ScopeDTO $dto) => [
+                            fn(ScopeDTO $dto) => [
                                 $dto->scope => $dto->description,
                             ]
                         )->filter()
@@ -55,6 +55,7 @@ readonly class ScopeFormSectionBuilder
                     ->columns(3)
                     ->bulkToggleable(),
             ])
+            ->columnSpanFull()
             ->collapsible();
     }
 
