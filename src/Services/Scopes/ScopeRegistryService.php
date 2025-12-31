@@ -8,15 +8,15 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
+use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
+use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
 use N3XT0R\FilamentPassportUi\ValueObjects\Scopes\ScopeName;
 
 readonly class ScopeRegistryService
 {
     public function __construct(
-        private ResourceRepository $resourceRepository,
-        private ActionRepository $actionRepository
+        private ResourceRepositoryContract $resourceRepository,
+        private ActionRepositoryContract $actionRepository
     ) {
     }
 
@@ -82,7 +82,7 @@ readonly class ScopeRegistryService
     private function actionsForResource(PassportScopeResource $resource, Collection $actions): Collection
     {
         return $actions->filter(
-            fn ($action) => $action->resource_id === null
+            fn($action) => $action->resource_id === null
                 || $action->resource_id === $resource->getKey()
         );
     }
