@@ -83,7 +83,7 @@ readonly class ScopeRegistryService
     private function actionsForResource(PassportScopeResource $resource, Collection $actions): Collection
     {
         return $actions->filter(
-            fn($action) => $action->resource_id === null
+            fn ($action) => $action->resource_id === null
                 || $action->resource_id === $resource->getKey()
         );
     }
