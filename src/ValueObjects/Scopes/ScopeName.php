@@ -19,7 +19,7 @@ class ScopeName
         PassportScopeAction $action
     ): self {
         return new self(
-            $resource->getAttribute('name') . '.' . $action->getAttribute('name')
+            $resource->getAttribute('name') . ':' . $action->getAttribute('name')
         );
     }
 
