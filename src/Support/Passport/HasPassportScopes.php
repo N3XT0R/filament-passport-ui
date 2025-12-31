@@ -7,7 +7,7 @@ namespace N3XT0R\FilamentPassportUi\Support\Passport\Traits;
 use Laravel\Passport\Http\Middleware\CheckToken;
 use Laravel\Passport\Http\Middleware\CheckTokenForAnyScope;
 
-trait HasPassportScopesTrait
+class HasPassportScopes
 {
     /**
      * Generate the middleware string to require the given scopes.
@@ -26,7 +26,7 @@ trait HasPassportScopesTrait
      * @param string ...$scopes
      * @return string
      */
-    public static function requireAny(string ...$scopes): string
+    public static function requiresAny(string ...$scopes): string
     {
         return CheckTokenForAnyScope::using(...$scopes);
     }

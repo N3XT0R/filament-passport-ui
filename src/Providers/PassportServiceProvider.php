@@ -8,6 +8,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\ClientRepository as BaseClientRepository;
 use Laravel\Passport\Passport;
+use N3XT0R\FilamentPassportUi\Http\Middleware\ResolvePassportScopeAttributes;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
@@ -43,13 +44,18 @@ class PassportServiceProvider extends ServiceProvider
         }
 
         Passport::tokensCan($scopeRegistryService->all()->toArray());
+
+        $this->app['router']->pushMiddlewareToGroup(
+            'api',
+            ResolvePassportScopeAttributes::class
+        );
     }
 
     protected function registerRepositories(): void
     {
         $this->app->singleton(
             ActionRepositoryContract::class,
-            fn (Application $app, array $params = []) => $this->makeRepository(
+            fn(Application $app, array $params = []) => $this->makeRepository(
                 app: $app,
                 params: $params,
                 repositoryClass: ActionRepository::class,
@@ -59,7 +65,7 @@ class PassportServiceProvider extends ServiceProvider
 
         $this->app->singleton(
             ResourceRepositoryContract::class,
-            fn (Application $app, array $params = []) => $this->makeRepository(
+            fn(Application $app, array $params = []) => $this->makeRepository(
                 app: $app,
                 params: $params,
                 repositoryClass: ResourceRepository::class,
