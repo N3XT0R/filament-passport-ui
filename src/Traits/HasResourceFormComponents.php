@@ -10,10 +10,9 @@ use N3XT0R\FilamentPassportUi\Support\Builder\ScopeFormSectionBuilder;
 
 trait HasResourceFormComponents
 {
-
     public static function isResourceFormComponentsEnabled(): bool
     {
-        return config('filament-passport-ui.scopes.enabled', true);
+        return config('passport-ui.use_database_scopes', true);
     }
 
     public static function getResourceFormComponents(): array
