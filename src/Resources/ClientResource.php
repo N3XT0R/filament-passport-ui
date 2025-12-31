@@ -73,7 +73,7 @@ class ClientResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Select::make('owner')
-                    ->label(__('filament-passport-ui::passport-ui.client_resource.field.owner'))
+                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
                     ->options(function (): Collection {
                         return app(GetAllOwnersRelationshipUseCase::class)->execute();
                     })
@@ -102,7 +102,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
