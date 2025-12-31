@@ -6,6 +6,7 @@ use Filament\Support\Assets\Asset;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Artisan;
 use Laravel\Passport\Client;
 use Livewire\Features\SupportTesting\Testable;
 use N3XT0R\FilamentPassportUi\Commands\FilamentPassportUiCommand;
@@ -14,6 +15,7 @@ use N3XT0R\FilamentPassportUi\Testing\TestsFilamentPassportUi;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use N3XT0R\FilamentPassportUi\Database\Seeders\FilamentPassportUiDatabaseSeeder;
 
 class FilamentPassportUiServiceProvider extends PackageServiceProvider
 {
@@ -35,6 +37,19 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
+                    ->endWith(function (InstallCommand $command) {
+                        if (!$command->confirm(
+                            question: 'Do you want to seed default Passport scope resources and actions?',
+                            default: false
+                        )) {
+                            return;
+                        }
+
+                        $command->comment('Seeding default Passport scope resources and actions...');
+                        Artisan::call('db:seed', [
+                            '--class' => FilamentPassportUiDatabaseSeeder::class,
+                        ]);
+                    })
                     ->askToStarRepoOnGitHub('n3xt0r/filament-passport-ui');
             });
 
