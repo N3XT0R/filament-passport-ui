@@ -27,6 +27,6 @@ class PassportScopeResource extends Model
 
     public function actions(): HasMany
     {
-        return $this->hasMany(PassportScopeAction::class, 'passport_scope_resource_id');
+        return $this->hasMany(PassportScopeAction::class, 'resource_id');
     }
 }

@@ -14,7 +14,7 @@ return new class () extends Migration {
             /**
              * Limit the action to a specific resource (e.g., "users", "orders", "invoices").
              */
-            $table->foreignId('passport_scope_resource_id')->nullable()
+            $table->foreignId('resource_id')->nullable()
                 ->constrained('passport_scope_resources')
                 ->cascadeOnDelete();
             // technical action name (e.g. "read", "write", "export")

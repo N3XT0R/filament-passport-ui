@@ -17,7 +17,7 @@ class PassportScopeAction extends Model
     protected $fillable = [
         'name',
         'description',
-        'passport_scope_resource_id',
+        'resource_id',
         'is_active',
     ];
 
@@ -27,6 +27,6 @@ class PassportScopeAction extends Model
 
     public function resource(): BelongsTo
     {
-        return $this->belongsTo(PassportScopeResource::class, 'passport_scope_resource_id');
+        return $this->belongsTo(PassportScopeResource::class, 'resource_id');
     }
 }
