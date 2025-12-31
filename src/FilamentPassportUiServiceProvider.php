@@ -133,6 +133,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         return [
+            InstallCommand::class,
             FilamentPassportUiCommand::class,
         ];
     }
