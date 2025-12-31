@@ -8,5 +8,8 @@ use Illuminate\Database\Seeder;
 
 class PassportScopeResourceSeeder extends Seeder
 {
-
+    public function run(): void
+    {
+        //
+    }
 }
