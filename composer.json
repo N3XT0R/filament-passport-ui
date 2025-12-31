@@ -44,7 +44,8 @@
     "autoload": {
         "psr-4": {
             "N3XT0R\\FilamentPassportUi\\": "src/",
-            "N3XT0R\\FilamentPassportUi\\Database\\Factories\\": "database/factories/"
+            "N3XT0R\\FilamentPassportUi\\Database\\Factories\\": "database/factories/",
+            "N3XT0R\\FilamentPassportUi\\Database\\Seeders\\": "database/Seeders/"
         }
     },
     "autoload-dev": {
