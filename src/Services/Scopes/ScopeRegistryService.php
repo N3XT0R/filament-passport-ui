@@ -7,6 +7,7 @@ namespace N3XT0R\FilamentPassportUi\Services\Scopes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
+use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\ValueObjects\Scopes\ScopeName;
@@ -31,7 +32,7 @@ readonly class ScopeRegistryService
         $scopes = collect();
 
         foreach ($resources as $resource) {
-            foreach ($actions as $action) {
+            foreach ($this->actionsForResource($resource, $actions) as $action) {
                 $scopeName = ScopeName::from($resource, $action);
 
                 $scopes->put(
@@ -56,7 +57,7 @@ readonly class ScopeRegistryService
         $scopeNames = collect();
 
         foreach ($resources as $resource) {
-            foreach ($actions as $action) {
+            foreach ($this->actionsForResource($resource, $actions) as $action) {
                 $scopeName = ScopeName::from($resource, $action);
                 $scopeNames->push(
                     new ScopeDTO(
@@ -76,4 +77,13 @@ readonly class ScopeRegistryService
         return Schema::hasTable('passport_scope_resources')
             && Schema::hasTable('passport_scope_actions');
     }
+
+    private function actionsForResource(PassportScopeResource $resource, Collection $actions): Collection
+    {
+        return $actions->filter(
+            fn ($action) => $action->resource_id === null
+                || $action->resource_id === $resource->getKey()
+        );
+    }
+
 }
