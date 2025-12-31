@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Repositories\Scopes;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
 
@@ -36,5 +37,10 @@ class ResourceRepository implements ResourceRepositoryContract
         return PassportScopeResource::query()
             ->where('name', $name)
             ->first();
+    }
+
+    public function isMigrated(): bool
+    {
+        return Schema::hasTable('passport_scope_resources');
     }
 }

@@ -57,4 +57,9 @@ final class CachedResourceRepositoryDecorator extends BaseCachedRepositoryDecora
             3600
         );
     }
+
+    public function isMigrated(): bool
+    {
+        return $this->innerRepository->isMigrated();
+    }
 }

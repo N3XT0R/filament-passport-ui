@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Services\Scopes;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Schema;
 use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
@@ -76,8 +75,8 @@ readonly class ScopeRegistryService
 
     public function isMigrated(): bool
     {
-        return Schema::hasTable('passport_scope_resources')
-            && Schema::hasTable('passport_scope_actions');
+        return $this->resourceRepository->isMigrated()
+            && $this->actionRepository->isMigrated();
     }
 
     private function actionsForResource(PassportScopeResource $resource, Collection $actions): Collection

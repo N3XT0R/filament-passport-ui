@@ -6,8 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts;
 
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use N3XT0R\FilamentPassportUi\Repositories\Contracts\IsMigratedContract;
 
-interface ActionRepositoryContract
+interface ActionRepositoryContract extends IsMigratedContract
 {
     /**
      * Get all scope actions.

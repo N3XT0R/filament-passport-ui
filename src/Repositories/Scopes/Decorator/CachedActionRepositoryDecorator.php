@@ -57,4 +57,8 @@ class CachedActionRepositoryDecorator extends BaseCachedRepositoryDecorator impl
         );
     }
 
+    public function isMigrated(): bool
+    {
+        return $this->innerRepository->isMigrated();
+    }
 }
