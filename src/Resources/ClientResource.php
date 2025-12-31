@@ -115,11 +115,11 @@ class ClientResource extends Resource
                     ->dateTime(),
             ])
             ->recordActions([
-                EditAction::class,
-                DeleteAction::class,
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
-                DeleteBulkAction::class,
+                DeleteBulkAction::make(),
             ]);
     }
 
