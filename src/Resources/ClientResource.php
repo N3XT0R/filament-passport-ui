@@ -65,30 +65,38 @@ class ClientResource extends Resource
      */
     public static function form(Schema $schema): Schema
     {
+        $components = [
+            TextInput::make('name')
+                ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
+                ->unique('clients', 'name')
+                ->required()
+                ->maxLength(255),
+            Select::make('owner')
+                ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
+                ->options(function (): Collection {
+                    return app(GetAllOwnersRelationshipUseCase::class)->execute();
+                })
+                ->saveRelationshipsUsing(function (Client $record, array $data): void {
+                    app(SaveOwnershipRelationUseCase::class)
+                        ->execute(
+                            client: $record,
+                            ownerId: $data['owner'],
+                            actor: Filament::auth()->user()
+                        );
+                })
+                ->searchable()
+                ->required(),
+        ];
+
+        /**
+         * merge getResourceFormComponents if enabled
+         */
+        if (static::isResourceFormComponentsEnabled()) {
+            $components = array_merge($components, static::getResourceFormComponents());
+        }
+
         return $schema
-            ->components([
-                TextInput::make('name')
-                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                    ->unique('clients', 'name')
-                    ->required()
-                    ->maxLength(255),
-                Select::make('owner')
-                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
-                    ->options(function (): Collection {
-                        return app(GetAllOwnersRelationshipUseCase::class)->execute();
-                    })
-                    ->saveRelationshipsUsing(function (Client $record, array $data): void {
-                        app(SaveOwnershipRelationUseCase::class)
-                            ->execute(
-                                client: $record,
-                                ownerId: $data['owner'],
-                                actor: Filament::auth()->user()
-                            );
-                    })
-                    ->searchable()
-                    ->required(),
-                ...static::getResourceFormComponents(),
-            ]);
+            ->components($components);
     }
 
     /**
@@ -102,7 +110,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
