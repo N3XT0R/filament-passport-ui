@@ -11,7 +11,6 @@ use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryCont
 
 class CachedActionRepositoryDecorator implements ActionRepositoryContract
 {
-
     private const array CACHE_TAGS = [
         'passport',
         'passport.scopes',
@@ -28,7 +27,7 @@ class CachedActionRepositoryDecorator implements ActionRepositoryContract
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: 'passport.scopes.actions.all',
             ttl: $this->ttl(),
-            callback: fn() => $this->innerRepository->all(),
+            callback: fn () => $this->innerRepository->all(),
         );
     }
 
@@ -37,7 +36,7 @@ class CachedActionRepositoryDecorator implements ActionRepositoryContract
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: 'passport.scopes.actions.active',
             ttl: $this->ttl(),
-            callback: fn() => $this->innerRepository->active(),
+            callback: fn () => $this->innerRepository->active(),
         );
     }
 
@@ -46,7 +45,7 @@ class CachedActionRepositoryDecorator implements ActionRepositoryContract
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: "passport.scopes.actions.by-name.{$name}",
             ttl: $this->ttl(),
-            callback: fn() => $this->innerRepository->findByName($name),
+            callback: fn () => $this->innerRepository->findByName($name),
         );
     }
 

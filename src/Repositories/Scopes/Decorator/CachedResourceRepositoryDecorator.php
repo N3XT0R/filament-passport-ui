@@ -27,7 +27,7 @@ final class CachedResourceRepositoryDecorator implements ResourceRepositoryContr
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: 'passport.scopes.resources.all',
             ttl: $this->ttl(),
-            callback: fn() => $this->innerRepository->all(),
+            callback: fn () => $this->innerRepository->all(),
         );
     }
 
@@ -36,7 +36,7 @@ final class CachedResourceRepositoryDecorator implements ResourceRepositoryContr
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: 'passport.scopes.resources.active',
             ttl: $this->ttl(),
-            callback: fn() => $this->innerRepository->active(),
+            callback: fn () => $this->innerRepository->active(),
         );
     }
 
@@ -45,7 +45,7 @@ final class CachedResourceRepositoryDecorator implements ResourceRepositoryContr
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: "passport.scopes.resources.by-name.{$name}",
             ttl: $this->ttl(),
-            callback: fn() => $this->innerRepository->findByName($name),
+            callback: fn () => $this->innerRepository->findByName($name),
         );
     }
 
