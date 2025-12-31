@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Cache;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 
-class CachedActionRepositoryDecorator implements ActionRepositoryContract
+class CachedActionRepositoryDecorator extends BaseCachedRepositoryDecorator implements ActionRepositoryContract
 {
-    private const array CACHE_TAGS = [
+    protected const array CACHE_TAGS = [
         'passport',
         'passport.scopes',
         'passport.scopes.actions',
@@ -56,4 +56,5 @@ class CachedActionRepositoryDecorator implements ActionRepositoryContract
             3600
         );
     }
+
 }

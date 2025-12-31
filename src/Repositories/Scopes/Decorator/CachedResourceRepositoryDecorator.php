@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\Cache;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
 
-final class CachedResourceRepositoryDecorator implements ResourceRepositoryContract
+final class CachedResourceRepositoryDecorator extends BaseCachedRepositoryDecorator implements
+    ResourceRepositoryContract
 {
-    private const array CACHE_TAGS = [
+    protected const array CACHE_TAGS = [
         'passport',
         'passport.scopes',
         'passport.scopes.resources',
