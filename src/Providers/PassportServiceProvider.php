@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Providers;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\ClientRepository as BaseClientRepository;
 use Laravel\Passport\Passport;
@@ -46,36 +47,50 @@ class PassportServiceProvider extends ServiceProvider
 
     protected function registerRepositories(): void
     {
-        $this->app->bind(
+        $this->app->singleton(
             ActionRepositoryContract::class,
-            function (Application $app, array $params = []) {
-                $repository = $app->make(ActionRepository::class);
-
-                $useCache = $params['cache']
-                    ?? config('passport-ui.cache.enabled', false);
-
-                if ($useCache) {
-                    $repository = new CachedActionRepositoryDecorator($repository);
-                }
-
-                return $repository;
-            }
+            fn(Application $app, array $params = []) => $this->makeRepository(
+                app: $app,
+                params: $params,
+                repositoryClass: ActionRepository::class,
+                decoratorClass: CachedActionRepositoryDecorator::class,
+            )
         );
 
-        $this->app->bind(
+        $this->app->singleton(
             ResourceRepositoryContract::class,
-            function (Application $app, array $params = []) {
-                $repository = $app->make(ResourceRepository::class);
-
-                $useCache = $params['cache']
-                    ?? config('passport-ui.cache.enabled', false);
-
-                if ($useCache) {
-                    $repository = new CachedResourceRepositoryDecorator($repository);
-                }
-
-                return $repository;
-            }
+            fn(Application $app, array $params = []) => $this->makeRepository(
+                app: $app,
+                params: $params,
+                repositoryClass: ResourceRepository::class,
+                decoratorClass: CachedResourceRepositoryDecorator::class,
+            )
         );
+    }
+
+    /**
+     * Make a repository instance, optionally decorated with caching.
+     * @template TRepository
+     * @template TDecorator
+     *
+     * @param class-string<TRepository> $repositoryClass
+     * @param class-string<TDecorator> $decoratorClass
+     * @throws BindingResolutionException
+     */
+    private function makeRepository(
+        Application $app,
+        array $params,
+        string $repositoryClass,
+        string $decoratorClass,
+    ): object {
+        $repository = $app->make($repositoryClass);
+
+        $useCache = $params['cache'] ?? (bool)config('passport-ui.cache.enabled', false);
+
+        if (!$useCache) {
+            return $repository;
+        }
+
+        return new $decoratorClass($repository);
     }
 }
