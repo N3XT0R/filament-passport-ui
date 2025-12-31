@@ -11,7 +11,7 @@ use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryCo
 
 final class CachedResourceRepositoryDecorator implements ResourceRepositoryContract
 {
-    private const CACHE_TAGS = [
+    private const array CACHE_TAGS = [
         'passport',
         'passport.scopes',
         'passport.scopes.resources',
