@@ -20,6 +20,7 @@ trait HasResourceFormComponents
                             app(ScopeFormSectionBuilder::class)->buildSections()
                         ),
                 ])
+                ->columnSpanFull()
                 ->collapsible(),
         ];
     }
