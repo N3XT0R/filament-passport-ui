@@ -6,8 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Repositories\Scopes;
 
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
+use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
 
-class ResourceRepository
+class ResourceRepository implements ResourceRepositoryContract
 {
     public function all(): Collection
     {

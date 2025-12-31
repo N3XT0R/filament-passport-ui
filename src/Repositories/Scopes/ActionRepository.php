@@ -6,8 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Repositories\Scopes;
 
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 
-class ActionRepository
+class ActionRepository implements ActionRepositoryContract
 {
     /**
      * Get all scope actions.
