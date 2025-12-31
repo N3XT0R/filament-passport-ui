@@ -9,7 +9,10 @@ use Laravel\Passport\ClientRepository as BaseClientRepository;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
+use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedActionRepositoryDecorator;
+use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedResourceRepositoryDecorator;
+use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use Illuminate\Contracts\Container\Container as Application;
@@ -50,6 +53,21 @@ class PassportServiceProvider extends ServiceProvider
 
                 if (($params['cache'] ?? false) || true === (bool)config('passport-ui.cache.enabled', false)) {
                     $repository = new CachedActionRepositoryDecorator(
+                        innerRepository: $repository,
+                    );
+                }
+
+                return $repository;
+            }
+        );
+
+        $this->app->bind(
+            ResourceRepositoryContract::class,
+            function (Application $app, array $params = []) {
+                $repository = $app->make(ResourceRepository::class);
+
+                if (($params['cache'] ?? false) || true === (bool)config('passport-ui.cache.enabled', false)) {
+                    $repository = new CachedResourceRepositoryDecorator(
                         innerRepository: $repository,
                     );
                 }
