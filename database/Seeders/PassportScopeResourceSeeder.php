@@ -22,14 +22,19 @@ class PassportScopeResourceSeeder extends Seeder
         ];
 
         foreach ($resources as $resource) {
-            DB::table('passport_scope_resources')->updateOrInsert(
-                ['name' => $resource['name']],
-                [
-                    'description' => $resource['description'],
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ]
-            );
+            $this->createResource($resource['name'], $resource['description'], $now);
         }
+    }
+
+    protected function createResource(string $name, string $description, ?Carbon $date = null): void
+    {
+        DB::table('passport_scope_resources')->updateOrInsert(
+            ['name' => $name],
+            [
+                'description' => $description,
+                'updated_at' => $date,
+                'created_at' => $date,
+            ]
+        );
     }
 }
