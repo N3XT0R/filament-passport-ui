@@ -11,6 +11,7 @@ use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
+use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\BaseCachedRepositoryDecorator;
 use N3XT0R\FilamentPassportUi\ValueObjects\Scopes\ScopeName;
 
 readonly class ScopeRegistryService
@@ -83,16 +84,19 @@ readonly class ScopeRegistryService
     private function actionsForResource(PassportScopeResource $resource, Collection $actions): Collection
     {
         return $actions->filter(
-            fn ($action) => $action->resource_id === null
+            fn($action) => $action->resource_id === null
                 || $action->resource_id === $resource->getKey()
         );
     }
 
     public function clearCache(): void
     {
-        Cache::tags([
-            'passport',
-            'passport.scopes',
-        ])->flush();
+        if ($this->actionRepository instanceof BaseCachedRepositoryDecorator) {
+            $this->actionRepository->clearCache();
+        }
+
+        if ($this->resourceRepository instanceof BaseCachedRepositoryDecorator) {
+            $this->resourceRepository->clearCache();
+        }
     }
 }
