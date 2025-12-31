@@ -24,10 +24,10 @@ readonly class ScopeFormSectionBuilder
     {
         return $this->scopeRegistryService
             ->allScopeNames()
-            ->groupBy(fn (ScopeDTO $dto) => $dto->resource)
-            ->filter(fn (Collection $scopes) => $scopes->isNotEmpty())
+            ->groupBy(fn(ScopeDTO $dto) => $dto->resource)
+            ->filter(fn(Collection $scopes) => $scopes->isNotEmpty())
             ->map(
-                fn (Collection $scopes, string $resource) => $this->buildSection($resource, $scopes)
+                fn(Collection $scopes, string $resource) => $this->buildSection($resource, $scopes)
             )
             ->values()
             ->all();
@@ -40,15 +40,15 @@ readonly class ScopeFormSectionBuilder
                 CheckboxList::make('scopes')
                     ->options(
                         $scopes->mapWithKeys(
-                            fn (ScopeDTO $dto) => [
+                            fn(ScopeDTO $dto) => [
                                 $dto->scope => $dto->scope,
                             ]
                         )
                     )
                     ->descriptions(
                         $scopes->mapWithKeys(
-                            fn (ScopeDTO $dto) => [
-                                $dto->scope => $this->buildDescription($dto),
+                            fn(ScopeDTO $dto) => [
+                                $dto->scope => $dto->description,
                             ]
                         )->filter()
                     )
@@ -56,27 +56,6 @@ readonly class ScopeFormSectionBuilder
                     ->bulkToggleable(),
             ])
             ->collapsible();
-    }
-
-    protected function buildDescription(ScopeDTO $dto): ?string
-    {
-        if ($dto->description && $dto->isGlobal) {
-            return sprintf(
-                '%s (%s)',
-                $dto->description,
-                __('filament-passport-ui::passport-ui.resource.global_action')
-            );
-        }
-
-        if ($dto->isGlobal) {
-            return sprintf(
-                '%s (%s)',
-                __('filament-passport-ui::passport-ui.resource.global_action'),
-                __('filament-passport-ui::passport-ui.resource.global_action_description')
-            );
-        }
-
-        return $dto->description;
     }
 
 }

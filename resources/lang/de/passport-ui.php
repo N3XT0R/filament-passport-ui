@@ -10,6 +10,9 @@ return [
         'created_at' => 'Erstellt am',
         'scopes' => 'Berechtigungen',
     ],
+    'resource' => [
+        'global_action' => 'globale Aktion',
+    ],
     'client_resource' => [
         'model_label' => 'Client',
         'plural_model_label' => 'Clients',

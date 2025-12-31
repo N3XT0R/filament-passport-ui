@@ -12,7 +12,6 @@ return [
     ],
     'resource' => [
         'global_action' => 'global action',
-        'global_action_description' => 'applies to all resources',
     ],
     'client_resource' => [
         'model_label' => 'Client',
