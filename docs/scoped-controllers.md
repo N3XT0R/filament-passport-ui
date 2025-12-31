@@ -2,8 +2,8 @@
 
 ``` php 
 
-use N3xt0r\FilamentPassportUI\Attributes\RequiresAnyScope;
-use N3xt0r\FilamentPassportUI\Attributes\RequiresScope;
+use N3xt0r\PassportModernScopes\Attributes\RequiresAnyScope;
+use N3xt0r\PassportModernScopes\Attributes\RequiresScope;
 
 #[RequiresScope('users:read')]
 final class UserController
