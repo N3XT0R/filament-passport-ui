@@ -23,4 +23,15 @@ return [
             'icon' => Heroicon::OutlinedKey,
         ],
     ],
+    'cache' => [
+        /**
+         * Whether to cache the scopes.
+         */
+        'enabled' => true,
+
+        /**
+         * The cache ttl in seconds.
+         */
+        'ttl' => 3600,
+    ],
 ];
