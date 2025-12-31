@@ -79,6 +79,12 @@ readonly class ScopeRegistryService
             && $this->actionRepository->isMigrated();
     }
 
+    /**
+     * Filter actions for a given resource (either global or specific to the resource).
+     * @param PassportScopeResource $resource
+     * @param Collection $actions
+     * @return Collection
+     */
     private function actionsForResource(PassportScopeResource $resource, Collection $actions): Collection
     {
         return $actions->filter(
@@ -87,6 +93,10 @@ readonly class ScopeRegistryService
         );
     }
 
+    /**
+     * Clear the caches of the underlying repositories.
+     * @return void
+     */
     public function clearCache(): void
     {
         if ($this->actionRepository instanceof BaseCachedRepositoryDecorator) {
