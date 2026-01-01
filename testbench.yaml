@@ -23,6 +23,7 @@ workbench:
     components: true
     factories: true
     views: true
+    guard: web
   build:
     - asset-publish
     - create-sqlite-db
