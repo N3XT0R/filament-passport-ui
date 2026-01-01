@@ -83,3 +83,19 @@ composer require n3xt0r/filament-passport-ui
 ```bash
 php artisan filament-passport-ui:install
 `` 
+
+## Tests 
+```bash
+composer install
+composer test
+```
+
+### running local for Development
+
+```bash
+composer install
+./vendor/bin/testbench filament:install --panels
+composer serve
+```
+
+> Open http://localhost:8000/admin
