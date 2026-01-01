@@ -8,6 +8,9 @@ migrations:
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
   - N3XT0R\FilamentPassportUi\Database\Seeders
+dont-discover:
+  - laravel/sanctum
+
 
 workbench:
   start: '/'
