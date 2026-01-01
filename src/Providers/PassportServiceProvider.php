@@ -44,18 +44,13 @@ class PassportServiceProvider extends ServiceProvider
         }
 
         Passport::tokensCan($scopeRegistryService->all()->toArray());
-
-        $this->app['router']->pushMiddlewareToGroup(
-            'api',
-            ResolvePassportScopeAttributes::class
-        );
     }
 
     protected function registerRepositories(): void
     {
         $this->app->singleton(
             ActionRepositoryContract::class,
-            fn (Application $app, array $params = []) => $this->makeRepository(
+            fn(Application $app, array $params = []) => $this->makeRepository(
                 app: $app,
                 params: $params,
                 repositoryClass: ActionRepository::class,
@@ -65,7 +60,7 @@ class PassportServiceProvider extends ServiceProvider
 
         $this->app->singleton(
             ResourceRepositoryContract::class,
-            fn (Application $app, array $params = []) => $this->makeRepository(
+            fn(Application $app, array $params = []) => $this->makeRepository(
                 app: $app,
                 params: $params,
                 repositoryClass: ResourceRepository::class,
