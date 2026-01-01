@@ -1,6 +1,6 @@
 <?php
 
-namespace Workbench\App\Providers\Filament;
+namespace App\Providers\Filament;
 
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;

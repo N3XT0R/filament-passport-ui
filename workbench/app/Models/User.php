@@ -1,6 +1,6 @@
 <?php
 
-namespace Workbench\App\Models;
+namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +11,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements OAuthenticatable
 {
-    /** @use HasFactory<\Workbench\Database\Factories\UserFactory> */
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use Notifiable;
     use HasApiTokens;

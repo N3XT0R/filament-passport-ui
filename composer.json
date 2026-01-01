@@ -52,9 +52,9 @@
     "autoload-dev": {
         "psr-4": {
             "N3XT0R\\FilamentPassportUi\\Tests\\": "tests/",
-            "Workbench\\App\\": "workbench/app/",
-            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
-            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+            "App\\": "workbench/app/",
+            "Database\\Factories\\": "workbench/database/factories/",
+            "Database\\Seeders\\": "workbench/database/seeders/"
         }
     },
     "scripts": {
