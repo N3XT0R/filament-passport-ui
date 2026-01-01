@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests;
 
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Orchestra\Testbench\Attributes\WithMigration;
 
+#[WithMigration]
 class DatabaseTestCase extends TestCase
 {
     use LazilyRefreshDatabase;

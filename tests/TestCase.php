@@ -40,9 +40,9 @@ class TestCase extends Orchestra
         );
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
-        $providers = [
+        return [
             PassportServiceProvider::class,
             ActionsServiceProvider::class,
             BladeCaptureDirectiveServiceProvider::class,
@@ -59,9 +59,5 @@ class TestCase extends Orchestra
             WidgetsServiceProvider::class,
             FilamentPassportUiServiceProvider::class,
         ];
-
-        sort($providers);
-
-        return $providers;
     }
 }
