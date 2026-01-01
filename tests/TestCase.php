@@ -18,12 +18,10 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Passport\PassportServiceProvider;
 use Livewire\LivewireServiceProvider;
 use N3XT0R\FilamentPassportUi\FilamentPassportUiServiceProvider;
-use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
-#[WithMigration]
 class TestCase extends Orchestra
 {
     use LazilyRefreshDatabase;
