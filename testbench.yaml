@@ -10,6 +10,7 @@ migrations:
 
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
+  - database/Seeders
 
 workbench:
   start: '/'
