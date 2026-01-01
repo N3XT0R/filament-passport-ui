@@ -8,5 +8,4 @@ composer.lock
 coverage
 node_modules
 phpstan.neon
-testbench.yaml
 vendor

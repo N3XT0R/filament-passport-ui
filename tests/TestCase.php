@@ -34,9 +34,9 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            static fn (string $modelName) => 'N3XT0R\\FilamentPassportUi\\Database\\Factories\\' . class_basename(
-                $modelName
-            ) . 'Factory'
+            static fn(string $modelName) => 'N3XT0R\\FilamentPassportUi\\Database\\Factories\\' . class_basename(
+                    $modelName
+                ) . 'Factory'
         );
     }
 
@@ -63,15 +63,5 @@ class TestCase extends Orchestra
         sort($providers);
 
         return $providers;
-    }
-
-    public function getEnvironmentSetUp($app): void
-    {
-        $app['config']->set('database.default', 'testing');
-    }
-
-    protected function defineDatabaseMigrations(): void
-    {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 }
