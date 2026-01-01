@@ -75,7 +75,7 @@
         "serve": [
             "Composer\\Config::disableProcessTimeout",
             "@build",
-            "@php vendor/bin/testbench serve --host=0.0.0.0 --port=8000 --ansi"
+            "@php vendor/bin/testbench serve --ansi"
         ]
     },
     "extra": {
