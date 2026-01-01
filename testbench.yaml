@@ -6,7 +6,7 @@ providers:
 migrations:
   - workbench/database/migrations
   - vendor/laravel/passport/database/migrations
-  - database/migrtations
+  - database/migrations
 
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
