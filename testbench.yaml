@@ -16,6 +16,7 @@ workbench:
   start: '/admin/'
   install: true
   health: false
+  config: true
   discovers:
     web: true
     api: true
