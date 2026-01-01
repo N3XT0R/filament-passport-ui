@@ -10,7 +10,7 @@ migrations:
 
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
-  - database/Seeders
+  - N3XT0R\FilamentPassportUi\Database\Seeders
 
 workbench:
   start: '/'
@@ -28,6 +28,7 @@ workbench:
     - create-sqlite-db
     - db-wipe
     - migrate-fresh
+    -
   assets:
     - laravel-assets
   sync:
