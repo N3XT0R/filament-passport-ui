@@ -17,9 +17,4 @@ class DatabaseTestCase extends TestCase
     {
         $app['config']->set('database.default', 'testing');
     }
-
-    protected function defineDatabaseMigrations(): void
-    {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-    }
 }
