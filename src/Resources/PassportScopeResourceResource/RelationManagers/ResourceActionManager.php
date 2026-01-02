@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\RelationManagers;
 
 use Filament\Actions\CreateAction;
-use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -20,24 +19,11 @@ class ResourceActionManager extends RelationManager
 
     public function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                TextInput::make('name')
-                    ->label(
-                        __(
-                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.name'
-                        )
-                    )
-                    ->unique(
-                        'passport_scope_actions',
-                        'name',
-                        ignoreRecord: true,
-                        modifyRuleUsing: fn(Builder $query) => $query->whereNull('resource_id')
-                    )
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
-            ]);
+        $form = PassportScopeActionsResource::form($schema);
+        $form->getComponent('resource_id')?->default(
+            $this->ownerRecord->getKey()
+        )->disabled();
+        return $form;
     }
 
     public function table(Table $table): Table
