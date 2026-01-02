@@ -17,7 +17,6 @@ use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryCo
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedActionRepositoryDecorator;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedResourceRepositoryDecorator;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
-use N3XT0R\FilamentPassportUi\Resources\GrantTypesRepository;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use Illuminate\Contracts\Container\Container as Application;
@@ -92,13 +91,13 @@ class PassportServiceProvider extends ServiceProvider
             );
 
             $allowedTypes = array_map(
-                static fn (string $value): OAuthClientType => OAuthClientType::from($value),
+                static fn(string $value): OAuthClientType => OAuthClientType::from($value),
                 $allowedTypeValues
             );
 
             $strategies = collect($app->tagged('filament-passport-ui.oauth.strategies'))
                 ->filter(function (OAuthClientCreationStrategyInterface $strategy) use ($allowedTypes) {
-                    return array_any($allowedTypes, fn (OAuthClientType $type): bool => $strategy->supports($type));
+                    return array_any($allowedTypes, fn(OAuthClientType $type): bool => $strategy->supports($type));
                 })
                 ->values();
 
@@ -119,7 +118,7 @@ class PassportServiceProvider extends ServiceProvider
         $this->app->singleton(GrantTypesRepository::class);
         $this->app->singleton(
             ActionRepositoryContract::class,
-            fn (Application $app, array $params = []) => $this->makeRepository(
+            fn(Application $app, array $params = []) => $this->makeRepository(
                 app: $app,
                 params: $params,
                 repositoryClass: ActionRepository::class,
@@ -129,7 +128,7 @@ class PassportServiceProvider extends ServiceProvider
 
         $this->app->singleton(
             ResourceRepositoryContract::class,
-            fn (Application $app, array $params = []) => $this->makeRepository(
+            fn(Application $app, array $params = []) => $this->makeRepository(
                 app: $app,
                 params: $params,
                 repositoryClass: ResourceRepository::class,
