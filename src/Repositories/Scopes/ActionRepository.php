@@ -43,8 +43,21 @@ class ActionRepository implements ActionRepositoryContract
             ->first();
     }
 
+    /**
+     * Check if the scope actions table is migrated.
+     * @return bool
+     */
     public function isMigrated(): bool
     {
         return Schema::hasTable('passport_scope_actions');
+    }
+
+    /**
+     * Get the total count of scope actions.
+     * @return int
+     */
+    public function count(): int
+    {
+        return PassportScopeAction::query()->count();
     }
 }
