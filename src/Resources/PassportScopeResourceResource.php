@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Pages;
+use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\RelationManagers;
 
 class PassportScopeResourceResource extends BaseManagementResource
 {
@@ -64,6 +65,13 @@ class PassportScopeResourceResource extends BaseManagementResource
                 DeleteAction::make()
                     ->requiresConfirmation(),
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\ResourceActionManager::class,
+        ];
     }
 
 
