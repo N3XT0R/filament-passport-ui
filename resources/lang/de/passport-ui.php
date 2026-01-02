@@ -48,12 +48,15 @@ return [
             'name' => 'Aktion',
             'description' => 'Beschreibung',
             'is_active' => 'Aktiv',
-            'is_global' => 'Global',
+            'is_global' => ''
         ],
         'form' => [
             'name' => 'Action',
             'description' => 'Beschreibung',
             'is_active' => 'Aktiv',
+        ],
+        'header_action' => [
+            'create' => 'Resource Aktion erstellen',
         ],
     ],
 ];

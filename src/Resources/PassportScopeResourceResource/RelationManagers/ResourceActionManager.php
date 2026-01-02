@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\RelationManagers;
 
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -57,7 +58,12 @@ class ResourceActionManager extends RelationManager
                 //
             ])
             ->headerActions([
-                //
+                CreateAction::make()
+                    ->label(
+                        __(
+                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.header_action.create'
+                        )
+                    ),
             ])
             ->recordActions([
                 EditAction::make()

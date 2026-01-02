@@ -55,5 +55,8 @@ return [
             'description' => 'Description',
             'is_active' => 'Is Active',
         ],
+        'header_action' => [
+            'create' => 'Create Resource Action',
+        ],
     ],
 ];
