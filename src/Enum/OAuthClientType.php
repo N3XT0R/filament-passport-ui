@@ -15,4 +15,12 @@ enum OAuthClientType: string
     case IMPLICIT = 'implicit';
     case AUTHORIZATION_CODE = 'authorization_code';
     case DEVICE = 'device';
+
+    public static function casesValues(): array
+    {
+        return array_map(
+            static fn(self $case) => $case->value,
+            self::cases()
+        );
+    }
 }
