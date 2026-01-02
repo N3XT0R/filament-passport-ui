@@ -159,6 +159,7 @@ class PassportServiceProvider extends ServiceProvider
 
         if (
             !$useCache
+            || defined('TESTBENCH_CORE')
             || $this->app->runningUnitTests()
             || $this->app->environment('testing')
         ) {
