@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources;
 
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
@@ -32,6 +34,11 @@ class PassportScopeResourceResource extends BaseManagementResource
                     ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.column.description'))
                     ->sortable()
                     ->searchable(),
+            ])
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make()
+                    ->requiresConfirmation(),
             ]);
     }
 
