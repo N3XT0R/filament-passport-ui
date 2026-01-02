@@ -9,11 +9,12 @@ namespace N3XT0R\FilamentPassportUi\Enum;
  */
 enum OAuthClientType: string
 {
-    case PERSONAL_ACCESS = 'personal_access';
-    case PASSWORD = 'password';
-    case CLIENT_CREDENTIALS = 'client_credentials';
-    case IMPLICIT = 'implicit';
     case AUTHORIZATION_CODE = 'authorization_code';
+    case CLIENT_CREDENTIALS = 'client_credentials';
+    case PASSWORD = 'password';
+    case PERSONAL_ACCESS = 'personal_access';
+    case IMPLICIT = 'implicit';
+
     case DEVICE = 'device';
 
     /**
@@ -23,8 +24,13 @@ enum OAuthClientType: string
     public static function values(): array
     {
         return array_map(
-            static fn (self $case) => $case->value,
+            static fn(self $case) => $case->value,
             self::cases()
         );
+    }
+
+    public static function all(): array
+    {
+        return self::cases();
     }
 }

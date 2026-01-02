@@ -93,6 +93,7 @@ class ClientResource extends Resource
             Select::make('grant_type')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.grant_type'))
                 ->options(app(GetAllowedGrantTypeOptions::class)->execute())
+                ->preload()
                 ->required(),
         ];
 
@@ -118,7 +119,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))

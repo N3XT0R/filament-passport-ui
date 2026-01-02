@@ -53,8 +53,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
                     })
                     ->askToStarRepoOnGitHub('n3xt0r/filament-passport-ui');
             })
-            ->hasConfigFile()
-            ->hasConfigFile()
+            ->hasConfigFile('passport-ui')
             ->hasMigrations($this->getMigrations())
             ->hasTranslations()
             ->hasViews(static::$viewNamespace);

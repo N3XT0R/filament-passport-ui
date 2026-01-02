@@ -16,7 +16,9 @@ readonly class GetAllowedGrantTypeOptions
     public function execute(): Collection
     {
         $values = collect();
-        foreach ($this->configRepository->getAllowedGrantTypes() as $grantType) {
+        $grantTypes = $this->configRepository->getAllowedGrantTypes();
+
+        foreach ($grantTypes as $grantType) {
             $values->put(
                 $grantType->value,
                 ucfirst(str_replace('_', ' ', $grantType->value))

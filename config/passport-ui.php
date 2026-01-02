@@ -43,6 +43,13 @@ return [
      * OAuth client settings and ui options.
      */
     'oauth' => [
-        'allowed_grant_types' => \N3XT0R\FilamentPassportUi\Enum\OAuthClientType::values(),
+        'allowed_grant_types' => [
+            'authorization_code',
+            'client_credentials',
+            'password',
+            'personal_access',
+            'implicit',
+            'device',
+        ],
     ],
 ];

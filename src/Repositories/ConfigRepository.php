@@ -27,12 +27,18 @@ readonly class ConfigRepository
      */
     public function getAllowedGrantTypes(): array
     {
-        $allowed = $this->config->get(self::CONFIG_ROOT . 'oauth.allowed_grant_types', []);
-        foreach ($allowed as $value) {
-            $allowed[] = OAuthClientType::from($value);
+        $values = $this->config->get(
+            self::CONFIG_ROOT . 'oauth.allowed_grant_types',
+            []
+        );
+
+        $types = [];
+
+        foreach ($values as $value) {
+            $types[] = OAuthClientType::from($value);
         }
 
-        return $allowed;
+        return $types;
     }
 
     /**
