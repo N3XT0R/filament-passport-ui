@@ -157,7 +157,11 @@ class PassportServiceProvider extends ServiceProvider
 
         $useCache = $params['cache'] ?? (bool)config('passport-ui.cache.enabled', false);
 
-        if (!$useCache || $this->app->runningInConsole()) {
+        if (
+            !$useCache
+            || $this->app->runningUnitTests()
+            || $this->app->environment('testing')
+        ) {
             return $repository;
         }
 
