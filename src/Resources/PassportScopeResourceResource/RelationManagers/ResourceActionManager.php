@@ -55,6 +55,11 @@ class ResourceActionManager extends RelationManager
                             'is_active',
                             !$record->is_active
                         )->save(),
+                    )
+                    ->headerTooltip(
+                        __(
+                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.column.is_active_tooltip'
+                        )
                     ),
                 IconColumn::make('is_global')
                     ->label(
