@@ -36,7 +36,7 @@ readonly class ConfigRepository
     }
 
     /**
-     * Get the owner model class name
+     * Get the owner model class name for OAuth clients
      * @return string
      */
     public function getOwnerModel(): string
@@ -45,7 +45,7 @@ readonly class ConfigRepository
     }
 
     /**
-     * Get the attribute used as label for owners
+     * Get the attribute used as label for owner relationships for OAuth clients
      * @return string
      */
     public function getOwnerLabelAttribute(): string
@@ -74,7 +74,7 @@ readonly class ConfigRepository
     }
 
     /**
-     * Check if database scopes are used
+     * Check if database scopes are used for Passport
      * @return bool
      */
     public function isUsingDatabaseScopes(): bool
