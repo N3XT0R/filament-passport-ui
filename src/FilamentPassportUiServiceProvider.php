@@ -54,23 +54,11 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
                     ->askToStarRepoOnGitHub('n3xt0r/filament-passport-ui');
             });
 
-        $configFileName = $package->shortName();
-
-        if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
-            $package->hasConfigFile();
-        }
-
-        if (file_exists($package->basePath('/../database/migrations'))) {
-            $package->hasMigrations($this->getMigrations());
-        }
-
-        if (file_exists($package->basePath('/../resources/lang'))) {
-            $package->hasTranslations();
-        }
-
-        if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
-        }
+        $package->hasConfigFile()
+            ->hasConfigFile()
+            ->hasMigrations($this->getMigrations())
+            ->hasTranslations()
+            ->hasViews(static::$viewNamespace);
     }
 
     public function packageRegistered(): void
