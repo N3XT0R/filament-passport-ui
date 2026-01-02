@@ -48,7 +48,7 @@ return [
             'name' => 'Action',
             'description' => 'Description',
             'is_active' => 'Is Active',
-            'is_local' => 'Is Local',
+            'is_global' => 'Is Global',
         ],
         'form' => [
             'name' => 'Action',

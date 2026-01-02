@@ -49,13 +49,13 @@ class ResourceActionManager extends RelationManager
                         )
                     )
                     ->boolean(),
-                IconColumn::make('is_local')
+                IconColumn::make('is_global')
                     ->label(
                         __(
-                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.column.is_local'
+                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.column.is_global'
                         )
                     )
-                    ->getStateUsing(fn(PassportScopeAction $record) => $record->resource_id !== null)
+                    ->getStateUsing(fn(PassportScopeAction $record) => $record->resource_id === null)
                     ->boolean(),
             ])
             ->filters([
