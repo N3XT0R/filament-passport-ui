@@ -32,5 +32,9 @@ return [
             'name' => 'Name',
             'description' => 'Beschreibung',
         ],
+        'form' => [
+            'name' => 'Name',
+            'description' => 'Beschreibung',
+        ],
     ],
 ];
