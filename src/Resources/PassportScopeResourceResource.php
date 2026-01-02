@@ -7,6 +7,7 @@ namespace N3XT0R\FilamentPassportUi\Resources;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
@@ -30,11 +31,13 @@ class PassportScopeResourceResource extends BaseManagementResource
                 ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.form.name'))
                 ->unique('passport_scope_resources', 'name')
                 ->required()
-                ->maxLength(255),
-            TextInput::make('description')
+                ->maxLength(255)
+                ->columnSpanFull(),
+            Textarea::make('description')
                 ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.form.description'))
                 ->required()
-                ->maxLength(255),
+                ->maxLength(255)
+                ->columnSpanFull(),
             Checkbox::make('is_active')
                 ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.form.is_active'))
                 ->default(true),
