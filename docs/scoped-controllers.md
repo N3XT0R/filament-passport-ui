@@ -1,4 +1,9 @@
-# Example
+# Scoped Controllers
+
+This Package includes the `n3xt0r/passport-modern-scopes` package, which provides attributes to enforce scope
+requirements on controller methods.
+
+Here is an Example Implementation of its Usage:
 
 ``` php 
 
@@ -21,4 +26,5 @@ final class UserController
 }
 ```
 
-
+For more information, visit
+the [n3xt0r/passport-modern-scopes](https://github.com/N3XT0R/laravel-passport-modern-scopes).
