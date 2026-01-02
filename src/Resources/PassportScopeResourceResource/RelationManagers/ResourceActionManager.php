@@ -31,6 +31,9 @@ class ResourceActionManager extends RelationManager
     public function table(Table $table): Table
     {
         $table = PassportScopeActionsResource::table($table);
+        $table->getAction('edit')?->visible(fn(
+            PassportScopeAction $record
+        ): bool => $record->resource_id !== null);
         $table->getAction('delete')?->visible(fn(
             PassportScopeAction $record
         ): bool => $record->resource_id !== null);
