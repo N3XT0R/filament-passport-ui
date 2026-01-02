@@ -18,7 +18,10 @@ readonly class GetAllowedGrantTypeOptions
     {
         $values = collect();
         foreach ($this->grantTypesRepository->active() as $grantType) {
-            $values->put($grantType->value, ucfirst(str_replace('_', ' ', $grantType->value)));
+            $values->put(
+                $grantType->value,
+                ucfirst(str_replace('_', ' ', $grantType->value))
+            );
         }
         return $values;
     }
