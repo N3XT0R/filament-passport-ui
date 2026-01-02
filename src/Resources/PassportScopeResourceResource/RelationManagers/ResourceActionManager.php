@@ -9,6 +9,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionsResource;
 
 class ResourceActionManager extends RelationManager
@@ -20,6 +21,7 @@ class ResourceActionManager extends RelationManager
     public function form(Schema $schema): Schema
     {
         $form = PassportScopeActionsResource::form($schema);
+
         $form->getComponent('resource_id')?->default(
             $this->ownerRecord->getKey()
         )->disabled();
@@ -29,6 +31,10 @@ class ResourceActionManager extends RelationManager
     public function table(Table $table): Table
     {
         $table = PassportScopeActionsResource::table($table);
+        $table->getAction('delete')?->visible(fn(
+            PassportScopeAction $record
+        ): bool => $record->resource_id !== null);
+
         return $table
             ->modifyQueryUsing(fn(Builder $query) => $query->orWhere('resource_id', null))
             ->headerActions([

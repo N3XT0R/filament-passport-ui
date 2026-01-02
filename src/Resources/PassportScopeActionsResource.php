@@ -110,7 +110,8 @@ class PassportScopeActionsResource extends BaseManagementResource
             ])
             ->recordActions([
                 EditAction::make(),
-                DeleteAction::make(),
+                DeleteAction::make('delete')
+                    ->requiresConfirmation(),
             ]);
     }
 
