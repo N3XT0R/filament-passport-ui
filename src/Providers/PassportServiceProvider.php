@@ -12,6 +12,7 @@ use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactory;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
+use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedActionRepositoryDecorator;
@@ -115,7 +116,7 @@ class PassportServiceProvider extends ServiceProvider
 
     protected function registerRepositories(): void
     {
-        $this->app->singleton(GrantTypesRepository::class);
+        $this->app->bind(ConfigRepository::class);
         $this->app->singleton(
             ActionRepositoryContract::class,
             fn(Application $app, array $params = []) => $this->makeRepository(
