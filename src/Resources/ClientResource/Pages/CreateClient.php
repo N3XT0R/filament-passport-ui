@@ -14,6 +14,7 @@ class CreateClient extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+        dd($data);
         return [];
     }
 
