@@ -14,9 +14,9 @@ readonly class GrantTypesRepository
      */
     public function active(): array
     {
-        $allowed = config('filament-passport-ui.oauth.allowed_grant_types', []);
-        foreach ($allowed as $key => $value) {
-            $allowed[$key] = OAuthClientType::from($value);
+        $allowed = config('passport-ui.oauth.allowed_grant_types', []);
+        foreach ($allowed as $value) {
+            $allowed[] = OAuthClientType::from($value);
         }
         return $allowed;
     }
