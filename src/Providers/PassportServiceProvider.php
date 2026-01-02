@@ -20,7 +20,7 @@ use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use Illuminate\Contracts\Container\Container as Application;
-use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\{
+use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\{OAuthClientCreationStrategyInterface,
     PersonalAccessClientStrategy,
     PasswordGrantClientStrategy,
     ClientCredentialsClientStrategy,
@@ -96,8 +96,8 @@ class PassportServiceProvider extends ServiceProvider
             );
 
             $strategies = collect($app->tagged('filament-passport-ui.oauth.strategies'))
-                ->filter(function ($strategy) use ($allowedTypes) {
-                    return array_any($allowedTypes, fn($type) => $strategy->supports($type));
+                ->filter(function (OAuthClientCreationStrategyInterface $strategy) use ($allowedTypes) {
+                    return array_any($allowedTypes, fn($type): bool => $strategy->supports($type));
                 })
                 ->values();
 
