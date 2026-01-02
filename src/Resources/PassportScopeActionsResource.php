@@ -7,8 +7,10 @@ namespace N3XT0R\FilamentPassportUi\Resources;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -28,18 +30,34 @@ class PassportScopeActionsResource extends BaseManagementResource
     {
         return $schema
             ->components([
-                TextInput::make('name')
-                    ->label(
-                        __(
-                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.name'
-                        )
-                    )
-                    ->unique(
-                        'passport_scope_actions',
-                        'name',
-                    )
-                    ->required()
-                    ->maxLength(255)
+                Grid::make()
+                    ->schema([
+                        TextInput::make('name')
+                            ->label(
+                                __(
+                                    'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.name'
+                                )
+                            )
+                            ->unique(
+                                'passport_scope_actions',
+                                'name',
+                            )
+                            ->required()
+                            ->maxLength(255),
+                        Select::make('resource_id')
+                            ->label(
+                                __(
+                                    'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.resource_id'
+                                )
+                            )
+                            ->relationship('resource', 'name')
+                            ->nullable()
+                            ->helperText(
+                                __(
+                                    'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.resource_id_helper_text'
+                                )
+                            ),
+                    ])
                     ->columnSpanFull(),
                 Textarea::make('description')
                     ->label(

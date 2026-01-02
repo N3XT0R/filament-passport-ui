@@ -54,6 +54,8 @@ return [
             'name' => 'Aktion',
             'description' => 'Beschreibung',
             'is_active' => 'Aktiv',
+            'resource_id' => 'Resource',
+            'resource_id_helper_text' => 'Wählen Sie die Ressource, zu der diese Aktion gehört. Leer lassen, um sie zu einer globalen Aktion zu machen.',
         ],
         'header_action' => [
             'create' => 'Resource Aktion erstellen',
