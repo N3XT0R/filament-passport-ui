@@ -28,7 +28,7 @@ trait HasPassportScopeGrantsTrait
     }
 
     /**
-     * Determine if the token has a given scope.
+     * Determine if the token has a given scope with additional scope grants check.
      * @param string $scope
      * @return bool
      */
