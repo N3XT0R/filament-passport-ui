@@ -6,11 +6,11 @@ namespace N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource;
+use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionsResource;
 
 class ListActions extends ListRecords
 {
-    protected static string $resource = PassportScopeActionResource::class;
+    protected static string $resource = PassportScopeActionsResource::class;
 
     public function getHeaderActions(): array
     {
