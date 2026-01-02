@@ -10,7 +10,6 @@ use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 
 readonly class GetAllOwnersRelationshipUseCase extends GetAllOwnersUseCase
 {
-
     public function __construct(private ConfigRepository $configRepository)
     {
     }

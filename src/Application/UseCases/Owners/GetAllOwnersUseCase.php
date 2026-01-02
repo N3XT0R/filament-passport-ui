@@ -9,7 +9,6 @@ use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
 
 readonly class GetAllOwnersUseCase
 {
-
     /**
      * Get All Owners
      * @return Collection

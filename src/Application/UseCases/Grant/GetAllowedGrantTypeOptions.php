@@ -9,7 +9,6 @@ use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 
 readonly class GetAllowedGrantTypeOptions
 {
-
     public function __construct(private ConfigRepository $configRepository)
     {
     }
