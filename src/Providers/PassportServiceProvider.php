@@ -101,6 +101,12 @@ class PassportServiceProvider extends ServiceProvider
                 })
                 ->values();
 
+            if ($strategies->isEmpty()) {
+                throw new \RuntimeException(
+                    'No OAuth client strategies enabled. Check filament-passport-ui.oauth.allowed_grant_types.'
+                );
+            }
+
             return new OAuthClientFactory(
                 strategies: $strategies
             );
