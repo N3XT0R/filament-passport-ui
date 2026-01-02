@@ -7,6 +7,8 @@ use Filament\Panel;
 
 class FilamentPassportUiPlugin implements FilamentPlugin
 {
+
+
     public function getId(): string
     {
         return 'filament-passport-ui';
@@ -14,9 +16,22 @@ class FilamentPassportUiPlugin implements FilamentPlugin
 
     public function register(Panel $panel): void
     {
-        $panel->resources([
+        $this->registerResources($panel);
+    }
+
+    protected function registerResources(Panel $panel): void
+    {
+        $resources = [
             Resources\ClientResource::class,
-        ]);
+        ];
+
+        if (config('filament-passport-ui.enable_scopes_management', true)) {
+            $resources[] = Resources\PassportScopeResourceResource::class;
+            $resources[] = Resources\PassportScopeActionsResource::class;
+        }
+
+
+        $panel->resources($resources);
     }
 
     public function boot(Panel $panel): void

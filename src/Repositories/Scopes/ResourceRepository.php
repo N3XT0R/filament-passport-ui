@@ -28,6 +28,15 @@ class ResourceRepository implements ResourceRepositoryContract
     }
 
     /**
+     * Count all scope resources.
+     * @return int
+     */
+    public function count(): int
+    {
+        return PassportScopeResource::query()->count();
+    }
+
+    /**
      * Find a scope resource by its name.
      * @param string $name
      * @return PassportScopeResource|null

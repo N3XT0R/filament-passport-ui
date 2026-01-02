@@ -9,16 +9,12 @@ use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
 
 readonly class GetAllOwnersUseCase
 {
-    public function __construct(private OwnerRepository $ownerRepository)
-    {
-    }
-
     /**
      * Get All Owners
      * @return Collection
      */
     public function execute(): Collection
     {
-        return $this->ownerRepository->all();
+        return app(OwnerRepository::class)->all();
     }
 }

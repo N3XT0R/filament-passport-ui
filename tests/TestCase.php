@@ -18,12 +18,10 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Passport\PassportServiceProvider;
 use Livewire\LivewireServiceProvider;
 use N3XT0R\FilamentPassportUi\FilamentPassportUiServiceProvider;
-use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
-#[WithMigration]
 class TestCase extends Orchestra
 {
     use LazilyRefreshDatabase;
@@ -40,9 +38,9 @@ class TestCase extends Orchestra
         );
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
-        $providers = [
+        return [
             PassportServiceProvider::class,
             ActionsServiceProvider::class,
             BladeCaptureDirectiveServiceProvider::class,
@@ -59,19 +57,5 @@ class TestCase extends Orchestra
             WidgetsServiceProvider::class,
             FilamentPassportUiServiceProvider::class,
         ];
-
-        sort($providers);
-
-        return $providers;
-    }
-
-    public function getEnvironmentSetUp($app): void
-    {
-        $app['config']->set('database.default', 'testing');
-    }
-
-    protected function defineDatabaseMigrations(): void
-    {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 }

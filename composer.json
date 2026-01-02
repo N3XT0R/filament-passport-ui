@@ -26,6 +26,7 @@
         "php": "^8.4",
         "filament/filament": "^4.0",
         "laravel/passport": "^13.0",
+        "n3xt0r/laravel-passport-modern-scopes": "^2.0",
         "spatie/laravel-activitylog": "^4.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
@@ -50,23 +51,37 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "N3XT0R\\FilamentPassportUi\\Tests\\": "tests/"
+            "N3XT0R\\FilamentPassportUi\\Tests\\": "tests/",
+            "App\\": "workbench/app/",
+            "Database\\Factories\\": "workbench/database/factories/",
+            "Database\\Seeders\\": "workbench/database/seeders/"
         }
     },
     "scripts": {
-        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare",
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ],
         "analyse": "phpstan analyse",
         "lint": "pint",
         "refactor": "rector",
         "test": "vendor/bin/phpunit --no-coverage",
         "test:lint": "pint --test",
-        "test:refactor": "rector --dry-run"
+        "test:refactor": "rector --dry-run",
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --host=0.0.0.0 --port=8000 --ansi"
+        ]
     },
     "extra": {
         "laravel": {
             "providers": [
-                "N3XT0R\\FilamentPassportUi\\FilamentPassportUiServiceProvider",
-                "N3XT0R\\FilamentPassportUi\\Providers\\PassportServiceProvider"
+                "N3XT0R\\FilamentPassportUi\\FilamentPassportUiServiceProvider"
             ],
             "aliases": {
                 "FilamentPassportUi": "N3XT0R\\FilamentPassportUi\\Facades\\FilamentPassportUi"

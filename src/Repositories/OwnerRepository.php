@@ -14,8 +14,7 @@ class OwnerRepository
     private function getBaseQuery(): Builder
     {
         /** @var class-string<Model&OAuthenticatable> $modelClass */
-        $modelClass = config('filament-passport-ui.owner_model', 'App\\Models\\User');
-
+        $modelClass = app(ConfigRepository::class)->getOwnerModel();
         return $modelClass::query();
     }
 

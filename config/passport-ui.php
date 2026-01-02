@@ -6,7 +6,7 @@ return [
     /**
      * Model used as the owner of the OAuth2 clients.
      */
-    'owner_model' => 'App\\Models\\User',
+    'owner_model' => '\\App\\Models\\User',
     'owner_label_attribute' => 'name',
 
     /**
@@ -23,6 +23,10 @@ return [
             'icon' => Heroicon::OutlinedKey,
         ],
     ],
+
+    /**
+     * Cache settings.
+     */
     'cache' => [
         /**
          * Whether to cache the scopes.
@@ -33,5 +37,19 @@ return [
          * The cache ttl in seconds.
          */
         'ttl' => 3600,
+    ],
+
+    /**
+     * OAuth client settings and ui options.
+     */
+    'oauth' => [
+        'allowed_grant_types' => [
+            'authorization_code',
+            'client_credentials',
+            'password',
+            'personal_access',
+            'implicit',
+            'device',
+        ],
     ],
 ];

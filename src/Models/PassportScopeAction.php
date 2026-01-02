@@ -27,6 +27,6 @@ class PassportScopeAction extends Model
 
     public function resource(): BelongsTo
     {
-        return $this->belongsTo(PassportScopeResource::class, 'resource_id');
+        return $this->belongsTo(PassportScopeResource::class, 'id');
     }
 }

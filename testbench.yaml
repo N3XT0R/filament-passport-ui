@@ -1,0 +1,37 @@
+laravel: '@testbench'
+
+migrations:
+  - workbench/database/migrations
+  - vendor/laravel/passport/database/migrations
+  - database/migrations
+
+seeders:
+  - Workbench\Database\Seeders\DatabaseSeeder
+  - N3XT0R\FilamentPassportUi\Database\Seeders
+dont-discover:
+  - laravel/sanctum
+
+
+workbench:
+  start: '/admin/'
+  install: true
+  health: false
+  discovers:
+    web: true
+    api: true
+    commands: true
+    components: true
+    factories: true
+    views: true
+    guard: web
+  build:
+    - asset-publish
+    - create-sqlite-db
+    - db-wipe
+    - migrate-refresh
+  assets:
+    - laravel-assets
+  sync:
+    - from: storage
+      to: workbench/storage
+      reverse: true

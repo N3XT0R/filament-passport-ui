@@ -4,5 +4,10 @@
         "concat_space": {
             "spacing": "one"
         }
-    }
+    },
+    "exclude": [
+        "vendor/",
+        "workbench/",
+        "database/"
+    ]
 }

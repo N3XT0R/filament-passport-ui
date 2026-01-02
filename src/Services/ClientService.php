@@ -7,7 +7,10 @@ namespace N3XT0R\FilamentPassportUi\Services;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Client;
 use Laravel\Passport\Contracts\OAuthenticatable;
+use N3XT0R\FilamentPassportUi\DTO\Client\CreateOAuthClientData;
+use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Exceptions\Domain\ClientAlreadyExists;
+use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use Throwable;
 
@@ -18,24 +21,25 @@ readonly class ClientService
     }
 
     /**
-     * Create a personal access client for the given user with the specified name.
-     * @param OAuthenticatable $user The user to associate the client with
-     * @param string $name Name of the personal access client
-     * @param string|null $provider Optional user provider
+     * Create a new OAuth client for the given user
+     * @param OAuthClientType $type
+     * @param CreateOAuthClientData $data
+     * @param OAuthenticatable|null $user
      * @return Client
-     * @throws ClientAlreadyExists|Throwable
+     * @throws Throwable
      */
-    public function createPersonalAccessClientForUser(
-        OAuthenticatable $user,
-        string $name,
-        ?string $provider = null
+    public function createClientForUser(
+        OAuthClientType $type,
+        CreateOAuthClientData $data,
+        ?OAuthenticatable $user,
     ): Client {
-        if ($this->clientRepository->findByName($name)) {
-            throw new ClientAlreadyExists($name);
+        if ($this->clientRepository->findByName($data->name)) {
+            throw new ClientAlreadyExists($data->name);
         }
 
+        $factory = app(OAuthClientFactoryInterface::class);
+        $client = $factory($type, $data, $user);
 
-        $client = $this->clientRepository->createPersonalAccessGrantClient($name, $provider);
         $client->owner()->associate($user);
         $client->saveOrFail();
 
@@ -45,6 +49,7 @@ readonly class ClientService
             ->withProperties([
                 'name' => $client->getAttribute('name'),
                 'grant_types' => $client->getAttribute('grant_types'),
+                'type' => $type->value,
             ])
             ->log('OAuth client created');
 
