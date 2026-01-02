@@ -31,13 +31,17 @@ class ResourceActionManager extends RelationManager
                         __(
                             'filament-passport-ui::passport-ui.passport_scope_actions_resource.column.name'
                         )
-                    ),
+                    )
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('description')
                     ->label(
                         __(
                             'filament-passport-ui::passport-ui.passport_scope_actions_resource.column.description'
                         )
-                    ),
+                    )
+                    ->sortable()
+                    ->searchable(),
                 IconColumn::make('is_active')
                     ->label(
                         __(
