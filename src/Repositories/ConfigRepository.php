@@ -14,7 +14,7 @@ use Illuminate\Contracts\Config\Repository;
  */
 readonly class ConfigRepository
 {
-    private const string CONFIG_ROOT = 'passport-ui.oauth.';
+    private const string CONFIG_ROOT = 'passport-ui.';
 
 
     public function __construct(private Repository $config)
@@ -27,7 +27,7 @@ readonly class ConfigRepository
      */
     public function getAllowedGrantTypes(): array
     {
-        $allowed = $this->config->get(self::CONFIG_ROOT . 'allowed_grant_types', []);
+        $allowed = $this->config->get(self::CONFIG_ROOT . 'oauth.allowed_grant_types', []);
         foreach ($allowed as $value) {
             $allowed[] = OAuthClientType::from($value);
         }
@@ -41,7 +41,7 @@ readonly class ConfigRepository
      */
     public function getOwnerModel(): string
     {
-        return (string)$this->config->get('passport-ui.owner_model', '\\App\\Models\\User');
+        return (string)$this->config->get(self::CONFIG_ROOT . 'owner_model', '\\App\\Models\\User');
     }
 
     /**
@@ -50,7 +50,7 @@ readonly class ConfigRepository
      */
     public function getOwnerLabelAttribute(): string
     {
-        return (string)$this->config->get('passport-ui.owner_label_attribute', 'name');
+        return (string)$this->config->get(self::CONFIG_ROOT . 'owner_label_attribute', 'name');
     }
 
     /**
@@ -60,7 +60,7 @@ readonly class ConfigRepository
      */
     public function getNavigationGroup(string $default = 'OAuth Management'): string
     {
-        return (string)$this->config->get('passport-ui.navigation.group', $default);
+        return (string)$this->config->get(self::CONFIG_ROOT . 'navigation.group', $default);
     }
 
     /**
@@ -70,7 +70,7 @@ readonly class ConfigRepository
      */
     public function getNavigationIcon(string|ScalableIcon $icon = Heroicon::OutlinedKey): string|ScalableIcon
     {
-        return $this->config->get('passport-ui.navigation.icon', $icon);
+        return $this->config->get(self::CONFIG_ROOT . 'navigation.icon', $icon);
     }
 
     /**
@@ -79,7 +79,7 @@ readonly class ConfigRepository
      */
     public function isUsingDatabaseScopes(): bool
     {
-        return (bool)$this->config->get('passport-ui.use_database_scopes', false);
+        return (bool)$this->config->get(self::CONFIG_ROOT . 'use_database_scopes', false);
     }
 
 }
