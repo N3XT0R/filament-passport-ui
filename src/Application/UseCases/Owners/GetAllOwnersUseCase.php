@@ -15,6 +15,6 @@ readonly class GetAllOwnersUseCase
      */
     public function execute(): Collection
     {
-        return app(OwnerRepository::class)->$this->ownerRepository->all();
+        return app(OwnerRepository::class)->all();
     }
 }
