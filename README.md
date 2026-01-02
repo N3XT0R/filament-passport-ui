@@ -91,13 +91,14 @@ and update the model classes accordingly.
 
 #### Using Database-Backed Scopes
 
-To manage scopes via the Filament UI, you need to implement `HasPassportScopeGrantsInterface` on your User model:
+To manage scopes via the Filament UI, you need to implement `HasPassportScopeGrantsInterface` instead `HasApiTokens` on
+your User
+model:
 
 ```php
 use N3XT0R\FilamentPassportUI\Contracts\HasPassportScopeGrantsInterface;
 use N3XT0R\FilamentPassportUI\Traits\HasPassportScopeGrantsTrait;
 use Laravel\Passport\Contracts\OAuthenticatable;
-use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements OAuthenticatable, HasPassportScopeGrantsInterface
 {;
