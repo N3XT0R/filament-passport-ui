@@ -23,8 +23,15 @@ abstract class BaseManagementResource extends Resource
 
     public static function getNavigationIcon(): string|BackedEnum|Htmlable|null
     {
-        $item = Str::afterLast(static::class, '\\');
+        $item = Str::snake(Str::afterLast(static::class, '\\'));
         return app(ConfigRepository::class)
             ->getNavigationIcon($item, static::$navigationIcon);
     }
+
+    public static function getLabel(): ?string
+    {
+        $item = Str::snake(Str::afterLast(static::class, '\\'));
+        return __("filament-passport-ui::passport-ui.{$item}.label");
+    }
+
 }

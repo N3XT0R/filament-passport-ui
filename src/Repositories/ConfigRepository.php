@@ -72,13 +72,13 @@ readonly class ConfigRepository
     /**
      * Get the navigation icon for a given resource
      * @param string $resource
-     * @param string|ScalableIcon $icon
-     * @return string|ScalableIcon
+     * @param string|ScalableIcon|null $icon
+     * @return string|ScalableIcon|null
      */
     public function getNavigationIcon(
         string $resource,
-        string|ScalableIcon $icon = Heroicon::OutlinedKey
-    ): string|ScalableIcon {
+        string|ScalableIcon|null $icon = Heroicon::OutlinedKey
+    ): string|ScalableIcon|null {
         return $this->config->get(self::CONFIG_ROOT . 'navigation.' . $resource . '.icon', $icon);
     }
 
