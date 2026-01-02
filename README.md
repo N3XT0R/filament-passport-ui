@@ -8,6 +8,9 @@
 
 ---
 
+> ⚠️ **Attention:** This package is still under development and not considered stable yet.  
+> Breaking changes may occur without prior notice.
+
 ![Filament Passport UI Logo](art/logo.png)
 
 Filament admin UI for managing **Laravel Passport** OAuth clients, tokens, and scopes.
