@@ -11,6 +11,7 @@ use Laravel\Passport\Client;
 use Livewire\Features\SupportTesting\Testable;
 use N3XT0R\FilamentPassportUi\Commands\FilamentPassportUiCommand;
 use N3XT0R\FilamentPassportUi\Observers\ClientObserver;
+use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Testing\TestsFilamentPassportUi;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -74,6 +75,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
+        $this->app->bind(ConfigRepository::class);
     }
 
     public function packageBooted(): void
