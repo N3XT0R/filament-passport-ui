@@ -39,4 +39,20 @@ return [
             'is_active' => 'Is Active',
         ],
     ],
+    'passport_scope_actions_resource' => [
+        'label' => 'Resource Actions',
+        'model_label' => 'Resource Action',
+        'plural_model_label' => 'Resource Actions',
+        'column' => [
+            'id' => 'ID',
+            'name' => 'Action',
+            'description' => 'Description',
+            'is_active' => 'Is Active',
+        ],
+        'form' => [
+            'name' => 'Action',
+            'description' => 'Description',
+            'is_active' => 'Is Active',
+        ],
+    ],
 ];
