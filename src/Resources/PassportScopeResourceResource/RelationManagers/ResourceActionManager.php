@@ -48,7 +48,14 @@ class ResourceActionManager extends RelationManager
                             'filament-passport-ui::passport-ui.passport_scope_actions_resource.column.is_active'
                         )
                     )
-                    ->boolean(),
+                    ->boolean()
+                    ->sortable()
+                    ->action(
+                        fn(PassportScopeAction $record) => $record->setAttribute(
+                            'is_active',
+                            !$record->is_active
+                        )->save(),
+                    ),
                 IconColumn::make('is_global')
                     ->label(
                         __(
