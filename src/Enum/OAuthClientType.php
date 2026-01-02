@@ -16,7 +16,11 @@ enum OAuthClientType: string
     case AUTHORIZATION_CODE = 'authorization_code';
     case DEVICE = 'device';
 
-    public static function casesValues(): array
+    /**
+     * Get all enum values
+     * @return array
+     */
+    public static function values(): array
     {
         return array_map(
             static fn(self $case) => $case->value,

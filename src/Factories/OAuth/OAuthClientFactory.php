@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Factories\OAuth;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Exceptions\UnsupportedOAuthClientTypeException;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\OAuthClientCreationStrategyInterface;
-use Laravel\Passport\Client;
-use RuntimeException;
-use Illuminate\Contracts\Auth\Authenticatable;
 
-readonly class OAuthClientFactory
+readonly class OAuthClientFactory implements OAuthClientFactoryInterface
 {
     /** @param iterable<OAuthClientCreationStrategyInterface> $strategies */
     public function __construct(

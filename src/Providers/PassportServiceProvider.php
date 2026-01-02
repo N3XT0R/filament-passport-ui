@@ -8,6 +8,9 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\ClientRepository as BaseClientRepository;
 use Laravel\Passport\Passport;
+use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactory;
+use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
@@ -17,13 +20,22 @@ use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use Illuminate\Contracts\Container\Container as Application;
+use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\{
+    PersonalAccessClientStrategy,
+    PasswordGrantClientStrategy,
+    ClientCredentialsClientStrategy,
+    ImplicitGrantClientStrategy,
+    AuthorizationCodeClientStrategy,
+    DeviceGrantClientStrategy
+};
 
 class PassportServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
         $this->app->singleton(BaseClientRepository::class, ClientRepository::class);
-        $this->registerFactories();
+        $this->registerOAuthFactory();
+        $this->registerOAuthStrategies();
         $this->registerRepositories();
     }
 
@@ -46,8 +58,48 @@ class PassportServiceProvider extends ServiceProvider
         Passport::tokensCan($scopeRegistryService->all()->toArray());
     }
 
-    protected function registerFactories(): void
+    protected function registerOAuthStrategies(): void
     {
+        $this->app->tag([
+            PersonalAccessClientStrategy::class,
+            PasswordGrantClientStrategy::class,
+            ClientCredentialsClientStrategy::class,
+            ImplicitGrantClientStrategy::class,
+            AuthorizationCodeClientStrategy::class,
+            DeviceGrantClientStrategy::class,
+        ], 'filament-passport-ui.oauth.strategies');
+    }
+
+    protected function registerOAuthFactory(): void
+    {
+        $this->app->bind(OAuthClientFactoryInterface::class, function ($app) {
+            $allowedTypeValues = config(
+                'filament-passport-ui.oauth.allowed_grant_types',
+                []
+            );
+
+            /** @var OAuthClientType[] $allowedTypes */
+            $allowedTypes = array_map(
+                static fn(string $value): OAuthClientType => OAuthClientType::from($value),
+                $allowedTypeValues
+            );
+
+            $strategies = collect($app->tagged('filament-passport-ui.oauth.strategies'))
+                ->filter(function ($strategy) use ($allowedTypes) {
+                    foreach ($allowedTypes as $type) {
+                        if ($strategy->supports($type)) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                })
+                ->values();
+
+            return new OAuthClientFactory(
+                strategies: $strategies
+            );
+        });
     }
 
     protected function registerRepositories(): void
