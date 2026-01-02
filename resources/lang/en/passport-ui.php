@@ -9,6 +9,7 @@ return [
         'updated_at' => 'updated at',
         'created_at' => 'created at',
         'scopes' => 'scopes',
+        'none' => 'none',
     ],
     'resource' => [
         'global_action' => 'global action',

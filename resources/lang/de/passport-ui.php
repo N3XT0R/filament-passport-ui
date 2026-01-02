@@ -9,6 +9,7 @@ return [
         'updated_at' => 'Aktualisiert am',
         'created_at' => 'Erstellt am',
         'scopes' => 'Berechtigungen',
+        'none' => 'Keine',
     ],
     'resource' => [
         'global_action' => 'globale Aktion',

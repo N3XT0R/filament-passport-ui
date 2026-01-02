@@ -16,9 +16,9 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
+use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Pages;
 
 class PassportScopeActionsResource extends BaseManagementResource
@@ -53,14 +53,8 @@ class PassportScopeActionsResource extends BaseManagementResource
                                     'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.resource_id'
                                 )
                             )
-                            ->relationship(
-                                name: 'resource',
-                                titleAttribute: 'name',
-                                modifyQueryUsing: fn(Builder $query) => $query->where(
-                                    'is_active',
-                                    true
-                                )
-                            )
+                            ->placeholder(__('filament-passport-ui::passport-ui.common.none'))
+                            ->options(app(ResourceRepository::class)->active()->pluck('name', 'id'))
                             ->default(null)
                             ->nullable()
                             ->helperText(
