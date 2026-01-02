@@ -7,6 +7,7 @@ namespace N3XT0R\FilamentPassportUi\Resources;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
+use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Pages;
 
 class PassportScopeResourceResource extends BaseManagementResource
@@ -40,5 +41,14 @@ class PassportScopeResourceResource extends BaseManagementResource
         return [
             'index' => Pages\ListResources::route('/'),
         ];
+    }
+
+    /**
+     * Get the amount of clients for the navigation badge.
+     * @return string|null
+     */
+    public static function getNavigationBadge(): ?string
+    {
+        return (string)app(ResourceRepository::class)->count();
     }
 }
