@@ -72,7 +72,7 @@ class ClientResource extends Resource
         $components = [
             TextInput::make('name')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                ->unique('clients', 'name')
+                ->unique('oauth_clients', 'name')
                 ->required()
                 ->maxLength(255),
             Select::make('owner')
@@ -119,7 +119,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
