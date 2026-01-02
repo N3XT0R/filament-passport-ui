@@ -16,6 +16,8 @@ class PassportScopeGrant extends Model
     protected $table = 'passport_scope_grants';
 
     protected $fillable = [
+        'tokenable_type',
+        'tokenable_id',
         'resource_id',
         'action_id',
     ];
