@@ -8,8 +8,10 @@ use Filament\Support\Contracts\ScalableIcon;
 use Filament\Support\Icons\Heroicon;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use Illuminate\Contracts\Config\Repository;
-use Rector\PHPUnit\CodeQuality\Rector\MethodCall\ScalarArgumentToExpectedParamTypeRector;
 
+/**
+ * Configuration Repository for Filament Passport UI
+ */
 readonly class ConfigRepository
 {
     private const string CONFIG_ROOT = 'passport-ui.oauth.';
