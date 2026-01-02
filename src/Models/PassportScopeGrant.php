@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * Scope grant assigned to a Passport owner (User, ServiceAccount, etc.)
+ */
 class PassportScopeGrant extends Model
 {
     protected $table = 'passport_scope_grants';
