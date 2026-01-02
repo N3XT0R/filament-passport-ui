@@ -30,6 +30,13 @@ class ScopeGrantRepository
         ]);
     }
 
+    /**
+     * Create or update a scope grant for the given tokenable model.
+     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param int $resourceId
+     * @param int $actionId
+     * @return PassportScopeGrant
+     */
     public function createOrUpdateScopeGrantForTokenable(
         HasPassportScopeGrantsInterface $tokenable,
         int $resourceId,
@@ -43,6 +50,13 @@ class ScopeGrantRepository
         ]);
     }
 
+    /**
+     * Delete a scope grant for the given tokenable model.
+     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param int $resourceId
+     * @param int $actionId
+     * @return bool
+     */
     public function deleteScopeGrantForTokenable(
         HasPassportScopeGrantsInterface $tokenable,
         int $resourceId,
