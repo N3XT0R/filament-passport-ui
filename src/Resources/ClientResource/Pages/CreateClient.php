@@ -10,4 +10,15 @@ use N3XT0R\FilamentPassportUi\Resources\ClientResource;
 class CreateClient extends CreateRecord
 {
     protected static string $resource = ClientResource::class;
+
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        return [];
+    }
+
+
+    protected function afterCreate(): void
+    {
+    }
 }
