@@ -18,7 +18,7 @@ resources
 using **Filament v4**.
 
 It is designed for applications that already rely on Filament as their primary admin panel and want to manage OAuth
-clients, tokens, scopes, and related authorization concepts in a clear and maintainable way — without custom internal
+clients, tokens, scopes, and related authorization concepts in a clear and maintainable way without custom internal
 tooling or CLI-driven workflows.
 
 This package focuses on **administration and visibility**, not on implementing OAuth flows themselves.
