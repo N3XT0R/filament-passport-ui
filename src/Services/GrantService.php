@@ -71,10 +71,11 @@ readonly class GrantService
             return false;
         }
 
-        return $tokenable->passportScopeGrants()
-            ->where('resource_id', $resource->getKey())
-            ->where('action_id', $action->getKey())
-            ->exists();
+        return app(ScopeGrantRepository::class)->tokenableHasScopeGrant(
+            tokenable: $tokenable,
+            resourceId: $resource->getKey(),
+            actionId: $action->getKey(),
+        );
     }
 
     /**
