@@ -14,6 +14,7 @@ use Laravel\Passport\ClientRepository as BaseClientRepository;
 use Laravel\Passport\Passport;
 use Livewire\Features\SupportTesting\Testable;
 use N3XT0R\FilamentPassportUi\Commands\FilamentPassportUiCommand;
+use N3XT0R\FilamentPassportUi\Database\Seeders\FilamentPassportUiDatabaseSeeder;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactory;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;
@@ -38,7 +39,6 @@ use N3XT0R\FilamentPassportUi\Testing\TestsFilamentPassportUi;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use N3XT0R\FilamentPassportUi\Database\Seeders\FilamentPassportUiDatabaseSeeder;
 
 class FilamentPassportUiServiceProvider extends PackageServiceProvider
 {
@@ -184,6 +184,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
         return [
             'create_passport_scope_resources_table',
             'create_passport_scope_actions_table',
+            'create_passport_scope_grants_table',
         ];
     }
 
@@ -234,13 +235,13 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
             );
 
             $allowedTypes = array_map(
-                static fn (string $value): OAuthClientType => OAuthClientType::from($value),
+                static fn(string $value): OAuthClientType => OAuthClientType::from($value),
                 $allowedTypeValues
             );
 
             $strategies = collect($app->tagged('filament-passport-ui.oauth.strategies'))
                 ->filter(function (OAuthClientCreationStrategyInterface $strategy) use ($allowedTypes) {
-                    return array_any($allowedTypes, fn (OAuthClientType $type): bool => $strategy->supports($type));
+                    return array_any($allowedTypes, fn(OAuthClientType $type): bool => $strategy->supports($type));
                 })
                 ->values();
 
@@ -262,7 +263,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
         $this->app->singleton(ConfigRepository::class);
         $this->app->singleton(
             ActionRepositoryContract::class,
-            fn (Application $app, array $params = []) => $this->makeRepository(
+            fn(Application $app, array $params = []) => $this->makeRepository(
                 app: $app,
                 params: $params,
                 repositoryClass: ActionRepository::class,
@@ -272,7 +273,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
 
         $this->app->singleton(
             ResourceRepositoryContract::class,
-            fn (Application $app, array $params = []) => $this->makeRepository(
+            fn(Application $app, array $params = []) => $this->makeRepository(
                 app: $app,
                 params: $params,
                 repositoryClass: ResourceRepository::class,
