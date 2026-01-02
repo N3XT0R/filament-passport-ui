@@ -91,13 +91,13 @@ class PassportServiceProvider extends ServiceProvider
             );
 
             $allowedTypes = array_map(
-                static fn (string $value): OAuthClientType => OAuthClientType::from($value),
+                static fn(string $value): OAuthClientType => OAuthClientType::from($value),
                 $allowedTypeValues
             );
 
             $strategies = collect($app->tagged('filament-passport-ui.oauth.strategies'))
                 ->filter(function (OAuthClientCreationStrategyInterface $strategy) use ($allowedTypes) {
-                    return array_any($allowedTypes, fn ($type): bool => $strategy->supports($type));
+                    return array_any($allowedTypes, fn(OAuthClientType $type): bool => $strategy->supports($type));
                 })
                 ->values();
 
@@ -117,7 +117,7 @@ class PassportServiceProvider extends ServiceProvider
     {
         $this->app->singleton(
             ActionRepositoryContract::class,
-            fn (Application $app, array $params = []) => $this->makeRepository(
+            fn(Application $app, array $params = []) => $this->makeRepository(
                 app: $app,
                 params: $params,
                 repositoryClass: ActionRepository::class,
@@ -127,7 +127,7 @@ class PassportServiceProvider extends ServiceProvider
 
         $this->app->singleton(
             ResourceRepositoryContract::class,
-            fn (Application $app, array $params = []) => $this->makeRepository(
+            fn(Application $app, array $params = []) => $this->makeRepository(
                 app: $app,
                 params: $params,
                 repositoryClass: ResourceRepository::class,
