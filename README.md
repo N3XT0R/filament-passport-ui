@@ -77,14 +77,39 @@ real-world applications, especially in systems with multiple integrations, servi
 Install the package via Composer:
 
 ```bash
-composer require n3xt0r/filament-passport-ui
+composer require n3xt0r/filament-passport-ui 
 ```
 
 ```bash
 php artisan filament-passport-ui:install
-`` 
+``` 
 
-## Tests 
+### Models
+
+By default, the package uses the standard Laravel Passport models. If you have custom models, publish the config file
+and update the model classes accordingly.
+
+#### Using Database-Backed Scopes
+
+To manage scopes via the Filament UI, you need to implement `HasPassportScopeGrantsInterface` on your User model:
+
+```php
+use N3XT0R\FilamentPassportUI\Contracts\HasPassportScopeGrantsInterface;
+use N3XT0R\FilamentPassportUI\Traits\HasPassportScopeGrantsTrait;
+use Laravel\Passport\Contracts\OAuthenticatable;
+use Laravel\Passport\HasApiTokens;
+
+class User extends Authenticatable implements OAuthenticatable, HasPassportScopeGrantsInterface
+{
+    use HasApiTokens;
+    use HasPassportScopeGrantsTrait;
+
+    // ...
+}
+```
+
+## Tests
+
 ```bash
 composer install
 composer test
