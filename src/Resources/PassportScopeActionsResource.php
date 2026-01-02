@@ -6,6 +6,10 @@ namespace N3XT0R\FilamentPassportUi\Resources;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -19,6 +23,42 @@ class PassportScopeActionsResource extends BaseManagementResource
     protected static ?string $recordTitleAttribute = 'name';
     protected static string|\UnitEnum|null $navigationGroup = 'filament-passport-ui::passport-ui.navigation.group';
 
+
+    public static function form(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                TextInput::make('name')
+                    ->label(
+                        __(
+                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.name'
+                        )
+                    )
+                    ->unique(
+                        'passport_scope_actions',
+                        'name',
+                    )
+                    ->required()
+                    ->maxLength(255)
+                    ->columnSpanFull(),
+                Textarea::make('description')
+                    ->label(
+                        __(
+                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.description'
+                        )
+                    )
+                    ->required()
+                    ->maxLength(255)
+                    ->columnSpanFull(),
+                Checkbox::make('is_active')
+                    ->label(
+                        __(
+                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.is_active'
+                        )
+                    )
+                    ->default(true),
+            ]);
+    }
 
     public static function table(Table $table): Table
     {
