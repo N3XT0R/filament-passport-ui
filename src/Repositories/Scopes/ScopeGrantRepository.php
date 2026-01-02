@@ -9,7 +9,6 @@ use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
 
 class ScopeGrantRepository
 {
-
     /**
      * Create a new scope grant for the given tokenable model.
      * @param HasPassportScopeGrantsInterface $tokenable
