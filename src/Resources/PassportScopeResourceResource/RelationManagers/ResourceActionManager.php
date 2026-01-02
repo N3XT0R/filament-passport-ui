@@ -13,7 +13,7 @@ class ResourceActionManager extends RelationManager
 {
     protected static string $relationship = 'actions';
 
-    protected static ?string $recordTitleAttribute = 'id';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public function table(Table $table): Table
     {
