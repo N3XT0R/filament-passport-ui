@@ -10,6 +10,7 @@ use Laravel\Passport\HasApiTokens;
 use LogicException;
 use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
+use N3XT0R\FilamentPassportUi\Services\GrantService;
 
 trait HasPassportScopeGrantsTrait
 {
@@ -35,6 +36,13 @@ trait HasPassportScopeGrantsTrait
     {
         $result = $this->parentTokenCan($scope);
         $this->ensureImplementsHasPassportScopeGrantsInterface();
+
+        if (true === $result) {
+            $result = app(GrantService::class)->tokenableHasGrantToScope(
+                $this,
+                $scope
+            );
+        }
 
 
         return $result;
