@@ -8,7 +8,6 @@ use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Facades\Filament;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -24,7 +23,6 @@ use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
@@ -75,21 +73,12 @@ class ClientResource extends Resource
                 ->unique('oauth_clients', 'id'),
             TextInput::make('name')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                ->unique('oauth_clients', 'name')
                 ->required()
                 ->maxLength(255),
             Select::make('owner')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
                 ->options(function (): Collection {
                     return app(GetAllOwnersRelationshipUseCase::class)->execute();
-                })
-                ->saveRelationshipsUsing(function (Client $record, array $data): void {
-                    app(SaveOwnershipRelationUseCase::class)
-                        ->execute(
-                            client: $record,
-                            ownerId: $data['owner'],
-                            actor: Filament::auth()->user()
-                        );
                 })
                 ->searchable()
                 ->required(),
