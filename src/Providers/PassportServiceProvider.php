@@ -84,7 +84,7 @@ class PassportServiceProvider extends ServiceProvider
      */
     protected function registerOAuthFactory(): void
     {
-        $this->app->bind(OAuthClientFactoryInterface::class, function ($app) {
+        $this->app->singleton(OAuthClientFactoryInterface::class, function ($app) {
             $allowedTypeValues = config(
                 'filament-passport-ui.oauth.allowed_grant_types',
                 []
