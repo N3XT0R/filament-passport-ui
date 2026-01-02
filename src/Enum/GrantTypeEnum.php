@@ -7,12 +7,12 @@ namespace N3XT0R\FilamentPassportUi\Enum;
 /**
  * OAuth2 Grant Types
  */
-enum GrantTypeEnum: string
+enum GrantTypeEnum
 {
-    case AUTHORIZATION_CODE = 'authorization_code';
-    case CLIENT_CREDENTIALS = 'client_credentials';
-    case DEVICE_CODE = 'device_code';
-    case IMPLICIT = 'implicit';
-    case PASSWORD = 'password';
-    case PERSONAL_ACCESS = 'personal_access';
+    case PERSONAL_ACCESS;
+    case PASSWORD;
+    case CLIENT_CREDENTIALS;
+    case IMPLICIT;
+    case AUTHORIZATION_CODE;
+    case DEVICE;
 }
