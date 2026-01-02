@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\RelationManagers;
 
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 
 class ResourceActionManager extends RelationManager
 {
@@ -41,6 +44,14 @@ class ResourceActionManager extends RelationManager
                         )
                     )
                     ->boolean(),
+                IconColumn::make('is_global')
+                    ->label(
+                        __(
+                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.column.is_global'
+                        )
+                    )
+                    ->getStateUsing(fn(PassportScopeAction $record) => $record->resource_id === null)
+                    ->boolean(),
             ])
             ->filters([
                 //
@@ -49,7 +60,10 @@ class ResourceActionManager extends RelationManager
                 //
             ])
             ->recordActions([
-                //
+                EditAction::make()
+                    ->visible(fn(PassportScopeAction $record) => $record->resource_id !== null),
+                DeleteAction::make()
+                    ->visible(fn(PassportScopeAction $record) => $record->resource_id !== null),
             ]);
     }
 }
