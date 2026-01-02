@@ -19,6 +19,7 @@ return [
         'column' => [
             'name' => 'Name',
             'owner' => 'Owner',
+            'grant_type' => 'Grant Type',
         ],
     ],
 ];

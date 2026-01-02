@@ -21,8 +21,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
+use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
+use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
@@ -86,6 +88,10 @@ class ClientResource extends Resource
                 })
                 ->searchable()
                 ->required(),
+            Select::make('grant_type')
+                ->label(__('filament-passport-ui::passport-ui.client_resource.column.grant_type'))
+                ->options(app(GetAllowedGrantTypeOptions::class)->execute()->toArray())
+                ->required(),
         ];
 
         /**
@@ -110,7 +116,7 @@ class ClientResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn (string $state): string => Str::headline($state))
+                    ->formatStateUsing(fn(string $state): string => Str::headline($state))
                     ->searchable(),
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
