@@ -28,6 +28,7 @@ return [
         'model_label' => 'Resource',
         'plural_model_label' => 'Resources',
         'column' => [
+            'id' => 'ID',
             'name' => 'Name',
             'description' => 'Description',
         ],
