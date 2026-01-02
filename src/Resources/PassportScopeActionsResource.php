@@ -16,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Pages;
@@ -55,7 +56,7 @@ class PassportScopeActionsResource extends BaseManagementResource
                             ->relationship(
                                 name: 'resource',
                                 titleAttribute: 'name',
-                                modifyQueryUsing: fn($query) => $query->where(
+                                modifyQueryUsing: fn(Builder $query) => $query->where(
                                     'is_active',
                                     true
                                 )
