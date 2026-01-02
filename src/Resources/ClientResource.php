@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources;
 
-use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Passport\Client;
@@ -24,12 +21,10 @@ use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
-use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
-use UnitEnum;
 
-class ClientResource extends Resource
+class ClientResource extends BaseManagementResource
 {
     use HasResourceFormComponents;
 
@@ -47,20 +42,6 @@ class ClientResource extends Resource
     public static function getPluralLabel(): ?string
     {
         return __('filament-passport-ui::passport-ui.client_resource.plural_model_label');
-    }
-
-    public static function getNavigationGroup(): string|UnitEnum|null
-    {
-        return __(
-            app(ConfigRepository::class)
-                ->getNavigationGroup(static::$navigationGroup)
-        );
-    }
-
-    public static function getNavigationIcon(): string|BackedEnum|Htmlable|null
-    {
-        return app(ConfigRepository::class)
-            ->getNavigationIcon(static::$navigationIcon);
     }
 
     /**
