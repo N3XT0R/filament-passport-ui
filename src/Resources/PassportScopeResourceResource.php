@@ -26,10 +26,12 @@ class PassportScopeResourceResource extends BaseManagementResource
             TextInput::make('name')
                 ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.form.name'))
                 ->unique('passport_scope_resources', 'name')
-                ->required(),
+                ->required()
+                ->maxLength(255),
             TextInput::make('description')
                 ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.form.description'))
-                ->required(),
+                ->required()
+                ->maxLength(255),
         ]);
     }
 
