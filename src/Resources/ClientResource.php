@@ -26,6 +26,7 @@ use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationsh
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
+use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
 use UnitEnum;
@@ -52,12 +53,14 @@ class ClientResource extends Resource
 
     public static function getNavigationGroup(): string|UnitEnum|null
     {
-        return __(config('filament-passport-ui.navigation.client_resource.group', static::$navigationGroup));
+        return app(ConfigRepository::class)
+            ->getNavigationGroup(static::$navigationGroup);
     }
 
     public static function getNavigationIcon(): string|BackedEnum|Htmlable|null
     {
-        return config('filament-passport-ui.navigation.client_resource.icon', static::$navigationIcon);
+        return app(ConfigRepository::class)
+            ->getNavigationIcon(static::$navigationIcon);
     }
 
     /**
