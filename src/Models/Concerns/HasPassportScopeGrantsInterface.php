@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 interface HasPassportScopeGrantsInterface extends HasRelationshipsInterface
 {
     public function passportScopeGrants(): MorphMany;
+
+    public function tokenCan(string $scope): bool;
 }
