@@ -44,6 +44,10 @@ class PassportServiceProvider extends ServiceProvider
         $this->bootScopes();
     }
 
+    /**
+     * Boot the OAuth scopes from the database if enabled.
+     * @return void
+     */
     protected function bootScopes(): void
     {
         if (false === (bool)config('passport-ui.use_database_scopes', false)) {
@@ -58,6 +62,10 @@ class PassportServiceProvider extends ServiceProvider
         Passport::tokensCan($scopeRegistryService->all()->toArray());
     }
 
+    /**
+     * Register OAuth client creation strategies.
+     * @return void
+     */
     protected function registerOAuthStrategies(): void
     {
         $this->app->tag([
@@ -70,6 +78,10 @@ class PassportServiceProvider extends ServiceProvider
         ], 'filament-passport-ui.oauth.strategies');
     }
 
+    /**
+     * Register the OAuth client factory.
+     * @return void
+     */
     protected function registerOAuthFactory(): void
     {
         $this->app->bind(OAuthClientFactoryInterface::class, function ($app) {
@@ -78,7 +90,6 @@ class PassportServiceProvider extends ServiceProvider
                 []
             );
 
-            /** @var OAuthClientType[] $allowedTypes */
             $allowedTypes = array_map(
                 static fn(string $value): OAuthClientType => OAuthClientType::from($value),
                 $allowedTypeValues
@@ -86,13 +97,7 @@ class PassportServiceProvider extends ServiceProvider
 
             $strategies = collect($app->tagged('filament-passport-ui.oauth.strategies'))
                 ->filter(function ($strategy) use ($allowedTypes) {
-                    foreach ($allowedTypes as $type) {
-                        if ($strategy->supports($type)) {
-                            return true;
-                        }
-                    }
-
-                    return false;
+                    return array_any($allowedTypes, fn($type) => $strategy->supports($type));
                 })
                 ->values();
 
