@@ -6,6 +6,8 @@ namespace N3XT0R\FilamentPassportUi\Resources;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
@@ -18,6 +20,18 @@ class PassportScopeResourceResource extends BaseManagementResource
     protected static ?string $recordTitleAttribute = 'name';
     protected static string|\UnitEnum|null $navigationGroup = 'filament-passport-ui::passport-ui.navigation.group';
 
+    public static function form(Schema $schema): Schema
+    {
+        return $schema->components([
+            TextInput::make('name')
+                ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.form.name'))
+                ->unique('passport_scope_resources', 'name')
+                ->required(),
+            TextInput::make('description')
+                ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.form.description'))
+                ->required(),
+        ]);
+    }
 
     public static function table(Table $table): Table
     {
