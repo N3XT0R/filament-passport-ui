@@ -106,10 +106,8 @@ class PassportScopeActionsResource extends BaseManagementResource
                     ->state(fn(PassportScopeAction $record): bool => $record->resource_id === null),
             ])
             ->recordActions([
-                EditAction::make()
-                    ->visible(fn(PassportScopeAction $record) => $record->resource_id !== null),
-                DeleteAction::make()
-                    ->visible(fn(PassportScopeAction $record) => $record->resource_id !== null),
+                EditAction::make(),
+                DeleteAction::make(),
             ]);
     }
 
