@@ -90,7 +90,7 @@ class ClientResource extends Resource
                 ->required(),
             Select::make('grant_type')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.grant_type'))
-                ->options(app(GetAllowedGrantTypeOptions::class)->execute()->toArray())
+                ->options(app(GetAllowedGrantTypeOptions::class)->execute())
                 ->required(),
         ];
 
