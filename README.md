@@ -89,25 +89,10 @@ php artisan filament-passport-ui:install
 By default, the package uses the standard Laravel Passport models. If you have custom models, publish the config file
 and update the model classes accordingly.
 
-#### Using Database-Backed Scopes
+#### Docs
 
-To manage scopes via the Filament UI, you need to implement `HasPassportScopeGrantsInterface`
-and use `HasPassportScopeGrantsTrait` and `HasApiTokensTrait` on your User model:
-
-```php
-use N3XT0R\FilamentPassportUI\Contracts\HasPassportScopeGrantsInterface;
-use N3XT0R\FilamentPassportUI\Traits\HasPassportScopeGrantsTrait;
-use Laravel\Passport\Contracts\OAuthenticatable;
-use N3XT0R\FilamentPassportUi\Models\Traits\HasApiTokensTrait;
-
-class User extends Authenticatable implements OAuthenticatable, HasPassportScopeGrantsInterface
-{;
-    use HasApiTokensTrait;
-    use HasPassportScopeGrantsTrait;
-
-    // ...
-}
-```
+Documentation is available at:
+[Docs](docs/index.md)
 
 ## Tests
 
