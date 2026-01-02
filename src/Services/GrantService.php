@@ -9,7 +9,7 @@ use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ScopeGrantRepository;
-use N3XT0R\FilamentPassportUi\Support\OAuth\Scope;
+use N3XT0R\FilamentPassportUi\Support\OAuth\ValueObjects\Scope;
 
 readonly class GrantService
 {
