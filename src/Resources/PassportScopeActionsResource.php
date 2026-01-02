@@ -12,6 +12,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -24,6 +25,7 @@ class PassportScopeActionsResource extends BaseManagementResource
     protected static ?string $model = PassportScopeAction::class;
     protected static ?string $recordTitleAttribute = 'name';
     protected static string|\UnitEnum|null $navigationGroup = 'filament-passport-ui::passport-ui.navigation.group';
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedShieldExclamation;
 
 
     public static function form(Schema $schema): Schema
