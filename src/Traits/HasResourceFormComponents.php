@@ -6,13 +6,14 @@ namespace N3XT0R\FilamentPassportUi\Traits;
 
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
+use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Support\Builder\ScopeFormSectionBuilder;
 
 trait HasResourceFormComponents
 {
     public static function isResourceFormComponentsEnabled(): bool
     {
-        return config('passport-ui.use_database_scopes', true);
+        return app(ConfigRepository::class)->isUsingDatabaseScopes();
     }
 
     public static function getResourceFormComponents(): array

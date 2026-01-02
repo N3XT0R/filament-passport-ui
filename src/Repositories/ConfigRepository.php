@@ -71,4 +71,13 @@ readonly class ConfigRepository
         return (string)$this->config->get('passport-ui.navigation.icon', $default);
     }
 
+    /**
+     * Check if database scopes are used
+     * @return bool
+     */
+    public function isUsingDatabaseScopes(): bool
+    {
+        return (bool)$this->config->get('passport-ui.use_database_scopes', false);
+    }
+
 }
