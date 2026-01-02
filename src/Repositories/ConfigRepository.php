@@ -65,12 +65,12 @@ readonly class ConfigRepository
 
     /**
      * Get the navigation icon for OAuth Management
-     * @param string|ScalableIcon $default
+     * @param string|ScalableIcon $icon
      * @return string|ScalableIcon
      */
-    public function getNavigationIcon(string|ScalableIcon $default = Heroicon::OutlinedKey): string|ScalableIcon
+    public function getNavigationIcon(string|ScalableIcon $icon = Heroicon::OutlinedKey): string|ScalableIcon
     {
-        return (string)$this->config->get('passport-ui.navigation.icon', $default);
+        return $this->config->get('passport-ui.navigation.icon', $icon);
     }
 
     /**
