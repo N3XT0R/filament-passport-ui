@@ -31,10 +31,12 @@ return [
             'id' => 'ID',
             'name' => 'Name',
             'description' => 'Description',
+            'is_active' => 'Is Active',
         ],
         'form' => [
             'name' => 'Name',
             'description' => 'Description',
+            'is_active' => 'Is Active',
         ],
     ],
 ];
