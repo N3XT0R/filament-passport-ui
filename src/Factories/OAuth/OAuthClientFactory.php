@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Factories\OAuth;
 
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\FilamentPassportUi\Exceptions\UnsupportedOAuthClientTypeException;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\OAuthClientCreationStrategyInterface;
 use Laravel\Passport\Client;
 use RuntimeException;
@@ -60,8 +61,6 @@ readonly class OAuthClientFactory
             }
         }
 
-        throw new RuntimeException(
-            sprintf('No OAuth client creation strategy found for type "%s".', $type->value)
-        );
+        throw UnsupportedOAuthClientTypeException::forType($type);
     }
 }
