@@ -9,6 +9,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
@@ -70,6 +71,8 @@ class ClientResource extends Resource
     public static function form(Schema $schema): Schema
     {
         $components = [
+            Hidden::make('id')
+                ->unique('oauth_clients', 'id'),
             TextInput::make('name')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
                 ->unique('oauth_clients', 'name')
@@ -93,6 +96,15 @@ class ClientResource extends Resource
             Select::make('grant_type')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.grant_type'))
                 ->options(app(GetAllowedGrantTypeOptions::class)->execute())
+                ->formatStateUsing(function (?string $state, ?Client $record): ?string {
+                    if ($record === null) {
+                        return $state;
+                    }
+
+                    $grantTypes = (array)$record->getAttribute('grant_types');
+
+                    return current($grantTypes);
+                })
                 ->preload()
                 ->required(),
         ];
