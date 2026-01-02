@@ -18,6 +18,7 @@ readonly class GrantTypesRepository
         foreach ($allowed as $value) {
             $allowed[] = OAuthClientType::from($value);
         }
+        
         return $allowed;
     }
 }
