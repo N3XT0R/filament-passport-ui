@@ -9,6 +9,7 @@ use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ScopeGrantRepository;
+use N3XT0R\FilamentPassportUi\Support\OAuth\Scope;
 
 readonly class GrantService
 {
@@ -79,19 +80,19 @@ readonly class GrantService
     /**
      * Check if the tokenable has a grant to a specific scope.
      * @param HasPassportScopeGrantsInterface $tokenable
-     * @param string $scope
+     * @param string $scopeString
      * @return bool
      */
     public function tokenableHasGrantToScope(
         HasPassportScopeGrantsInterface $tokenable,
-        string $scope,
+        string $scopeString,
     ): bool {
-        [$resourceName, $actionName] = explode(':', $scope, 2);
+        $scope = Scope::fromString($scopeString);
 
         return $this->tokenableHasGrant(
             $tokenable,
-            $resourceName,
-            $actionName,
+            $scope->resource,
+            $scope->action,
         );
     }
 }
