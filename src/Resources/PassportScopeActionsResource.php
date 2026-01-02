@@ -52,7 +52,15 @@ class PassportScopeActionsResource extends BaseManagementResource
                                     'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.resource_id'
                                 )
                             )
-                            ->relationship('resource', 'name')
+                            ->relationship(
+                                name: 'resource',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn($query) => $query->where(
+                                    'is_active',
+                                    true
+                                )
+                            )
+                            ->default(null)
                             ->nullable()
                             ->helperText(
                                 __(
