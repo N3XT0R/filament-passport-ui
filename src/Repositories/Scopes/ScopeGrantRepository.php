@@ -68,4 +68,23 @@ class ScopeGrantRepository
             ->where('action_id', $actionId)
             ->delete();
     }
+
+    /**
+     * Check if a tokenable has a scope grant.
+     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param int $resourceId
+     * @param int $actionId
+     * @return bool
+     */
+    public function tokenableHasScopeGrant(
+        HasPassportScopeGrantsInterface $tokenable,
+        int $resourceId,
+        int $actionId,
+    ): bool {
+        return PassportScopeGrant::where('tokenable_type', $tokenable->getMorphClass())
+            ->where('tokenable_id', $tokenable->getKey())
+            ->where('resource_id', $resourceId)
+            ->where('action_id', $actionId)
+            ->exists();
+    }
 }
