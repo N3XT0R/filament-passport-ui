@@ -91,9 +91,9 @@ and update the model classes accordingly.
 
 #### Using Database-Backed Scopes
 
-To manage scopes via the Filament UI, you need to implement `HasPassportScopeGrantsInterface` instead `HasApiTokens` on
-your User
-model:
+To manage scopes via the Filament UI, you need to implement `HasPassportScopeGrantsInterface` instead of `HasApiTokens`
+-trait
+in your User model:
 
 ```php
 use N3XT0R\FilamentPassportUI\Contracts\HasPassportScopeGrantsInterface;
