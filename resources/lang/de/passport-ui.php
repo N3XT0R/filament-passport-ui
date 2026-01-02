@@ -49,7 +49,6 @@ return [
             'description' => 'Beschreibung',
             'is_active' => 'Aktiv',
             'is_global' => 'Global',
-            'is_active_tooltip' => 'Klicken zum Aktivieren/Deaktivieren der Aktion',
         ],
         'form' => [
             'name' => 'Action',

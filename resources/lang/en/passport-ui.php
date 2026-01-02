@@ -49,7 +49,6 @@ return [
             'description' => 'Description',
             'is_active' => 'Is Active',
             'is_global' => 'Is Global',
-            'is_active_tooltip' => 'Toggle to activate or deactivate this action.',
         ],
         'form' => [
             'name' => 'Action',
