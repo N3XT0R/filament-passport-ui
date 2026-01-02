@@ -9,7 +9,7 @@ use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 readonly class GrantTypesRepository
 {
     /**
-     *
+     * Get active OAuth client types based on configuration
      * @return OAuthClientType[]
      */
     public function active(): array
@@ -18,7 +18,7 @@ readonly class GrantTypesRepository
         foreach ($allowed as $value) {
             $allowed[] = OAuthClientType::from($value);
         }
-        
+
         return $allowed;
     }
 }
