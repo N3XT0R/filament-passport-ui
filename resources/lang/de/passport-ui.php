@@ -51,7 +51,7 @@ return [
             'is_global' => 'Global',
         ],
         'form' => [
-            'name' => 'Action',
+            'name' => 'Aktion',
             'description' => 'Beschreibung',
             'is_active' => 'Aktiv',
         ],
