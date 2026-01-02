@@ -71,6 +71,8 @@ class PassportScopeResourceResource extends BaseManagementResource
     {
         return [
             'index' => Pages\ListResources::route('/'),
+            'create' => Pages\CreateResource::route('/create'),
+            'edit' => Pages\EditResource::route('/{record}/edit'),
         ];
     }
 
