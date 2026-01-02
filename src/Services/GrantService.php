@@ -86,7 +86,7 @@ readonly class GrantService
         HasPassportScopeGrantsInterface $tokenable,
         string $scope,
     ): bool {
-        [$resourceName, $actionName] = explode('.', $scope, 2);
+        [$resourceName, $actionName] = explode(':', $scope, 2);
 
         return $this->tokenableHasGrant(
             $tokenable,
