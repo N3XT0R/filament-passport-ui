@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Services;
 
+use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
@@ -100,14 +101,14 @@ readonly class GrantService
     /**
      * Get all grants of the tokenable as scope strings.
      * @param HasPassportScopeGrantsInterface $tokenable
-     * @return array
+     * @return Collection<string>
      */
-    public function getTokenableGrantsAsScopes(HasPassportScopeGrantsInterface $tokenable): array
+    public function getTokenableGrantsAsScopes(HasPassportScopeGrantsInterface $tokenable): Collection
     {
         $grants = $this->scopeGrantRepository->getTokenableGrants($tokenable);
 
         return $grants->map(fn(PassportScopeGrant $grant) => Scope::fromString(
             $grant->resource->getAttribute('name') . ':' . $grant->action->getAttribute('name')
-        )->toString())->toArray();
+        )->toString());
     }
 }

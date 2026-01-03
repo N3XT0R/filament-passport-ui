@@ -38,6 +38,8 @@ readonly class ScopeFormSectionBuilder
 
     protected function buildSection(string $resource, Collection $scopes, ?Model $record = null): Section
     {
+        $grantedScopes = $this->getGrantedScopesForRecord($record);
+
         return Section::make($resource)
             ->schema([
                 CheckboxList::make('scopes')
@@ -62,4 +64,19 @@ readonly class ScopeFormSectionBuilder
             ->collapsible();
     }
 
+
+    private function getGrantedScopesForRecord(?Model $record): Collection
+    {
+        $collection = new Collection();
+        if ($record === null) {
+            return $collection;
+        }
+
+        $owner = $record->getAttribute('owner');
+        if ($owner === null) {
+            return $collection;
+        }
+
+        return $this->grantService->getTokenableGrantsAsScopes($owner);
+    }
 }
