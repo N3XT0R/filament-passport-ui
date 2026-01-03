@@ -62,4 +62,16 @@ return [
             'create' => 'Create Resource Action',
         ],
     ],
+    'token_resource' => [
+        'label' => 'Tokens',
+        'model_label' => 'Token',
+        'plural_model_label' => 'Tokens',
+        'column' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'client' => 'Client',
+            'created_at' => 'Created At',
+            'expires_at' => 'Expires At',
+        ],
+    ]
 ];
