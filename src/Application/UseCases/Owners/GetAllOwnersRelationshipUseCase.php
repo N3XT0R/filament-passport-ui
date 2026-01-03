@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Application\UseCases\Owners;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 
 readonly class GetAllOwnersRelationshipUseCase extends GetAllOwnersUseCase
@@ -16,7 +16,7 @@ readonly class GetAllOwnersRelationshipUseCase extends GetAllOwnersUseCase
 
     /**
      * Get All Owners as relationship options
-     * @return Collection
+     * @return Collection<int|string, string>
      */
     public function execute(): Collection
     {

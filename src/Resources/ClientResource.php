@@ -14,7 +14,6 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
@@ -60,12 +59,11 @@ class ClientResource extends BaseManagementResource
                 ->maxLength(255),
             Select::make('owner')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
-                ->options(function (): Collection {
-                    return app(GetAllOwnersRelationshipUseCase::class)->execute();
-                })
+                ->placeholder(__('filament-passport-ui::passport-ui.common.none'))
+                ->options(app(GetAllOwnersRelationshipUseCase::class)->execute())
+                ->default(null)
                 ->nullable()
-                ->helperText(__('filament-passport-ui::passport-ui.client_resource.form.owner_hint'))
-                ->searchable(),
+                ->helperText(__('filament-passport-ui::passport-ui.client_resource.form.owner_hint')),
             Select::make('grant_type')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.grant_type'))
                 ->options(app(GetAllowedGrantTypeOptions::class)->execute())
