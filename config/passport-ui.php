@@ -36,9 +36,9 @@ return [
         /**
          * Model used to represent OAuth2 clients.
          *
-         * Must be compatible with {@see \N3XT0R\FilamentPassportUi\Models\Passport\Client}.
+         * Must be compatible with {@see \Laravel\Passport\Client}.
          */
-        'client' => \N3XT0R\FilamentPassportUi\Models\Passport\Client::class,
+        'client' => null,
 
         /**
          * Model used to represent OAuth2 tokens.
