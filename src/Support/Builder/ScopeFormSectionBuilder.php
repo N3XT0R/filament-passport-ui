@@ -6,9 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Support\Builder;
 
 use Filament\Forms\Components\CheckboxList;
 use Filament\Schemas\Components\Section;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
+use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
 use N3XT0R\FilamentPassportUi\Services\GrantService;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 
@@ -21,9 +21,11 @@ readonly class ScopeFormSectionBuilder
     }
 
     /**
+     * Build form sections for scopes grouped by resource.
+     * @param HasPassportScopeGrantsInterface|null $record
      * @return array<int, Section>
      */
-    public function buildSections(?Model $record = null): array
+    public function buildSections(?HasPassportScopeGrantsInterface $record = null): array
     {
         return $this->scopeRegistryService
             ->allScopeNames()
@@ -36,8 +38,11 @@ readonly class ScopeFormSectionBuilder
             ->all();
     }
 
-    protected function buildSection(string $resource, Collection $scopes, ?Model $record = null): Section
-    {
+    protected function buildSection(
+        string $resource,
+        Collection $scopes,
+        ?HasPassportScopeGrantsInterface $record = null
+    ): Section {
         $grantedScopes = $this->getGrantedScopesForRecord($record);
 
         return Section::make($resource)
@@ -70,7 +75,7 @@ readonly class ScopeFormSectionBuilder
     }
 
 
-    private function getGrantedScopesForRecord(?Model $record): Collection
+    private function getGrantedScopesForRecord(?HasPassportScopeGrantsInterface $record): Collection
     {
         $collection = new Collection();
         if ($record === null) {
@@ -79,7 +84,7 @@ readonly class ScopeFormSectionBuilder
 
         $owner = $record->getAttribute('owner');
         if ($owner === null) {
-            return $collection;
+            return $this->grantService->getTokenableGrantsAsScopes($record);
         }
 
         return $this->grantService->getTokenableGrantsAsScopes($owner);
