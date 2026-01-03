@@ -8,6 +8,7 @@ use Carbon\CarbonInterface;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -133,6 +134,7 @@ class ClientResource extends BaseManagementResource
                     ->dateTime(),
             ])
             ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make()
                     ->requiresConfirmation(),
@@ -158,6 +160,7 @@ class ClientResource extends BaseManagementResource
             'index' => Pages\ListClients::route('/'),
             'edit' => Pages\EditClient::route('/{record}/edit'),
             'create' => Pages\CreateClient::route('/create'),
+            'view' => Pages\ViewClient::route('/{record}'),
         ];
     }
 
