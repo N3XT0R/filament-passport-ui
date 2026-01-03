@@ -9,12 +9,14 @@ use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
+use N3XT0R\FilamentPassportUi\Services\GrantService;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 
 readonly class ScopeFormSectionBuilder
 {
     public function __construct(
-        private ScopeRegistryService $scopeRegistryService
+        private ScopeRegistryService $scopeRegistryService,
+        private GrantService $grantService,
     ) {
     }
 
