@@ -24,7 +24,7 @@ return [
         'column' => [
             'name' => 'Name',
             'owner' => 'Eigentümer',
-            'grant_type' => 'Grant Type',
+            'grant_type' => 'Grant-Typ',
         ],
     ],
     'passport_scope_resource_resource' => [
