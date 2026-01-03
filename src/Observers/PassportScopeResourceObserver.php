@@ -7,6 +7,9 @@ namespace N3XT0R\FilamentPassportUi\Observers;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedResourceRepositoryDecorator;
 
+/**
+ * Clears the resource cache when a PassportScopeResource model is created, updated, deleted, restored, or force deleted.
+ */
 class PassportScopeResourceObserver
 {
 
