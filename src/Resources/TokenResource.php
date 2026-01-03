@@ -11,6 +11,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
+use N3XT0R\FilamentPassportUi\Repositories\TokenRepository;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Pages;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 
@@ -84,5 +85,10 @@ class TokenResource extends BaseManagementResource
         return [
             'index' => Pages\ListTokens::route('/'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string)app(TokenRepository::class)->count();
     }
 }
