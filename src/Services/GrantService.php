@@ -25,15 +25,17 @@ readonly class GrantService
 
     /**
      * Grant a scope to the given tokenable model.
-     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param HasPassportScopeGrantsInterface&Model $tokenable
      * @param string $resourceName
      * @param string $actionName
+     * @param Authenticatable|null $actor
      * @return PassportScopeGrant
      */
     public function grantScopeToTokenable(
-        HasPassportScopeGrantsInterface $tokenable,
+        Model&HasPassportScopeGrantsInterface $tokenable,
         string $resourceName,
         string $actionName,
+        ?Authenticatable $actor = null,
     ): PassportScopeGrant {
         $resource = $this->resourceRepository->findByName($resourceName);
         if ($resource === null) {
@@ -45,11 +47,26 @@ readonly class GrantService
             throw new \InvalidArgumentException("Action '{$actionName}' not found.");
         }
 
-        return $this->scopeGrantRepository->createOrUpdateScopeGrantForTokenable(
+        $result = $this->scopeGrantRepository->createOrUpdateScopeGrantForTokenable(
             $tokenable,
             $resource->getKey(),
             $action->getKey(),
         );
+
+        if ($actor) {
+            activity('oauth')
+                ->performedOn($tokenable)
+                ->causedBy($actor)
+                ->withProperties([
+                    'tokenable_type' => $tokenable->getMorphClass(),
+                    'tokenable_id' => $tokenable->getKey(),
+                    'granted_scope' => new Scope($resourceName, $actionName)->toString(),
+                ])
+                ->log('OAuth scope grant given to tokenable');
+        }
+
+
+        return $result;
     }
 
     /**
