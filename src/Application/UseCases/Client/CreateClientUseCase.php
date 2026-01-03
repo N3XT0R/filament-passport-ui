@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Application\UseCases\Client;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\DTO\Client\CreateOAuthClientData;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
@@ -25,10 +26,10 @@ readonly class CreateClientUseCase
      * Create a new OAuth client
      * @param array $data
      * @param Authenticatable|null $actor
-     * @return void
+     * @return Client
      * @throws \Throwable
      */
-    public function execute(array $data, ?Authenticatable $actor = null): void
+    public function execute(array $data, ?Authenticatable $actor = null): Client
     {
         $clientType = OAuthClientType::from($data['grant_type']);
         $dto = CreateOAuthClientData::fromArray($data);
@@ -46,5 +47,8 @@ readonly class CreateClientUseCase
             scopes: $scopes,
             actor: $actor
         );
+
+
+        return $client;
     }
 }
