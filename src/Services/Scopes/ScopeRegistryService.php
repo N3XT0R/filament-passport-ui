@@ -22,7 +22,7 @@ readonly class ScopeRegistryService
 
     /**
      * Get all active scopes in the system.
-     * @return Collection<string, string>
+     * @return Collection<string>
      */
     public function all(): Collection
     {
@@ -37,7 +37,7 @@ readonly class ScopeRegistryService
 
                 $scopes->put(
                     $scopeName->value(),
-                    ''
+                    $scopeName->description()
                 );
             }
         }
@@ -88,7 +88,7 @@ readonly class ScopeRegistryService
     private function actionsForResource(PassportScopeResource $resource, Collection $actions): Collection
     {
         return $actions->filter(
-            fn ($action) => $action->resource_id === null
+            fn($action) => $action->resource_id === null
                 || $action->resource_id === $resource->getKey()
         );
     }
