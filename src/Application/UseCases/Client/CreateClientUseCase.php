@@ -10,6 +10,9 @@ use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 use N3XT0R\FilamentPassportUi\Services\GrantService;
 
+/**
+ * Use case to create a new OAuth client
+ */
 readonly class CreateClientUseCase
 {
     public function __construct(
