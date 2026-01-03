@@ -258,8 +258,9 @@ readonly class GrantService
 
     /**
      * Upsert grants for the tokenable based on the provided scopes.
-     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param HasPassportScopeGrantsInterface&Model $tokenable
      * @param array $scopes
+     * @param Authenticatable|null $actor
      * @return void
      */
     public function upsertGrantsForTokenable(
