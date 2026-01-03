@@ -6,7 +6,6 @@ namespace N3XT0R\FilamentPassportUi\Resources;
 
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Laravel\Passport\Passport;
@@ -23,14 +22,11 @@ class TokenResource extends BaseManagementResource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.id'))
-                    ->sortable(),
-                SelectColumn::make('user_id')
+                TextColumn::make('user_id')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.user_name'))
                     ->sortable()
                     ->searchable(),
-                SelectColumn::make('client_id')
+                TextColumn::make('client_id')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.client'))
                     ->sortable()
                     ->searchable(),
