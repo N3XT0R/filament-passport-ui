@@ -11,10 +11,6 @@ use Laravel\Passport\Passport;
 use Livewire\Features\SupportTesting\Testable;
 use N3XT0R\FilamentPassportUi\Commands\FilamentPassportUiCommand;
 use N3XT0R\FilamentPassportUi\Database\Seeders\FilamentPassportUiDatabaseSeeder;
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
-use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactory;
-use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;
-use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\OAuthClientCreationStrategyInterface;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 use N3XT0R\FilamentPassportUi\Testing\TestsFilamentPassportUi;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
@@ -42,6 +38,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
     protected array $booter = [
         Providers\Boot\ScopeBooter::class,
         Providers\Boot\ObserverBooter::class,
+        Providers\Boot\OAuthClientFactoryBooter::class,
     ];
 
     public function configurePackage(Package $package): void
@@ -123,8 +120,6 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
         Testable::mixin(new TestsFilamentPassportUi());
 
         $this->executeBooter();
-
-        $this->registerOAuthFactory();
     }
 
     private function executeBooter(): void
@@ -217,40 +212,5 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
 
         $scopes = $scopeRegistryService->all();
         Passport::tokensCan($scopes->toArray());
-    }
-
-    /**
-     * Register the OAuth client factory.
-     * @return void
-     */
-    protected function registerOAuthFactory(): void
-    {
-        $this->app->singleton(OAuthClientFactoryInterface::class, function ($app) {
-            $allowedTypeValues = config(
-                'filament-passport-ui.oauth.allowed_grant_types',
-                []
-            );
-
-            $allowedTypes = array_map(
-                static fn(string $value): OAuthClientType => OAuthClientType::from($value),
-                $allowedTypeValues
-            );
-
-            $strategies = collect($app->tagged('filament-passport-ui.oauth.strategies'))
-                ->filter(function (OAuthClientCreationStrategyInterface $strategy) use ($allowedTypes) {
-                    return array_any($allowedTypes, fn(OAuthClientType $type): bool => $strategy->supports($type));
-                })
-                ->values();
-
-            if ($strategies->isEmpty()) {
-                throw new \RuntimeException(
-                    'No OAuth client strategies enabled. Check filament-passport-ui.oauth.allowed_grant_types.'
-                );
-            }
-
-            return new OAuthClientFactory(
-                strategies: $strategies
-            );
-        });
     }
 }
