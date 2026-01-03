@@ -263,8 +263,9 @@ readonly class GrantService
      * @return void
      */
     public function upsertGrantsForTokenable(
-        HasPassportScopeGrantsInterface $tokenable,
+        Model&HasPassportScopeGrantsInterface $tokenable,
         array $scopes,
+        ?Authenticatable $actor = null,
     ): void {
         $existingGrants = $this->getTokenableGrantsAsScopes($tokenable)->toArray();
 
@@ -273,5 +274,17 @@ readonly class GrantService
 
         $this->revokeGrantsFromTokenable($tokenable, $scopesToRevoke);
         $this->giveGrantsToTokenable($tokenable, $scopesToGrant);
+
+        if ($actor) {
+            activity('oauth')
+                ->performedOn($tokenable)
+                ->causedBy($actor)
+                ->withProperties([
+                    'tokenable_type' => $tokenable->getMorphClass(),
+                    'tokenable_id' => $tokenable->getKey(),
+                    'upserted_scopes' => $scopes,
+                ])
+                ->log('OAuth scope grants upserted for tokenable');
+        }
     }
 }
