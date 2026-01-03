@@ -13,7 +13,12 @@ use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedResourceReposi
 class PassportScopeResourceObserver
 {
 
-    public function __call($method, array $arguments): void
+    public function __call($method, $arguments)
+    {
+        static::__callStatic($method, $arguments);
+    }
+    
+    public static function __callStatic($method, $arguments)
     {
         if (in_array($method, ['created', 'updated', 'deleted', 'restored', 'forceDeleted'], true)) {
             $repository = app(ResourceRepositoryContract::class);
