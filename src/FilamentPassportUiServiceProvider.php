@@ -76,10 +76,10 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-        $this->executeRegister();
+        $this->executeRegistrars();
     }
 
-    private function executeRegister(): void
+    private function executeRegistrars(): void
     {
         foreach ($this->registrars as $registrar) {
             $registrarInstance = app($registrar);
