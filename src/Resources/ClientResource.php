@@ -61,6 +61,13 @@ class ClientResource extends BaseManagementResource
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
                 ->placeholder(__('filament-passport-ui::passport-ui.common.none'))
                 ->options(app(GetAllOwnersRelationshipUseCase::class)->execute())
+                ->formatStateUsing(function (?string $state, ?Client $record): ?string {
+                    if ($record === null) {
+                        return $state;
+                    }
+
+                    return (string)$record->getAttribute('owner_id');
+                })
                 ->default(null)
                 ->nullable()
                 ->helperText(__('filament-passport-ui::passport-ui.client_resource.form.owner_hint')),
