@@ -71,14 +71,18 @@ class ClientRepository extends BaseRepository
      * @param Client $client
      * @return void
      */
-    public function delete(Client $client): void
+    public function delete(Client $client, bool $forceDelete = false): void
     {
         $client->tokens()->with('refreshToken')->each(function (Token $token): void {
             $token->refreshToken?->revoke();
             $token->revoke();
         });
 
-        $client->delete();
+        if ($forceDelete) {
+            $client->delete();
+        } else {
+            $client->forceFill(['revoked' => true])->save();
+        }
     }
 
 

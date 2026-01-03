@@ -17,6 +17,6 @@ class ClientObserver extends BaseObserver
 
     public function deleting(Model $model): void
     {
-        app(ClientRepository::class)->delete($model);
+        app(ClientRepository::class)->delete($model, true);
     }
 }
