@@ -154,6 +154,13 @@ class ClientResource extends BaseManagementResource
         return Passport::clientModel();
     }
 
+    public static function getRelations(): array
+    {
+        return [
+            ClientResource\RelationManagers\ClientTokensRelationManager::class,
+        ];
+    }
+
     public static function getPages(): array
     {
         return [

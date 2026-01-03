@@ -67,7 +67,7 @@ class TokenResource extends BaseManagementResource
                     ->dateTime()
                     ->sortable(),
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('updated_at', 'desc');
     }
 
 
