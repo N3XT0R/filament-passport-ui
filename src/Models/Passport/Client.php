@@ -15,6 +15,10 @@ class Client extends PassportClient implements HasPassportScopeGrantsInterface
 
     public function hasScope(string $scope): bool
     {
+        if ((bool)config('filament-passport-ui.use_database_scopes', false) === false) {
+            return parent::hasScope($scope);
+        }
+
         return app(GrantService::class)->tokenableHasGrantToScope(
             $this,
             $scope
