@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Services;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Contracts\OAuthenticatable;
-use N3XT0R\FilamentPassportUi\DTO\Client\CreateOAuthClientData;
+use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Exceptions\Domain\ClientAlreadyExists;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;
@@ -24,14 +24,14 @@ readonly class ClientService
     /**
      * Create a new OAuth client for the given user
      * @param OAuthClientType $type
-     * @param CreateOAuthClientData $data
+     * @param OAuthClientData $data
      * @param OAuthenticatable|null $user
      * @return Client
      * @throws Throwable
      */
     public function createClientForUser(
         OAuthClientType $type,
-        CreateOAuthClientData $data,
+        OAuthClientData $data,
         ?OAuthenticatable $user,
     ): Client {
         if ($this->clientRepository->findByName($data->name)) {

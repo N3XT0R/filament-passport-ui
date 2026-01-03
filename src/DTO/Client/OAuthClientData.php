@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\DTO\Client;
 
-final readonly class CreateOAuthClientData
+final readonly class OAuthClientData
 {
     public function __construct(
         public string $name,

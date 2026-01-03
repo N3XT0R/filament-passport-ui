@@ -21,6 +21,7 @@ readonly class EditClientUseCase
 
     public function execute(Client $client, array $data, ?Authenticatable $actor = null): Client
     {
-        $this->clientRepository->update();
+        $client->
+        $this->clientRepository->update($client);
     }
 }

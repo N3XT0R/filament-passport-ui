@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Factories\OAuth;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Client;
-use N3XT0R\FilamentPassportUi\DTO\Client\CreateOAuthClientData;
+use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Exceptions\UnsupportedOAuthClientTypeException;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\OAuthClientCreationStrategyInterface;
@@ -21,7 +21,7 @@ readonly class OAuthClientFactory implements OAuthClientFactoryInterface
 
     public function __invoke(
         OAuthClientType $type,
-        CreateOAuthClientData $data,
+        OAuthClientData $data,
         ?Authenticatable $user = null,
     ): Client {
         return $this->createUsingStrategy($type, $data, $user);
@@ -29,7 +29,7 @@ readonly class OAuthClientFactory implements OAuthClientFactoryInterface
 
     private function createUsingStrategy(
         OAuthClientType $type,
-        CreateOAuthClientData $data,
+        OAuthClientData $data,
         ?Authenticatable $user,
     ): Client {
         foreach ($this->strategies as $strategy) {
