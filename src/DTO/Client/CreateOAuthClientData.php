@@ -14,4 +14,15 @@ final readonly class CreateOAuthClientData
         public array $options = []
     ) {
     }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            name: $data['name'],
+            redirectUris: $data['redirect_uris'] ?? [],
+            provider: $data['provider'] ?? null,
+            confidential: $data['confidential'] ?? true,
+            options: $data['options'] ?? []
+        );
+    }
 }
