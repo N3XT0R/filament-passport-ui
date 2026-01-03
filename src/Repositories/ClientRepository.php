@@ -69,6 +69,7 @@ class ClientRepository extends BaseRepository
      * this repository keeps it as an explicit aggregate operation to avoid
      * leaking token-revocation logic into higher layers (services, controllers, UI).
      * @param Client $client
+     * @param bool $forceDelete
      * @return void
      */
     public function delete(Client $client, bool $forceDelete = false): void
