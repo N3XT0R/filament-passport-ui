@@ -7,6 +7,7 @@ namespace N3XT0R\FilamentPassportUi\Models\Passport;
 use Laravel\Passport\Client as PassportClient;
 use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
 use N3XT0R\FilamentPassportUi\Models\Traits\HasPassportScopeGrantsTrait;
+use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Services\GrantService;
 
 class Client extends PassportClient implements HasPassportScopeGrantsInterface
@@ -15,7 +16,8 @@ class Client extends PassportClient implements HasPassportScopeGrantsInterface
 
     public function hasScope(string $scope): bool
     {
-        if ((bool)config('filament-passport-ui.use_database_scopes', false) === false) {
+        $configRepository = app(ConfigRepository::class);
+        if ($configRepository->isUsingDatabaseScopes() === false) {
             return parent::hasScope($scope);
         }
 
