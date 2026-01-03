@@ -14,6 +14,9 @@ class PassportModelsBooter implements BooterInterface
         $config = config('passport-ui.models');
 
         foreach ($config as $modelType => $modelClass) {
+            if (empty($modelClass)) {
+                continue;
+            }
             match ($modelType) {
                 'client' => Passport::useClientModel($modelClass),
                 'token' => Passport::useTokenModel($modelClass),
