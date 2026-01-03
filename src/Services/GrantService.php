@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Services;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
@@ -150,8 +152,9 @@ readonly class GrantService
      * @return void
      */
     public function giveGrantsToTokenable(
-        HasPassportScopeGrantsInterface $tokenable,
+        Model&HasPassportScopeGrantsInterface $tokenable,
         array $scopes,
+        ?Authenticatable $actor = null,
     ): void {
         foreach ($scopes as $scopeString) {
             $scope = Scope::fromString($scopeString);
@@ -166,6 +169,18 @@ readonly class GrantService
                 $scope->resource,
                 $scope->action,
             );
+        }
+
+        if ($actor) {
+            activity('oauth')
+                ->performedOn($tokenable)
+                ->causedBy($actor)
+                ->withProperties([
+                    'tokenable_type' => $tokenable->getMorphClass(),
+                    'tokenable_id' => $tokenable->getKey(),
+                    'granted_scopes' => $scopes,
+                ])
+                ->log('OAuth scope grants given to tokenable');
         }
     }
 
