@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 
+use Filament\Facades\Filament;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Client\CreateClientUseCase;
@@ -18,7 +19,7 @@ class CreateClient extends CreateRecord
     {
         return app(CreateClientUseCase::class)->execute(
             data: $data,
-            actor: auth()->user(),
+            actor: Filament::auth()->user(),
         );
     }
 }
