@@ -53,7 +53,7 @@ readonly class GrantService
             $action->getKey(),
         );
 
-        if ($actor) {
+        if ($result && $actor) {
             activity('oauth')
                 ->performedOn($tokenable)
                 ->causedBy($actor)
@@ -71,15 +71,16 @@ readonly class GrantService
 
     /**
      * Revoke a scope from the given tokenable model.
-     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param Model&HasPassportScopeGrantsInterface $tokenable
      * @param string $resourceName
      * @param string $actionName
      * @return bool
      */
     public function revokeScopeFromTokenable(
-        HasPassportScopeGrantsInterface $tokenable,
+        Model&HasPassportScopeGrantsInterface $tokenable,
         string $resourceName,
         string $actionName,
+        ?Authenticatable $actor = null,
     ): bool {
         $resource = $this->resourceRepository->findByName($resourceName);
         if ($resource === null) {
@@ -91,11 +92,26 @@ readonly class GrantService
             throw new \InvalidArgumentException("Action '{$actionName}' not found.");
         }
 
-        return $this->scopeGrantRepository->deleteScopeGrantForTokenable(
+        $result = $this->scopeGrantRepository->deleteScopeGrantForTokenable(
             $tokenable,
             $resource->getKey(),
             $action->getKey(),
         );
+
+        if ($result && $actor) {
+            activity('oauth')
+                ->performedOn($tokenable)
+                ->causedBy($actor)
+                ->withProperties([
+                    'tokenable_type' => $tokenable->getMorphClass(),
+                    'tokenable_id' => $tokenable->getKey(),
+                    'revoked_scope' => new Scope($resourceName, $actionName)->toString(),
+                ])
+                ->log('OAuth scope grant revoked from tokenable');
+        }
+
+
+        return $result;
     }
 
     /**
