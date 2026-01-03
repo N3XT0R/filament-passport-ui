@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources;
 
+use Carbon\CarbonInterface;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -124,6 +125,11 @@ class ClientResource extends BaseManagementResource
                 TextColumn::make('updated_at')
                     ->label(__('filament-passport-ui::passport-ui.common.updated_at'))
                     ->dateTime(),
+                TextColumn::make('last_login')
+                    ->dateTime()
+                    ->getStateUsing(function (Client $record): ?CarbonInterface {
+                        return app(ClientRepository::class)->getLastLoginAtForClient($record);
+                    })
             ])
             ->recordActions([
                 EditAction::make(),

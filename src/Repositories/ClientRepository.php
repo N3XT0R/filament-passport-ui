@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Repositories;
 
+use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
 use Laravel\Passport\Client;
-use Laravel\Passport\Passport;
 use Laravel\Passport\ClientRepository as BaseRepository;
+use Laravel\Passport\Passport;
 
 class ClientRepository extends BaseRepository
 {
@@ -27,5 +28,18 @@ class ClientRepository extends BaseRepository
     public function count(): int
     {
         return Passport::clientModel()::count();
+    }
+
+    /**
+     * Get the last login time for a given client.
+     * @param Client $client
+     * @return CarbonInterface|null
+     */
+    public function getLastLoginAtForClient(Client $client): ?CarbonInterface
+    {
+        return $client->tokens()
+            ->orderBy('updated_at', 'desc')
+            ->first()
+            ?->updated_at;
     }
 }
