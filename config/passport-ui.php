@@ -29,6 +29,10 @@ return [
      * Setting a value to `null` will fall back to Passport's default model.
      */
     'models' => [
+        /**Model used to represent OAuth2 auth_codes.
+         * Must be compatible with {@see \Laravel\Passport\AuthCode}.
+         */
+        'auth_code' => null,
         /**
          * Model used to represent OAuth2 clients.
          *
@@ -37,18 +41,25 @@ return [
         'client' => Laravel\Passport\Client::class,
 
         /**
-         * Model used to represent OAuth2 clients.
+         * Model used to represent OAuth2 tokens.
          *
          * Must be compatible with {@see \Laravel\Passport\Token}.
          */
-        'token' => Laravel\Passport\Token::class,
+        'token' => null,
 
         /**
          * Model used to represent OAuth2 scopes.
          *
          * Must be compatible with {@see \Laravel\Passport\Scope}.
          */
-        'scope' => Laravel\Passport\Scope::class,
+        'scope' => null,
+
+        /**
+         * Model used to represent OAuth2 auth codes.
+         *
+         * Must be compatible with {@see \Laravel\Passport\RefreshToken}.
+         */
+        'refresh_token' => null,
     ],
     /**
      * Cache settings.
