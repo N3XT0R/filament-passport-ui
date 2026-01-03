@@ -58,7 +58,12 @@ readonly class ScopeFormSectionBuilder
                         )->filter()
                     )
                     ->columns(3)
-                    ->bulkToggleable(),
+                    ->bulkToggleable()
+                    ->afterStateHydrated(function (CheckboxList $component) use ($grantedScopes) {
+                        $component->state(
+                            $grantedScopes->map(fn(string $scope) => $scope)->all()
+                        );
+                    }),
             ])
             ->columnSpanFull()
             ->collapsible();
