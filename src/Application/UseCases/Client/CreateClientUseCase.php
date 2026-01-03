@@ -34,6 +34,7 @@ readonly class CreateClientUseCase
         $this->grantService->giveGrantsToTokenable(
             tokenable: $client,
             scopes: $scopes,
+            actor: $actor
         );
     }
 }
