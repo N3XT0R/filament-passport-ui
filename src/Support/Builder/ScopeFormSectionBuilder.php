@@ -30,13 +30,13 @@ readonly class ScopeFormSectionBuilder
             ->groupBy(fn(ScopeDTO $dto) => $dto->resource)
             ->filter(fn(Collection $scopes) => $scopes->isNotEmpty())
             ->map(
-                fn(Collection $scopes, string $resource) => $this->buildSection($resource, $scopes)
+                fn(Collection $scopes, string $resource) => $this->buildSection($resource, $scopes, $record)
             )
             ->values()
             ->all();
     }
 
-    protected function buildSection(string $resource, Collection $scopes): Section
+    protected function buildSection(string $resource, Collection $scopes, ?Model $record = null): Section
     {
         return Section::make($resource)
             ->schema([
