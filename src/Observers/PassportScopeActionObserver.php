@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Observers;
 
+use Illuminate\Database\Eloquent\Model;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedActionRepositoryDecorator;
 
@@ -12,14 +13,40 @@ use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedActionReposito
  */
 class PassportScopeActionObserver extends BaseObserver
 {
-    
-    public static function __callStatic($method, $arguments)
+    public function created(Model $model): void
     {
-        if (in_array($method, ['created', 'updated', 'deleted', 'restored', 'forceDeleted'], true)) {
-            $repository = app(ActionRepositoryContract::class);
-            if ($repository instanceof CachedActionRepositoryDecorator) {
-                $repository->clearCache();
-            }
+        $this->clearCache();
+    }
+
+    public function updated(Model $model): void
+    {
+        $this->clearCache();
+    }
+
+    public function deleted(Model $model): void
+    {
+        $this->clearCache();
+    }
+
+    public function restored(Model $model): void
+    {
+        $this->clearCache();
+    }
+
+    public function forceDeleted(Model $model): void
+    {
+        $this->clearCache();
+    }
+
+    /**
+     * Clear cached scope actions if caching is enabled.
+     */
+    protected function clearCache(): void
+    {
+        $repository = app(ActionRepositoryContract::class);
+
+        if ($repository instanceof CachedActionRepositoryDecorator) {
+            $repository->clearCache();
         }
     }
 }
