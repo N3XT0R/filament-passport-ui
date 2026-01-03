@@ -8,11 +8,13 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use N3XT0R\FilamentPassportUi\DTO\Client\CreateOAuthClientData;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
+use N3XT0R\FilamentPassportUi\Services\GrantService;
 
 readonly class CreateClientUseCase
 {
     public function __construct(
-        private ClientService $clientService
+        private ClientService $clientService,
+        private GrantService $grantService,
     ) {
     }
 
@@ -22,7 +24,7 @@ readonly class CreateClientUseCase
         $dto = CreateOAuthClientData::fromArray($data);
 
 
-        $this->clientService->createClientForUser(
+        $client = $this->clientService->createClientForUser(
             type: $clientType,
             data: $dto,
             user: $actor

@@ -117,4 +117,21 @@ class ScopeGrantRepository
             ->with(['resource', 'action'])
             ->get();
     }
+
+    /**
+     * Give multiple grants to the given tokenable.
+     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param Collection<int, array{resource_id: int, action_id: int}> $grants
+     * @return void
+     */
+    public function giveGrantsToTokenable(HasPassportScopeGrantsInterface $tokenable, Collection $grants): void
+    {
+        foreach ($grants as $grant) {
+            $this->createOrUpdateScopeGrantForTokenable(
+                tokenable: $tokenable,
+                resourceId: $grant['resource_id'],
+                actionId: $grant['action_id'],
+            );
+        }
+    }
 }
