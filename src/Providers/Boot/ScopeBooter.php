@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Providers\Boot;
 
+use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Providers\Boot\Concerns\BooterInterface;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 
