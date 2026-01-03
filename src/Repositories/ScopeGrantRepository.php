@@ -6,6 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Repositories;
 
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
+use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
 
 class ScopeGrantRepository
 {
@@ -31,7 +32,7 @@ class ScopeGrantRepository
     /**
      * Get all scope grants for the given tokenable.
      * @param HasPassportScopeGrantsInterface $tokenable
-     * @return Collection
+     * @return Collection<PassportScopeGrant>
      */
     public function getTokenableGrants(HasPassportScopeGrantsInterface $tokenable): Collection
     {

@@ -96,4 +96,13 @@ readonly class GrantService
             $scope->action,
         );
     }
+
+    public function getTokenableGrantsAsScopes(HasPassportScopeGrantsInterface $tokenable): array
+    {
+        $grants = $this->scopeGrantRepository->getTokenableGrants($tokenable);
+
+        return $grants->map(fn(PassportScopeGrant $grant) => Scope::fromString(
+            $grant->resource->getAttribute('name') . ':' . $grant->action->getAttribute('name')
+        )->toString())->toArray();
+    }
 }
