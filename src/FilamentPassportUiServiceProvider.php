@@ -7,11 +7,9 @@ use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
-use Laravel\Passport\Passport;
 use Livewire\Features\SupportTesting\Testable;
 use N3XT0R\FilamentPassportUi\Commands\FilamentPassportUiCommand;
 use N3XT0R\FilamentPassportUi\Database\Seeders\FilamentPassportUiDatabaseSeeder;
-use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 use N3XT0R\FilamentPassportUi\Testing\TestsFilamentPassportUi;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -193,24 +191,5 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
             'create_passport_scope_actions_table',
             'create_passport_scope_grant_table',
         ];
-    }
-
-    /**
-     * Boot the OAuth scopes from the database if enabled.
-     * @return void
-     */
-    protected function bootScopes(): void
-    {
-        if (false === (bool)config('passport-ui.use_database_scopes', false)) {
-            return;
-        }
-
-        $scopeRegistryService = app(ScopeRegistryService::class);
-        if (false === $scopeRegistryService->isMigrated()) {
-            return;
-        }
-
-        $scopes = $scopeRegistryService->all();
-        Passport::tokensCan($scopes->toArray());
     }
 }

@@ -7,6 +7,12 @@ namespace N3XT0R\FilamentPassportUi\Providers\Boot;
 use N3XT0R\FilamentPassportUi\Providers\Boot\Concerns\BooterInterface;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 
+/**
+ * Class ScopeBooter
+ *
+ * This class is responsible for booting the scopes from the database
+ * into Laravel Passport's token capabilities.
+ */
 class ScopeBooter implements BooterInterface
 {
 
