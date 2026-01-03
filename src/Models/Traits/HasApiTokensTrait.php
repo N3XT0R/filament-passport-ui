@@ -21,7 +21,7 @@ trait HasApiTokensTrait
     public function tokenCan(string $scope): bool
     {
         $result = $this->parentTokenCan($scope);
-        if (true === $result && $this->oauthApps()->count() > 0) {
+        if (true === $result) {
             $result = app(GrantService::class)->tokenableHasGrantToScope(
                 $this,
                 $scope
