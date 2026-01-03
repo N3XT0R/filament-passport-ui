@@ -22,12 +22,13 @@ class FilamentPassportUiPlugin implements FilamentPlugin
     protected function registerResources(Panel $panel): void
     {
         $resources = [
-            Resources\ClientResource::class,
+            0 => Resources\ClientResource::class,
+            10 => Resources\TokenResource::class,
         ];
 
         if (config('filament-passport-ui.enable_scopes_management', true)) {
-            $resources[] = Resources\PassportScopeResourceResource::class;
-            $resources[] = Resources\PassportScopeActionsResource::class;
+            $resources[1] = Resources\PassportScopeResourceResource::class;
+            $resources[2] = Resources\PassportScopeActionsResource::class;
         }
 
 
