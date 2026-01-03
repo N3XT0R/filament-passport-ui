@@ -107,8 +107,9 @@ readonly class GrantService
     {
         $grants = $this->scopeGrantRepository->getTokenableGrants($tokenable);
 
-        return $grants->map(fn(PassportScopeGrant $grant) => Scope::fromString(
-            $grant->resource->getAttribute('name') . ':' . $grant->action->getAttribute('name')
+
+        return $grants->map(fn(PassportScopeGrant $grant) => new Scope(
+            $grant->resource->getAttribute('name'), $grant->action->getAttribute('name')
         )->toString());
     }
 }
