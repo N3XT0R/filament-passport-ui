@@ -97,6 +97,11 @@ readonly class GrantService
         );
     }
 
+    /**
+     * Get all grants of the tokenable as scope strings.
+     * @param HasPassportScopeGrantsInterface $tokenable
+     * @return array
+     */
     public function getTokenableGrantsAsScopes(HasPassportScopeGrantsInterface $tokenable): array
     {
         $grants = $this->scopeGrantRepository->getTokenableGrants($tokenable);
