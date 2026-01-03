@@ -62,7 +62,7 @@ class ClientResource extends BaseManagementResource
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
                 ->placeholder(__('filament-passport-ui::passport-ui.common.none'))
                 ->options(app(GetAllOwnersRelationshipUseCase::class)->execute())
-                ->formatStateUsing(function (?string $state, ?Client $record): ?string {
+                ->formatStateUsing(function (?string $state, ?Client $record): string|int|null {
                     if ($record === null) {
                         return $state;
                     }
