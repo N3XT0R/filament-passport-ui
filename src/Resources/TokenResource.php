@@ -89,6 +89,6 @@ class TokenResource extends BaseManagementResource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string)app(TokenRepository::class)->count();
+        return (string)app(TokenRepository::class)->notExpiredCount();
     }
 }

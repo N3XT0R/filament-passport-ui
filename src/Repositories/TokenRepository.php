@@ -15,6 +15,11 @@ class TokenRepository
         return $this->getTokenModel()::count();
     }
 
+    public function notExpiredCount(): int
+    {
+        return $this->getTokenModel()::where('expires_at', '>', now())->count();
+    }
+
     /**
      * @return class-string<Token>
      */
