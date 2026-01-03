@@ -21,6 +21,13 @@ readonly class CreateClientUseCase
     ) {
     }
 
+    /**
+     * Create a new OAuth client
+     * @param array $data
+     * @param Authenticatable|null $actor
+     * @return void
+     * @throws \Throwable
+     */
     public function execute(array $data, ?Authenticatable $actor = null): void
     {
         $clientType = OAuthClientType::from($data['grant_type']);
