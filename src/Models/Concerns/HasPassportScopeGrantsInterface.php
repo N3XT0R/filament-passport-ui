@@ -13,11 +13,4 @@ interface HasPassportScopeGrantsInterface extends HasRelationshipsInterface
      * @return MorphMany
      */
     public function passportScopeGrants(): MorphMany;
-
-    /**
-     * Determine if the token has a given scope with additional scope grants check.
-     * @param string $scope
-     * @return bool
-     */
-    public function tokenCan(string $scope): bool;
 }
