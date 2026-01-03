@@ -134,10 +134,12 @@ class ClientResource extends BaseManagementResource
             ])
             ->recordActions([
                 EditAction::make(),
-                DeleteAction::make(),
+                DeleteAction::make()
+                    ->requireConfirmation(),
             ])
             ->toolbarActions([
-                DeleteBulkAction::make(),
+                DeleteBulkAction::make()
+                    ->requiresConfirmation(),
             ]);
     }
 
