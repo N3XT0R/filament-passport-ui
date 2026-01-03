@@ -14,11 +14,11 @@ use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
  * This class is responsible for booting the scopes from the database
  * into Laravel Passport's token capabilities.
  */
-class ScopeBooter implements BooterInterface
+readonly class ScopeBooter implements BooterInterface
 {
 
     public function __construct(
-        private readonly ScopeRegistryService $scopeRegistry
+        private ScopeRegistryService $scopeRegistry
     ) {
     }
 
