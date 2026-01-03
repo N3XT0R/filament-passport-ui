@@ -32,7 +32,6 @@ class TokenResource extends BaseManagementResource
                             $record->getAttribute('client_id') ?? ''
                         );
                     })
-                    ->sortable()
                     ->searchable()
                     ->toggleable(),
                 TextColumn::make('client_id')
@@ -40,8 +39,7 @@ class TokenResource extends BaseManagementResource
                     ->formatStateUsing(function (string $state): string {
                         return app(ClientRepository::class)->find($state)?->name;
                     })
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.name'))
                     ->sortable()
