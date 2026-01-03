@@ -33,26 +33,31 @@ class TokenResource extends BaseManagementResource
                         );
                     })
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('client_id')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.client'))
                     ->formatStateUsing(function (string $state): string {
                         return app(ClientRepository::class)->find($state)?->name;
                     })
-                    ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('name')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.name'))
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('scopes')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.scopes'))
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
                 IconColumn::make('revoked')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.revoked'))
                     ->boolean()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.created_at'))
                     ->dateTime()
