@@ -63,8 +63,7 @@ class ClientResource extends BaseManagementResource
                 ->options(function (): Collection {
                     return app(GetAllOwnersRelationshipUseCase::class)->execute();
                 })
-                ->searchable()
-                ->required(),
+                ->searchable(),
             Select::make('grant_type')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.column.grant_type'))
                 ->options(app(GetAllowedGrantTypeOptions::class)->execute())
