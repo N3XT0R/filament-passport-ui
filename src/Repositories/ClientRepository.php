@@ -13,6 +13,7 @@ use Laravel\Passport\Passport;
 class ClientRepository extends BaseRepository
 {
     /**
+     * Get all OAuth clients.
      * @return Collection<Client>
      */
     public function all(): Collection
@@ -20,11 +21,20 @@ class ClientRepository extends BaseRepository
         return Passport::clientModel()::all();
     }
 
+    /**
+     * Find an OAuth client by its name.
+     * @param string $name
+     * @return Client|null
+     */
     public function findByName(string $name): ?Client
     {
         return Passport::clientModel()::where('name', $name)->first();
     }
 
+    /**
+     * Count the total number of OAuth clients.
+     * @return int
+     */
     public function count(): int
     {
         return Passport::clientModel()::count();
