@@ -7,6 +7,12 @@ namespace N3XT0R\FilamentPassportUi\Providers\Boot;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Providers\Boot\Concerns\BooterInterface;
 
+/**
+ * Class PassportModelsBooter
+ *
+ * This class is responsible for booting custom Passport models
+ * as defined in the configuration.
+ */
 class PassportModelsBooter implements BooterInterface
 {
     public function boot(): void
