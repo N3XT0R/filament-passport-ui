@@ -17,10 +17,10 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
-use Laravel\Passport\Client;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
+use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
@@ -85,6 +85,7 @@ class ClientResource extends BaseManagementResource
 
                     return current($grantTypes);
                 })
+                ->disabled(fn(?Client $record): bool => $record !== null)
                 ->preload()
                 ->required(),
         ];

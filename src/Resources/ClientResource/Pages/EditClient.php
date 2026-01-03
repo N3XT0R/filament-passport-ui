@@ -6,23 +6,25 @@ namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 
 use Filament\Facades\Filament;
 use Filament\Resources\Pages\EditRecord;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
+use Illuminate\Database\Eloquent\Model;
+use N3XT0R\FilamentPassportUi\Application\UseCases\Client\EditClientUseCase;
+use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource;
 
 class EditClient extends EditRecord
 {
     protected static string $resource = ClientResource::class;
 
-    protected function mutateFormDataBeforeSave(array $data): array
+    protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        dd($data);
-        app(SaveOwnershipRelationUseCase::class)
-            ->execute(
-                client: $data['id'],
-                ownerId: $data['owner'],
-                actor: Filament::auth()->user()
-            );
+        if (!$record instanceof Client) {
+            throw new \RuntimeException('Record is not an instance of Client model.');
+        }
 
-        return parent::mutateFormDataBeforeSave($data);
+        return app(EditClientUseCase::class)->execute(
+            client: $record,
+            data: $data,
+            actor: Filament::auth()->user(),
+        );
     }
 }
