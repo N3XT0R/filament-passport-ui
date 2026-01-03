@@ -66,7 +66,7 @@ class ClientResource extends BaseManagementResource
                         return $state;
                     }
 
-                    return (string)$record->getAttribute('owner_id');
+                    return $record->owner?->getKey();
                 })
                 ->default(null)
                 ->nullable()
