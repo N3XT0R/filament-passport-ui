@@ -21,6 +21,13 @@ readonly class EditClientUseCase
     ) {
     }
 
+    /**
+     * Edit an existing OAuth client
+     * @param Client $client
+     * @param array $data
+     * @param Authenticatable|null $actor
+     * @return Client
+     */
     public function execute(Client $client, array $data, ?Authenticatable $actor = null): Client
     {
         $dto = new OAuthClientData(
