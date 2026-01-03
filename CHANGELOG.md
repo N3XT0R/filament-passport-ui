@@ -29,6 +29,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `PersonalAccessClientStrategy`
     - `ImplicitGrantClientStrategy`
     - `DeviceGrantClientStrategy`
+- **Application Use Cases** (Clean Architecture pattern):
+    - `CreateClientUseCase` for creating new OAuth clients with automatic scope assignment
+    - `EditClientUseCase` for modifying existing OAuth clients
+    - `GetAllowedGrantTypeOptions` for retrieving available grant types
+    - `GetAllOwnersUseCase` and `GetAllOwnersRelationshipUseCase` for owner lookup
+    - `SaveOwnershipRelationUseCase` for transferring client ownership
 - **Service Layer**:
     - `ClientService` for OAuth client lifecycle management with ownership support
     - `GrantService` for granting/revoking scopes on tokenable models
@@ -57,4 +63,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Database Seeders** for default scope resources and actions
 - **Install Command** with interactive setup wizard
 - **Comprehensive Documentation** covering configuration, scoped controllers, and testing
-
