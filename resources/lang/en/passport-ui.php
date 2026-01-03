@@ -25,6 +25,7 @@ return [
             'name' => 'Name',
             'owner' => 'Owner',
             'grant_type' => 'Grant Type',
+            'last_login' => 'Last Login',
         ],
     ],
     'passport_scope_resource_resource' => [

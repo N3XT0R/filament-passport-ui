@@ -126,6 +126,7 @@ class ClientResource extends BaseManagementResource
                     ->label(__('filament-passport-ui::passport-ui.common.updated_at'))
                     ->dateTime(),
                 TextColumn::make('last_login')
+                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.last_login'))
                     ->dateTime()
                     ->getStateUsing(function (Client $record): ?CarbonInterface {
                         return app(ClientRepository::class)->getLastLoginAtForClient($record);
