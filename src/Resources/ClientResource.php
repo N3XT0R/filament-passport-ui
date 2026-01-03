@@ -114,6 +114,10 @@ class ClientResource extends BaseManagementResource
                 TextColumn::make('owner.name')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
                     ->searchable(),
+                TextColumn::make('grant_types')
+                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.grant_type'))
+                    ->listWithLineBreaks()
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->label(__('filament-passport-ui::passport-ui.common.created_at'))
                     ->dateTime(),
