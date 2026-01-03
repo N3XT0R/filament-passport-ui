@@ -5,12 +5,8 @@ namespace N3XT0R\FilamentPassportUi;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Contracts\Container\Container as Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
-use Laravel\Passport\Client;
-use Laravel\Passport\ClientRepository as BaseClientRepository;
 use Laravel\Passport\Passport;
 use Livewire\Features\SupportTesting\Testable;
 use N3XT0R\FilamentPassportUi\Commands\FilamentPassportUiCommand;
@@ -18,33 +14,35 @@ use N3XT0R\FilamentPassportUi\Database\Seeders\FilamentPassportUiDatabaseSeeder;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactory;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;
-use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\AuthorizationCodeClientStrategy;
-use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\ClientCredentialsClientStrategy;
-use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\DeviceGrantClientStrategy;
-use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\ImplicitGrantClientStrategy;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\OAuthClientCreationStrategyInterface;
-use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\PasswordGrantClientStrategy;
-use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\PersonalAccessClientStrategy;
-use N3XT0R\FilamentPassportUi\Observers\ClientObserver;
-use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
-use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedActionRepositoryDecorator;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedResourceRepositoryDecorator;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 use N3XT0R\FilamentPassportUi\Testing\TestsFilamentPassportUi;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
+;
+
 class FilamentPassportUiServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-passport-ui';
 
     public static string $viewNamespace = 'filament-passport-ui';
+
+    /**
+     * @var array|\class-string[]
+     */
+    protected array $registrars = [
+        Providers\Register\RepositoryRegistrar::class,
+        Providers\Register\OAuthStrategyRegistrar::class,
+    ];
+    /**
+     * @var array|\class-string[]
+     */
+    protected array $booter = [
+        Providers\Boot\ScopeBooter::class,
+        Providers\Boot\ObserverBooter::class,
+    ];
 
     public function configurePackage(Package $package): void
     {
@@ -83,8 +81,17 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-        $this->registerRepositories();
-        $this->registerOAuthStrategies();
+        $this->executeRegister();
+    }
+
+    private function executeRegister(): void
+    {
+        foreach ($this->registrars as $registrar) {
+            $registrarInstance = app($registrar);
+            if ($registrarInstance instanceof Providers\Register\Concerns\RegistrarInterface) {
+                $registrarInstance->register();
+            }
+        }
     }
 
     public function packageBooted(): void
@@ -115,14 +122,19 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
         // Testing
         Testable::mixin(new TestsFilamentPassportUi());
 
+        $this->executeBooter();
+
         $this->registerOAuthFactory();
-        $this->bootScopes();
-        $this->bootObserver();
     }
 
-    protected function bootObserver(): void
+    private function executeBooter(): void
     {
-        Client::observe(ClientObserver::class);
+        foreach ($this->booter as $booterClass) {
+            $booter = app($booterClass);
+            if ($booter instanceof Providers\Boot\Concerns\BooterInterface) {
+                $booter->boot();
+            }
+        }
     }
 
     protected function getAssetPackageName(): ?string
@@ -208,22 +220,6 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
     }
 
     /**
-     * Register OAuth client creation strategies.
-     * @return void
-     */
-    protected function registerOAuthStrategies(): void
-    {
-        $this->app->tag([
-            PersonalAccessClientStrategy::class,
-            PasswordGrantClientStrategy::class,
-            ClientCredentialsClientStrategy::class,
-            ImplicitGrantClientStrategy::class,
-            AuthorizationCodeClientStrategy::class,
-            DeviceGrantClientStrategy::class,
-        ], 'filament-passport-ui.oauth.strategies');
-    }
-
-    /**
      * Register the OAuth client factory.
      * @return void
      */
@@ -256,61 +252,5 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
                 strategies: $strategies
             );
         });
-    }
-
-    protected function registerRepositories(): void
-    {
-        $this->app->singleton(BaseClientRepository::class, ClientRepository::class);
-        $this->app->singleton(ConfigRepository::class);
-        $this->app->singleton(
-            ActionRepositoryContract::class,
-            fn(Application $app, array $params = []) => $this->makeRepository(
-                app: $app,
-                params: $params,
-                repositoryClass: ActionRepository::class,
-                decoratorClass: CachedActionRepositoryDecorator::class,
-            )
-        );
-
-        $this->app->singleton(
-            ResourceRepositoryContract::class,
-            fn(Application $app, array $params = []) => $this->makeRepository(
-                app: $app,
-                params: $params,
-                repositoryClass: ResourceRepository::class,
-                decoratorClass: CachedResourceRepositoryDecorator::class,
-            )
-        );
-    }
-
-    /**
-     * Make a repository instance, optionally decorated with caching.
-     * @template TRepository
-     * @template TDecorator
-     *
-     * @param class-string<TRepository> $repositoryClass
-     * @param class-string<TDecorator> $decoratorClass
-     * @throws BindingResolutionException
-     */
-    protected function makeRepository(
-        Application $app,
-        array $params,
-        string $repositoryClass,
-        string $decoratorClass,
-    ): object {
-        $repository = $app->make($repositoryClass);
-
-        $useCache = $params['cache'] ?? (bool)config('passport-ui.cache.enabled', false);
-
-        if (
-            !$useCache
-            || defined('TESTBENCH_CORE')
-            || $this->app->runningUnitTests()
-            || $this->app->environment('testing')
-        ) {
-            return $repository;
-        }
-
-        return new $decoratorClass($repository);
     }
 }
