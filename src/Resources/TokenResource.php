@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Resources;
 
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Pages;
@@ -20,8 +23,39 @@ class TokenResource extends BaseManagementResource
     {
         return $table
             ->columns([
-
-            ]);
+                TextColumn::make('id')
+                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.id'))
+                    ->sortable(),
+                SelectColumn::make('user_id')
+                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.user_name'))
+                    ->sortable()
+                    ->searchable(),
+                SelectColumn::make('client_id')
+                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.client'))
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('name')
+                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.name'))
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('scopes')
+                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.scopes'))
+                    ->sortable()
+                    ->searchable(),
+                IconColumn::make('revoked')
+                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.revoked'))
+                    ->boolean()
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.created_at'))
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('expires_at')
+                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.expires_at'))
+                    ->dateTime()
+                    ->sortable(),
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 
 
