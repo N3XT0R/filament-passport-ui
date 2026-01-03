@@ -9,6 +9,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Laravel\Passport\Passport;
+use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Pages;
 
 class TokenResource extends BaseManagementResource
@@ -28,6 +29,9 @@ class TokenResource extends BaseManagementResource
                     ->searchable(),
                 TextColumn::make('client_id')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.client'))
+                    ->formatStateUsing(function (string $state): string {
+                        return app(ClientRepository::class)->find($state)?->name;
+                    })
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('name')
