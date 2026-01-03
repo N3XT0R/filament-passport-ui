@@ -15,8 +15,6 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-;
-
 class FilamentPassportUiServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-passport-ui';
