@@ -15,8 +15,8 @@ class ClientObserver extends BaseObserver
         OAuthClientCreated::dispatch($model);
     }
 
-    public function deleted(Model $model): void
+    public function deleting(Model $model): void
     {
-        app(ClientRepository::class)->delete();
+        app(ClientRepository::class)->delete($model);
     }
 }
