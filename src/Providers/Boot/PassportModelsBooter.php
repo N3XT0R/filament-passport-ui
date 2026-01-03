@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Providers\Boot;
 
 use Laravel\Passport\Passport;
+use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Providers\Boot\Concerns\BooterInterface;
 
 /**
@@ -20,11 +21,11 @@ class PassportModelsBooter implements BooterInterface
         $config = config('passport-ui.models');
 
         foreach ($config as $modelType => $modelClass) {
-            if (empty($modelClass)) {
+            if (empty($modelClass) && $modelType !== 'client') {
                 continue;
             }
             match ($modelType) {
-                'client' => Passport::useClientModel($modelClass),
+                'client' => Passport::useClientModel(empty($modelClass) ? Client::class : $modelClass),
                 'token' => Passport::useTokenModel($modelClass),
                 'auth_code' => Passport::useAuthCodeModel($modelClass),
                 'refresh_token' => Passport::useRefreshTokenModel($modelClass),
