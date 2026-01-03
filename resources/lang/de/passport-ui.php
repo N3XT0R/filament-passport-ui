@@ -18,6 +18,9 @@ return [
         'label' => 'OAuth Clients',
         'model_label' => 'Client',
         'plural_model_label' => 'Clients',
+        'form' => [
+            'owner_hint' => 'Der Eigentümer dieses Clients. Wird verwendet, um den Client einem Benutzer zuzuordnen.',
+        ],
         'column' => [
             'name' => 'Name',
             'owner' => 'Eigentümer',
