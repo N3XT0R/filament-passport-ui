@@ -6,11 +6,17 @@ namespace N3XT0R\FilamentPassportUi\Observers;
 
 use Illuminate\Database\Eloquent\Model;
 use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientCreated;
+use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 
 class ClientObserver extends BaseObserver
 {
     public function created(Model $model): void
     {
         OAuthClientCreated::dispatch($model);
+    }
+
+    public function deleted(Model $model): void
+    {
+        app(ClientRepository::class)->delete();
     }
 }
