@@ -78,7 +78,7 @@ class ClientRepository extends BaseRepository
             $token->revoke();
         });
 
-        $client->forceFill(['revoked' => true])->save();
+        $client->delete();
     }
 
 
