@@ -49,6 +49,7 @@ class TokenResource extends BaseManagementResource
                     ->toggledHiddenByDefault(),
                 TextColumn::make('scopes')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.scopes'))
+                    ->listWithLineBreaks()
                     ->sortable()
                     ->searchable()
                     ->toggleable()
