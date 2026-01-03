@@ -51,6 +51,35 @@ readonly class GrantService
     }
 
     /**
+     * Revoke a scope from the given tokenable model.
+     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param string $resourceName
+     * @param string $actionName
+     * @return bool
+     */
+    public function revokeScopeFromTokenable(
+        HasPassportScopeGrantsInterface $tokenable,
+        string $resourceName,
+        string $actionName,
+    ): bool {
+        $resource = $this->resourceRepository->findByName($resourceName);
+        if ($resource === null) {
+            throw new \InvalidArgumentException("Resource '{$resourceName}' not found.");
+        }
+
+        $action = $this->actionRepository->findByName($actionName);
+        if ($action === null) {
+            throw new \InvalidArgumentException("Action '{$actionName}' not found.");
+        }
+
+        return $this->scopeGrantRepository->deleteScopeGrantForTokenable(
+            $tokenable,
+            $resource->getKey(),
+            $action->getKey(),
+        );
+    }
+
+    /**
      * Check if the tokenable has a specific grant.
      * @param HasPassportScopeGrantsInterface $tokenable
      * @param string $resourceName
@@ -111,5 +140,76 @@ readonly class GrantService
         return $grants->map(fn(PassportScopeGrant $grant) => new Scope(
             $grant->resource->getAttribute('name'), $grant->action->getAttribute('name')
         )->toString());
+    }
+
+
+    /**
+     * Give multiple grants to the tokenable based on the provided scopes.
+     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param array $scopes
+     * @return void
+     */
+    public function giveGrantsToTokenable(
+        HasPassportScopeGrantsInterface $tokenable,
+        array $scopes,
+    ): void {
+        foreach ($scopes as $scopeString) {
+            $scope = Scope::fromString($scopeString);
+
+            if ($this->tokenableHasGrantToScope($tokenable, $scopeString)) {
+                continue;
+            }
+
+
+            $this->grantScopeToTokenable(
+                $tokenable,
+                $scope->resource,
+                $scope->action,
+            );
+        }
+    }
+
+    /**
+     * Revoke multiple grants from the tokenable based on the provided scopes.
+     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param array $scopes
+     * @return void
+     */
+    public function revokeGrantsFromTokenable(
+        HasPassportScopeGrantsInterface $tokenable,
+        array $scopes,
+    ): void {
+        foreach ($scopes as $scopeString) {
+            $scope = Scope::fromString($scopeString);
+
+            if (!$this->tokenableHasGrantToScope($tokenable, $scopeString)) {
+                continue;
+            }
+
+            $this->revokeScopeFromTokenable(
+                $tokenable,
+                $scope->resource,
+                $scope->action,
+            );
+        }
+    }
+
+    /**
+     * Upsert grants for the tokenable based on the provided scopes.
+     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param array $scopes
+     * @return void
+     */
+    public function upsertGrantsForTokenable(
+        HasPassportScopeGrantsInterface $tokenable,
+        array $scopes,
+    ): void {
+        $existingGrants = $this->getTokenableGrantsAsScopes($tokenable)->toArray();
+
+        $scopesToRevoke = array_diff($existingGrants, $scopes);
+        $scopesToGrant = array_diff($scopes, $existingGrants);
+
+        $this->revokeGrantsFromTokenable($tokenable, $scopesToRevoke);
+        $this->giveGrantsToTokenable($tokenable, $scopesToGrant);
     }
 }

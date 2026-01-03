@@ -22,6 +22,7 @@ readonly class CreateClientUseCase
     {
         $clientType = OAuthClientType::from($data['grant_type']);
         $dto = CreateOAuthClientData::fromArray($data);
+        $scopes = $data['scopes'] ?? [];
 
 
         $client = $this->clientService->createClientForUser(
