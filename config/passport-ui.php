@@ -23,7 +23,33 @@ return [
             'icon' => Heroicon::OutlinedKey,
         ],
     ],
+    /**
+     * Model mappings used by Passport and this package.
+     *
+     * Setting a value to `null` will fall back to Passport's default model.
+     */
+    'models' => [
+        /**
+         * Model used to represent OAuth2 clients.
+         *
+         * Must be compatible with {@see \Laravel\Passport\Client}.
+         */
+        'client' => Laravel\Passport\Client::class,
 
+        /**
+         * Model used to represent OAuth2 clients.
+         *
+         * Must be compatible with {@see \Laravel\Passport\Token}.
+         */
+        'token' => Laravel\Passport\Token::class,
+
+        /**
+         * Model used to represent OAuth2 scopes.
+         *
+         * Must be compatible with {@see \Laravel\Passport\Scope}.
+         */
+        'scope' => Laravel\Passport\Scope::class,
+    ],
     /**
      * Cache settings.
      */
