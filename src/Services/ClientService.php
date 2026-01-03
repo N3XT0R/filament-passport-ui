@@ -57,6 +57,25 @@ readonly class ClientService
         return $client;
     }
 
+    public function updateClient(Client $client, OAuthClientData $data, ?Authenticatable $actor = null): Client
+    {
+        $client->name = $data->isNameEmpty() ? $client->name : $data->name;
+        $client->redirect_uris = $data->isRedirectUrisEmpty() ? $client->redirect_uris : $data->redirectUris;
+        $client->revoked = $data->revoked;
+
+        $client->saveOrFail();
+
+        activity('oauth')
+            ->performedOn($client)
+            ->causedBy($actor)
+            ->withProperties([
+                'name' => $client->getAttribute('name'),
+            ])
+            ->log('OAuth client updated');
+
+        return $client;
+    }
+
     /**
      * Change the owner of the given client to the new owner
      * @param Client $client
