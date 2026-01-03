@@ -220,13 +220,14 @@ readonly class GrantService
 
     /**
      * Revoke multiple grants from the tokenable based on the provided scopes.
-     * @param HasPassportScopeGrantsInterface $tokenable
+     * @param Model&HasPassportScopeGrantsInterface $tokenable
      * @param array $scopes
      * @return void
      */
     public function revokeGrantsFromTokenable(
-        HasPassportScopeGrantsInterface $tokenable,
+        Model&HasPassportScopeGrantsInterface $tokenable,
         array $scopes,
+        ?Authenticatable $actor = null,
     ): void {
         foreach ($scopes as $scopeString) {
             $scope = Scope::fromString($scopeString);
@@ -240,6 +241,18 @@ readonly class GrantService
                 $scope->resource,
                 $scope->action,
             );
+        }
+
+        if ($actor) {
+            activity('oauth')
+                ->performedOn($tokenable)
+                ->causedBy($actor)
+                ->withProperties([
+                    'tokenable_type' => $tokenable->getMorphClass(),
+                    'tokenable_id' => $tokenable->getKey(),
+                    'revoked_scopes' => $scopes,
+                ])
+                ->log('OAuth scope grants revoked from tokenable');
         }
     }
 
