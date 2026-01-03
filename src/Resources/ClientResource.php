@@ -85,7 +85,7 @@ class ClientResource extends BaseManagementResource
          * merge getResourceFormComponents if enabled
          */
         if (static::isResourceFormComponentsEnabled()) {
-            $components = array_merge($components, static::getResourceFormComponents());
+            $components = array_merge($components, static::getResourceFormComponents($schema->getRecord()));
         }
 
         return $schema

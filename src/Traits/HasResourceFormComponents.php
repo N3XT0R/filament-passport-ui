@@ -6,6 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Traits;
 
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
+use Illuminate\Database\Eloquent\Model;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Support\Builder\ScopeFormSectionBuilder;
 
@@ -16,14 +17,14 @@ trait HasResourceFormComponents
         return app(ConfigRepository::class)->isUsingDatabaseScopes();
     }
 
-    public static function getResourceFormComponents(): array
+    public static function getResourceFormComponents(?Model $record): array
     {
         return [
             Section::make(__('filament-passport-ui::passport-ui.common.scopes'))
                 ->schema([
                     Grid::make()
                         ->schema(
-                            app(ScopeFormSectionBuilder::class)->buildSections()
+                            app(ScopeFormSectionBuilder::class)->buildSections($record)
                         ),
                 ])
                 ->columnSpanFull()
