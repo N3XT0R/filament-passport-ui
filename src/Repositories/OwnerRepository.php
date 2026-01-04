@@ -9,8 +9,13 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\Contracts\OAuthenticatable;
 
-class OwnerRepository
+readonly class OwnerRepository
 {
+
+    public function __construct(private ConfigRepository $configRepository)
+    {
+    }
+
     /**
      * Get the base query for the owner model.
      * @return Builder
@@ -18,7 +23,7 @@ class OwnerRepository
     private function getBaseQuery(): Builder
     {
         /** @var class-string<Model&OAuthenticatable> $modelClass */
-        $modelClass = app(ConfigRepository::class)->getOwnerModel();
+        $modelClass = $this->configRepository->getOwnerModel();
         return $modelClass::query();
     }
 
