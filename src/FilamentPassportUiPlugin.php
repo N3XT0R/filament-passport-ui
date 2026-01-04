@@ -53,7 +53,7 @@ class FilamentPassportUiPlugin implements FilamentPlugin
     /**
      * Get the plugin instance from the Filament container.
      * @note This method assumes the plugin is registered with Filament
-     * and is possible to override/extend the plugin class.
+     * and is possible to override/extend the plugin class via DI.
      * @return static
      */
     public static function get(): static
