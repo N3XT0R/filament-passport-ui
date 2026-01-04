@@ -130,4 +130,14 @@ class ScopeGrantRepository
             ->where('tokenable_id', $tokenable->getKey())
             ->delete();
     }
+
+    /**
+     * Delete all scope grants that are orphaned (i.e., their tokenable model no longer exists).
+     * @return bool
+     */
+    public function deleteTokenableOrphans(): bool
+    {
+        return PassportScopeGrant::whereDoesntHave('tokenable')
+            ->delete();
+    }
 }
