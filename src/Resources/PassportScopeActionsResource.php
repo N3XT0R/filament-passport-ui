@@ -16,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use N3XT0R\FilamentPassportUi\Application\StateResolvers\ScopeAction\FormatIsGlobalState;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
@@ -106,7 +107,7 @@ class PassportScopeActionsResource extends BaseManagementResource
                     ->label(__('filament-passport-ui::passport-ui.passport_scope_actions_resource.column.is_global'))
                     ->boolean()
                     ->sortable()
-                    ->state(fn(PassportScopeAction $record): bool => $record->resource_id === null),
+                    ->state(fn(PassportScopeAction $record): bool => app(FormatIsGlobalState::class)->execute($record)),
             ])
             ->recordActions([
                 EditAction::make('edit'),
