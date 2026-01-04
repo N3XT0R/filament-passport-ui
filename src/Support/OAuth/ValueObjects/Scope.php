@@ -19,11 +19,13 @@ final class Scope
 
     public static function fromString(string $scope): self
     {
-        [$resource, $action] = explode(self::SEPARATOR, $scope, 2);
+        $parts = explode(self::SEPARATOR, $scope, 2);
 
-        if ($action === null) {
+        if (count($parts) !== 2) {
             throw new InvalidArgumentException("Invalid scope format: {$scope}");
         }
+
+        [$resource, $action] = $parts;
 
         return new self($resource, $action);
     }
