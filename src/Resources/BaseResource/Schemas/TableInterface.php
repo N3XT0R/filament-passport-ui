@@ -8,5 +8,10 @@ use Filament\Tables\Table;
 
 interface TableInterface
 {
+    /**
+     * Configure the given table schema.
+     * @param Table $table
+     * @return Table
+     */
     public static function configure(Table $table): Table;
 }
