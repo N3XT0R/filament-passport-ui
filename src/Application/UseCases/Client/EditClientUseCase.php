@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Application\UseCases\Client;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Laravel\Passport\Contracts\OAuthenticatable;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
 use N3XT0R\FilamentPassportUi\Models\Passport\Client;
+use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 use N3XT0R\FilamentPassportUi\Services\GrantService;
 
@@ -16,6 +18,7 @@ use N3XT0R\FilamentPassportUi\Services\GrantService;
 readonly class EditClientUseCase
 {
     public function __construct(
+        private OwnerRepository $ownerRepository,
         private ClientService $clientService,
         private GrantService $grantService,
     ) {
@@ -30,6 +33,7 @@ readonly class EditClientUseCase
      */
     public function execute(Client $client, array $data, ?Authenticatable $actor = null): Client
     {
+        $owner = $data['owner'] ?? null;
         $dto = new OAuthClientData(
             name: $data['name'],
             redirectUris: $data['redirect_uris'] ?? [],
@@ -40,6 +44,10 @@ readonly class EditClientUseCase
             owner: $data['owner'] ?? null,
         );
         $scopes = $data['scopes'] ?? [];
+
+        if ($owner instanceof OAuthenticatable === false) {
+            $owner = $this->ownerRepository->findByKey($owner);
+        }
 
         $client = $this->clientService->updateClient($client, $dto, $actor);
         $this->grantService->upsertGrantsForTokenable(

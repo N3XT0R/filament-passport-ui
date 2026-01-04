@@ -25,34 +25,37 @@ readonly class ClientService
      * Create a new OAuth client for the given user
      * @param OAuthClientType $type
      * @param OAuthClientData $data
-     * @param OAuthenticatable|null $user
+     * @param Authenticatable|null $actor
      * @return Client
      * @throws Throwable
      */
     public function createClientForUser(
         OAuthClientType $type,
         OAuthClientData $data,
-        ?OAuthenticatable $user,
+        ?Authenticatable $actor = null,
     ): Client {
         if ($this->clientRepository->findByName($data->name)) {
             throw new ClientAlreadyExists($data->name);
         }
 
         $factory = app(OAuthClientFactoryInterface::class);
-        $client = $factory($type, $data, $user);
+        $client = $factory($type, $data, $data->owner);
 
-        $client->owner()->associate($user);
+        $client->owner()->associate($data->owner);
         $client->saveOrFail();
 
-        activity('oauth')
-            ->performedOn($client)
-            ->causedBy($user)
-            ->withProperties([
-                'name' => $client->getAttribute('name'),
-                'grant_types' => $client->getAttribute('grant_types'),
-                'type' => $type->value,
-            ])
-            ->log('OAuth client created');
+        if ($actor) {
+            activity('oauth')
+                ->performedOn($client)
+                ->causedBy($actor)
+                ->withProperties([
+                    'name' => $client->getAttribute('name'),
+                    'grant_types' => $client->getAttribute('grant_types'),
+                    'type' => $type->value,
+                ])
+                ->log('OAuth client created');
+        }
+
 
         return $client;
     }
@@ -62,6 +65,12 @@ readonly class ClientService
         $client->name = $data->isNameEmpty() ? $client->name : $data->name;
         $client->redirect_uris = $data->isRedirectUrisEmpty() ? $client->redirect_uris : $data->redirectUris;
         $client->revoked = $data->revoked;
+
+        if ($data->owner) {
+            $client->owner()->dissociate();
+            $client->owner()->associate($data->owner);
+        }
+
 
         $client->saveOrFail();
 

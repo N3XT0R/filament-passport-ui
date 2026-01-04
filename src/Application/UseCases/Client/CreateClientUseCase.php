@@ -6,8 +6,10 @@ namespace N3XT0R\FilamentPassportUi\Application\UseCases\Client;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Client;
+use Laravel\Passport\Contracts\OAuthenticatable;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 use N3XT0R\FilamentPassportUi\Services\GrantService;
 
@@ -17,6 +19,7 @@ use N3XT0R\FilamentPassportUi\Services\GrantService;
 readonly class CreateClientUseCase
 {
     public function __construct(
+        private OwnerRepository $ownerRepository,
         private ClientService $clientService,
         private GrantService $grantService,
     ) {
@@ -31,7 +34,14 @@ readonly class CreateClientUseCase
      */
     public function execute(array $data, ?Authenticatable $actor = null): Client
     {
+        $owner = $data['owner'] ?? null;
         $clientType = OAuthClientType::from($data['grant_type']);
+
+        if ($owner instanceof OAuthenticatable === false) {
+            $owner = $this->ownerRepository->findByKey($owner);
+        }
+        $data['owner'] = $owner;
+
         $dto = OAuthClientData::fromArray($data);
         $scopes = $data['scopes'] ?? [];
 
@@ -39,7 +49,7 @@ readonly class CreateClientUseCase
         $client = $this->clientService->createClientForUser(
             type: $clientType,
             data: $dto,
-            user: $actor
+            actor: $actor
         );
 
         $this->grantService->giveGrantsToTokenable(
