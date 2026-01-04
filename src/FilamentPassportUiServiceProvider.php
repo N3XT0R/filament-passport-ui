@@ -23,14 +23,14 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
     public static string $viewNamespace = 'filament-passport-ui';
 
     /**
-     * @var array|\class-string[]
+     * @var array|class-string[]
      */
     protected array $registrars = [
         Providers\Register\RepositoryRegistrar::class,
         Providers\Register\OAuthStrategyRegistrar::class,
     ];
     /**
-     * @var array|\class-string[]
+     * @var array|class-string[]
      */
     protected array $booter = [
         Providers\Boot\ScopeBooter::class,
