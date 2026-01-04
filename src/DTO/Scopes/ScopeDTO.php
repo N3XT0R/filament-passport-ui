@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\DTO\Scopes;
 
-class ScopeDTO
+readonly class ScopeDTO
 {
     public function __construct(
-        public readonly string $scope,
-        public readonly bool $isGlobal = false,
-        public readonly ?string $resource = null,
-        public readonly ?string $description = null,
+        public string $scope,
+        public bool $isGlobal = false,
+        public ?string $resource = null,
+        public ?string $description = null,
     ) {
     }
 
