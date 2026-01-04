@@ -40,6 +40,7 @@ exclude_patterns = [
   "**/templates/**",
   "**/testdata/**",
   "**/vendor/**",
+  "**/resources/**",
 ]
 
 test_patterns = [
@@ -76,6 +77,7 @@ exclude_patterns = [
   "**/database/**",
   "**/lang/**",
   "**/config/**",
+  "**/resources/**",
 ]
 
 [files]
@@ -89,4 +91,5 @@ exclude = [
   "**/database/**",
   "**/lang/**",
   "**/config/**",
+  "**/resources/**",
 ]
