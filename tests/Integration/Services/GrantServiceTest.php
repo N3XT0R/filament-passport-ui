@@ -214,4 +214,39 @@ final class GrantServiceTest extends DatabaseTestCase
             'description' => 'OAuth scope grants given to tokenable',
         ]);
     }
+
+    public function testRevokeGrantsLogsActivityWithActor(): void
+    {
+        $actor = User::factory()->create();
+        $client = Client::factory()->create();
+
+        $resource = PassportScopeResource::factory()->create([
+            'name' => 'users',
+            'description' => 'User management',
+        ]);
+
+        $action = PassportScopeAction::factory()->create([
+            'name' => 'read',
+            'description' => 'Read users',
+        ]);
+
+        PassportScopeGrant::factory()
+            ->withTokenable($client)
+            ->create([
+                'resource_id' => $resource->getKey(),
+                'action_id' => $action->getKey(),
+            ]);
+
+        $this->service->revokeGrantsFromTokenable(
+            $client,
+            ['users:read'],
+            $actor
+        );
+
+        $this->assertDatabaseHas('activity_log', [
+            'log_name' => 'oauth',
+            'causer_id' => $actor->getKey(),
+            'description' => 'OAuth scope grants revoked from tokenable',
+        ]);
+    }
 }
