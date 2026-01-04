@@ -51,8 +51,10 @@ readonly class ClientService
                     'name' => $client->getAttribute('name'),
                     'grant_types' => $client->getAttribute('grant_types'),
                     'type' => $type->value,
-                    'client_id' => $client->getKey(),
-                    'client_type' => $client::class,
+                    'client' => [
+                        'client_id' => $client->getKey(),
+                        'client_type' => $client::class,
+                    ],
                 ])
                 ->log('OAuth client created');
         }
@@ -88,8 +90,10 @@ readonly class ClientService
                 ->withProperties([
                     'name' => $client->getAttribute('name'),
                     'revoked' => $client->getAttribute('revoked'),
-                    'client_id' => $client->getKey(),
-                    'client_type' => $client::class,
+                    'client' => [
+                        'client_id' => $client->getKey(),
+                        'client_type' => $client::class,
+                    ],
                 ])
                 ->log('OAuth client updated');
         }
@@ -118,8 +122,10 @@ readonly class ClientService
             ->withProperties([
                 'name' => $client->getAttribute('name'),
                 'new_owner_id' => $newOwner->getAuthIdentifier(),
-                'client_id' => $client->getKey(),
-                'client_type' => $client::class,
+                'client' => [
+                    'client_id' => $client->getKey(),
+                    'client_type' => $client::class,
+                ],
             ])
             ->log('OAuth client ownership changed');
 
