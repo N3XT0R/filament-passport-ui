@@ -35,6 +35,11 @@ class FilamentPassportUiPlugin implements FilamentPlugin
         $panel->resources($resources);
     }
 
+    /**
+     * Bootstrap any plugin panel services if any exists
+     * @param Panel $panel
+     * @return void
+     */
     public function boot(Panel $panel): void
     {
         //
@@ -45,6 +50,10 @@ class FilamentPassportUiPlugin implements FilamentPlugin
         return app(static::class);
     }
 
+    /**
+     * Get the plugin instance from the Filament container.
+     * @return static
+     */
     public static function get(): static
     {
         /** @var static $plugin */
