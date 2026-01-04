@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases;
+namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Cleanup;
 
 use App\Models\User;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Cleanup\CleanUpUseCase;
