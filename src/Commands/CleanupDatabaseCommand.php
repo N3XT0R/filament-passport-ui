@@ -7,11 +7,11 @@ namespace N3XT0R\FilamentPassportUi\Commands;
 use Illuminate\Console\Command;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Cleanup\CleanUpUseCase;
 
-class DeleteTokenableOrphansCommand extends Command
+class CleanupDatabaseCommand extends Command
 {
-    public $signature = 'filament-passport-ui:delete-tokenable-orphans';
+    public $signature = 'filament-passport-ui:cleanup-database';
 
-    public function handle(CleanUpUseCase $cleanUpUseCase)
+    public function handle(CleanUpUseCase $cleanUpUseCase): int
     {
         try {
             $cleanUpUseCase->execute();

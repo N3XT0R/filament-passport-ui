@@ -8,6 +8,7 @@ use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
 use Livewire\Features\SupportTesting\Testable;
+use N3XT0R\FilamentPassportUi\Commands\CleanupDatabaseCommand;
 use N3XT0R\FilamentPassportUi\Commands\FilamentPassportUiCommand;
 use N3XT0R\FilamentPassportUi\Database\Seeders\FilamentPassportUiDatabaseSeeder;
 use N3XT0R\FilamentPassportUi\Testing\TestsFilamentPassportUi;
@@ -153,6 +154,7 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
     {
         return [
             FilamentPassportUiCommand::class,
+            CleanupDatabaseCommand::class,
         ];
     }
 
