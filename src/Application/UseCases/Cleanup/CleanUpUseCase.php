@@ -9,7 +9,7 @@ use N3XT0R\FilamentPassportUi\Repositories\Scopes\ScopeGrantRepository;
 /**
  * Use case to clean up
  */
-class CleanUpUseCase
+readonly class CleanUpUseCase
 {
     public function __construct(
         private readonly ScopeGrantRepository $scopeGrantRepository,
