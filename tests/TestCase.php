@@ -21,6 +21,7 @@ use N3XT0R\FilamentPassportUi\FilamentPassportUiServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
+use Spatie\Activitylog\ActivitylogServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -32,9 +33,9 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            static fn (string $modelName) => 'N3XT0R\\FilamentPassportUi\\Database\\Factories\\' . class_basename(
-                $modelName
-            ) . 'Factory'
+            static fn(string $modelName) => 'N3XT0R\\FilamentPassportUi\\Database\\Factories\\' . class_basename(
+                    $modelName
+                ) . 'Factory'
         );
     }
 
@@ -55,6 +56,7 @@ class TestCase extends Orchestra
             SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
+            ActivitylogServiceProvider::class,
             FilamentPassportUiServiceProvider::class,
         ];
     }

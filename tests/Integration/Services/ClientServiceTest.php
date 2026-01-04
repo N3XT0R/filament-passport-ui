@@ -165,4 +165,35 @@ final class ClientServiceTest extends DatabaseTestCase
             $this->service->getOwnerLabelAttribute($client)
         );
     }
+
+    public function testCreateClientForUserLogsActivityWithActor(): void
+    {
+        $owner = User::factory()->create();
+        $actor = User::factory()->create();
+
+        $data = new OAuthClientData(
+            name: 'Actor Client',
+            redirectUris: [],
+            owner: $owner,
+        );
+
+        $client = $this->service->createClientForUser(
+            OAuthClientType::PERSONAL_ACCESS,
+            $data,
+            $actor
+        );
+
+        $this->assertDatabaseHas('activity_log', [
+            'log_name' => 'oauth',
+            'causer_id' => $actor->getKey(),
+            'causer_type' => $actor::class,
+            'description' => 'OAuth client created',
+        ]);
+
+        $this->assertDatabaseHas('activity_log', [
+            'subject_id' => $client->getKey(),
+            'subject_type' => Client::class,
+        ]);
+    }
+
 }
