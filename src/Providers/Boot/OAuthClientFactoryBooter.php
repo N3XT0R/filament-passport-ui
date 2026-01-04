@@ -19,7 +19,7 @@ class OAuthClientFactoryBooter extends BaseBooter
     {
         $this->app->singleton(OAuthClientFactoryInterface::class, function ($app) {
             $allowedTypeValues = config(
-                'filament-passport-ui.oauth.allowed_grant_types',
+                'passport-ui.oauth.allowed_grant_types',
                 []
             );
 
