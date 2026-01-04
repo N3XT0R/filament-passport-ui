@@ -12,7 +12,7 @@ use N3XT0R\FilamentPassportUi\Repositories\Scopes\ScopeGrantRepository;
 readonly class CleanUpUseCase
 {
     public function __construct(
-        private readonly ScopeGrantRepository $scopeGrantRepository,
+        private ScopeGrantRepository $scopeGrantRepository,
     ) {
     }
 
