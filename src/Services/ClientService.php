@@ -71,7 +71,6 @@ readonly class ClientService
             $client->owner()->associate($data->owner);
         }
 
-
         $client->saveOrFail();
 
         activity('oauth')
