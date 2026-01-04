@@ -16,7 +16,6 @@ class PassportScopeResourceFactory extends Factory
         return [
             'name' => $this->faker->unique()->slug(1),
             'description' => $this->faker->optional()->sentence(),
-            'group' => $this->faker->optional()->word(),
             'is_active' => true,
         ];
     }
