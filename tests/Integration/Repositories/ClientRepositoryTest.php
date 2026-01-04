@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Repositories;
 
 use App\Models\Token;
 use Carbon\Carbon;
-use Laravel\Passport\Client;
+use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 
