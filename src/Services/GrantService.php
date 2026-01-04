@@ -55,11 +55,12 @@ readonly class GrantService
 
         if ($result && $actor) {
             activity('oauth')
-                ->performedOn($tokenable)
                 ->causedBy($actor)
                 ->withProperties([
-                    'tokenable_type' => $tokenable->getMorphClass(),
-                    'tokenable_id' => $tokenable->getKey(),
+                    'tokenable' => [
+                        'type' => $tokenable->getMorphClass(),
+                        'id' => $tokenable->getKey(),
+                    ],
                     'granted_scope' => new Scope($resourceName, $actionName)->toString(),
                 ])
                 ->log('OAuth scope grant given to tokenable');
@@ -100,11 +101,12 @@ readonly class GrantService
 
         if ($result && $actor) {
             activity('oauth')
-                ->performedOn($tokenable)
                 ->causedBy($actor)
                 ->withProperties([
-                    'tokenable_type' => $tokenable->getMorphClass(),
-                    'tokenable_id' => $tokenable->getKey(),
+                    'tokenable' => [
+                        'type' => $tokenable->getMorphClass(),
+                        'id' => $tokenable->getKey(),
+                    ],
                     'revoked_scope' => new Scope($resourceName, $actionName)->toString(),
                 ])
                 ->log('OAuth scope grant revoked from tokenable');
@@ -207,11 +209,12 @@ readonly class GrantService
 
         if ($actor) {
             activity('oauth')
-                ->performedOn($tokenable)
                 ->causedBy($actor)
                 ->withProperties([
-                    'tokenable_type' => $tokenable->getMorphClass(),
-                    'tokenable_id' => $tokenable->getKey(),
+                    'tokenable' => [
+                        'type' => $tokenable->getMorphClass(),
+                        'id' => $tokenable->getKey(),
+                    ],
                     'granted_scopes' => $scopes,
                 ])
                 ->log('OAuth scope grants given to tokenable');
@@ -245,11 +248,12 @@ readonly class GrantService
 
         if ($actor) {
             activity('oauth')
-                ->performedOn($tokenable)
                 ->causedBy($actor)
                 ->withProperties([
-                    'tokenable_type' => $tokenable->getMorphClass(),
-                    'tokenable_id' => $tokenable->getKey(),
+                    'tokenable' => [
+                        'type' => $tokenable->getMorphClass(),
+                        'id' => $tokenable->getKey(),
+                    ],
                     'revoked_scopes' => $scopes,
                 ])
                 ->log('OAuth scope grants revoked from tokenable');
@@ -278,11 +282,12 @@ readonly class GrantService
 
         if ($actor) {
             activity('oauth')
-                ->performedOn($tokenable)
                 ->causedBy($actor)
                 ->withProperties([
-                    'tokenable_type' => $tokenable->getMorphClass(),
-                    'tokenable_id' => $tokenable->getKey(),
+                    'tokenable' => [
+                        'type' => $tokenable->getMorphClass(),
+                        'id' => $tokenable->getKey(),
+                    ],
                     'upserted_scopes' => $scopes,
                 ])
                 ->log('OAuth scope grants upserted for tokenable');
