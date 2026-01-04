@@ -3,7 +3,6 @@ laravel: '@testbench'
 migrations:
   - workbench/database/migrations
   - vendor/laravel/passport/database/migrations
-  - vendor/spatie/laravel-activitylog/database/migrations
   - database/migrations
 
 seeders:
