@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Services;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
@@ -27,12 +28,14 @@ readonly class GrantService
      * @param HasPassportScopeGrantsInterface&Model $tokenable
      * @param string $resourceName
      * @param string $actionName
+     * @param Authenticatable|null $actor
      * @return PassportScopeGrant
      */
     public function grantScopeToTokenable(
         Model&HasPassportScopeGrantsInterface $tokenable,
         string $resourceName,
-        string $actionName
+        string $actionName,
+        ?Authenticatable $actor = null,
     ): PassportScopeGrant {
         $resource = $this->resourceRepository->findByName($resourceName);
         if ($resource === null) {
@@ -50,6 +53,19 @@ readonly class GrantService
             $action->getKey(),
         );
 
+        if ($result && $actor) {
+            activity('oauth')
+                ->causedBy($actor)
+                ->withProperties([
+                    'tokenable' => [
+                        'type' => $tokenable->getMorphClass(),
+                        'id' => $tokenable->getKey(),
+                    ],
+                    'granted_scope' => new Scope($resourceName, $actionName)->toString(),
+                ])
+                ->log('OAuth scope grant given to tokenable');
+        }
+
 
         return $result;
     }
@@ -64,7 +80,8 @@ readonly class GrantService
     public function revokeScopeFromTokenable(
         Model&HasPassportScopeGrantsInterface $tokenable,
         string $resourceName,
-        string $actionName
+        string $actionName,
+        ?Authenticatable $actor = null,
     ): bool {
         $resource = $this->resourceRepository->findByName($resourceName);
         if ($resource === null) {
@@ -76,11 +93,27 @@ readonly class GrantService
             throw new \InvalidArgumentException("Action '{$actionName}' not found.");
         }
 
-        return $this->scopeGrantRepository->deleteScopeGrantForTokenable(
+        $result = $this->scopeGrantRepository->deleteScopeGrantForTokenable(
             $tokenable,
             $resource->getKey(),
             $action->getKey(),
         );
+
+        if ($result && $actor) {
+            activity('oauth')
+                ->causedBy($actor)
+                ->withProperties([
+                    'tokenable' => [
+                        'type' => $tokenable->getMorphClass(),
+                        'id' => $tokenable->getKey(),
+                    ],
+                    'revoked_scope' => new Scope($resourceName, $actionName)->toString(),
+                ])
+                ->log('OAuth scope grant revoked from tokenable');
+        }
+
+
+        return $result;
     }
 
     /**
@@ -151,11 +184,13 @@ readonly class GrantService
      * Give multiple grants to the tokenable based on the provided scopes.
      * @param HasPassportScopeGrantsInterface&Model $tokenable
      * @param array $scopes
+     * @param Authenticatable|null $actor
      * @return void
      */
     public function giveGrantsToTokenable(
         Model&HasPassportScopeGrantsInterface $tokenable,
         array $scopes,
+        ?Authenticatable $actor = null,
     ): void {
         foreach ($scopes as $scopeString) {
             $scope = Scope::fromString($scopeString);
@@ -171,6 +206,19 @@ readonly class GrantService
                 $scope->action,
             );
         }
+
+        if ($actor) {
+            activity('oauth')
+                ->causedBy($actor)
+                ->withProperties([
+                    'tokenable' => [
+                        'type' => $tokenable->getMorphClass(),
+                        'id' => $tokenable->getKey(),
+                    ],
+                    'granted_scopes' => $scopes,
+                ])
+                ->log('OAuth scope grants given to tokenable');
+        }
     }
 
     /**
@@ -182,6 +230,7 @@ readonly class GrantService
     public function revokeGrantsFromTokenable(
         Model&HasPassportScopeGrantsInterface $tokenable,
         array $scopes,
+        ?Authenticatable $actor = null,
     ): void {
         foreach ($scopes as $scopeString) {
             $scope = Scope::fromString($scopeString);
@@ -196,17 +245,32 @@ readonly class GrantService
                 $scope->action,
             );
         }
+
+        if ($actor) {
+            activity('oauth')
+                ->causedBy($actor)
+                ->withProperties([
+                    'tokenable' => [
+                        'type' => $tokenable->getMorphClass(),
+                        'id' => $tokenable->getKey(),
+                    ],
+                    'revoked_scopes' => $scopes,
+                ])
+                ->log('OAuth scope grants revoked from tokenable');
+        }
     }
 
     /**
      * Upsert grants for the tokenable based on the provided scopes.
      * @param HasPassportScopeGrantsInterface&Model $tokenable
      * @param array $scopes
+     * @param Authenticatable|null $actor
      * @return void
      */
     public function upsertGrantsForTokenable(
         Model&HasPassportScopeGrantsInterface $tokenable,
-        array $scopes
+        array $scopes,
+        ?Authenticatable $actor = null,
     ): void {
         $existingGrants = $this->getTokenableGrantsAsScopes($tokenable)->toArray();
 
@@ -215,5 +279,18 @@ readonly class GrantService
 
         $this->revokeGrantsFromTokenable($tokenable, $scopesToRevoke);
         $this->giveGrantsToTokenable($tokenable, $scopesToGrant);
+
+        if ($actor) {
+            activity('oauth')
+                ->causedBy($actor)
+                ->withProperties([
+                    'tokenable' => [
+                        'type' => $tokenable->getMorphClass(),
+                        'id' => $tokenable->getKey(),
+                    ],
+                    'upserted_scopes' => $scopes,
+                ])
+                ->log('OAuth scope grants upserted for tokenable');
+        }
     }
 }
