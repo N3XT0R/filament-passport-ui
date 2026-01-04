@@ -94,10 +94,10 @@ readonly class GrantService
         }
 
         $result = $this->scopeGrantRepository->deleteScopeGrantForTokenable(
-            $tokenable,
-            $resource->getKey(),
-            $action->getKey(),
-        );
+                $tokenable,
+                $resource->getKey(),
+                $action->getKey(),
+            ) > 0;
 
         if ($result && $actor) {
             activity('oauth')
