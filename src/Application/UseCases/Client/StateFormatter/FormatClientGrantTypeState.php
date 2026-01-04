@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace N3XT0R\FilamentPassportUi\Application\UseCases\Client;
+namespace N3XT0R\FilamentPassportUi\Application\UseCases\Client\StateFormatter;
 
 use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 
