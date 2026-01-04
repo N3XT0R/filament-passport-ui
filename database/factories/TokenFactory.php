@@ -14,6 +14,7 @@ class TokenFactory extends Factory
     public function definition(): array
     {
         return [
+            'id' => $this->faker->uuid,
             'user_id' => null,
             'client_id' => null,
             'name' => $this->faker->word,
