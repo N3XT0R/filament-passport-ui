@@ -59,7 +59,7 @@ final class ScopeRegistryServiceTest extends DatabaseTestCase
 
     public function testAllIncludesGlobalActions(): void
     {
-        $users = PassportScopeResource::factory()->create([
+        PassportScopeResource::factory()->create([
             'name' => 'users',
             'is_active' => true,
         ]);
@@ -105,7 +105,7 @@ final class ScopeRegistryServiceTest extends DatabaseTestCase
 
     public function testAllScopeNamesMarksGlobalActions(): void
     {
-        $users = PassportScopeResource::factory()->create([
+        PassportScopeResource::factory()->create([
             'name' => 'users',
             'is_active' => true,
         ]);
