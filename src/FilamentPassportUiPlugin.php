@@ -7,8 +7,6 @@ use Filament\Panel;
 
 class FilamentPassportUiPlugin implements FilamentPlugin
 {
-
-
     public function getId(): string
     {
         return 'filament-passport-ui';
