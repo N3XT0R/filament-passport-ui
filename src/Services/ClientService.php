@@ -81,13 +81,16 @@ readonly class ClientService
 
         $client->saveOrFail();
 
-        activity('oauth')
-            ->performedOn($client)
-            ->causedBy($actor)
-            ->withProperties([
-                'name' => $client->getAttribute('name'),
-            ])
-            ->log('OAuth client updated');
+        if ($actor) {
+            activity('oauth')
+                ->performedOn($client)
+                ->causedBy($actor)
+                ->withProperties([
+                    'name' => $client->getAttribute('name'),
+                    'revoked' => $client->getAttribute('revoked'),
+                ])
+                ->log('OAuth client updated');
+        }
 
         return $client;
     }
