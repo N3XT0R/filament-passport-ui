@@ -21,7 +21,7 @@ readonly class ScopeName
     ): self {
         return new self(
             $resource->getAttribute('name') . ':' . $action->getAttribute('name'),
-            trim($resource->getAttribute('description')) . ': ' . $action->getAttribute('description')
+            trim((string)$resource->getAttribute('description')) . ': ' . $action->getAttribute('description')
         );
     }
 
