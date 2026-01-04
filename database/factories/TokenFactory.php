@@ -6,6 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Passport\Token;
+use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 
 class TokenFactory extends Factory
 {
@@ -24,5 +25,12 @@ class TokenFactory extends Factory
             'updated_at' => now(),
             'expires_at' => now()->addDays(30),
         ];
+    }
+
+    public function withClient(?Client $client = null): self
+    {
+        return $this->state([
+            'client_id' => $client?->getKey() ?? Client::factory()->create()->getKey(),
+        ]);
     }
 }
