@@ -14,7 +14,7 @@ class ClientFactory extends \Laravel\Passport\Database\Factories\ClientFactory
 
     public function withPassportScopeGrants(array $scopeGrants): self
     {
-        return $this->afterCreating(function (Client $client) use ($scopeGrants) {
+        return $this->afterCreating(function () use ($scopeGrants) {
             foreach ($scopeGrants as $scopeGrant) {
                 $this->withPassportScopeGrant($scopeGrant);
             }
