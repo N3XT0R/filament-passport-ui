@@ -60,6 +60,14 @@ readonly class ClientService
         return $client;
     }
 
+    /**
+     * Update the given OAuth client
+     * @param Client $client
+     * @param OAuthClientData $data
+     * @param Authenticatable|null $actor
+     * @return Client
+     * @throws Throwable
+     */
     public function updateClient(Client $client, OAuthClientData $data, ?Authenticatable $actor = null): Client
     {
         $client->name = $data->isNameEmpty() ? $client->name : $data->name;
