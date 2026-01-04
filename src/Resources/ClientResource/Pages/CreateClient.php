@@ -25,9 +25,15 @@ class CreateClient extends CreateRecord
                 ->all();
         }
 
-        return app(CreateClientUseCase::class)->execute(
+        $result = app(CreateClientUseCase::class)->execute(
             data: $data,
             actor: Filament::auth()->user(),
         );
+
+        $this->form->fill([
+            'secret' => $result->plainSecret,
+        ]);
+
+        return $result->client;
     }
 }

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Application\UseCases\Client;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Laravel\Passport\Client;
 use Laravel\Passport\Contracts\OAuthenticatable;
+use N3XT0R\FilamentPassportUi\DTO\Client\ClientResultDTO;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
@@ -29,17 +29,17 @@ readonly class CreateClientUseCase
      * Create a new OAuth client
      * @param array $data
      * @param Authenticatable|null $actor
-     * @return Client
+     * @return ClientResultDTO
      * @throws \Throwable
      */
-    public function execute(array $data, ?Authenticatable $actor = null): Client
+    public function execute(array $data, ?Authenticatable $actor = null): ClientResultDTO
     {
         $owner = $data['owner'] ?? null;
 
         if ($owner instanceof OAuthenticatable === false) {
             $owner = $this->ownerRepository->findByKey($owner);
         }
-        
+
         $data['owner'] = $owner;
         $scopes = $data['scopes'] ?? [];
 
@@ -57,6 +57,6 @@ readonly class CreateClientUseCase
         );
 
 
-        return $client;
+        return new ClientResultDTO($client, $client->plainSecret);
     }
 }
