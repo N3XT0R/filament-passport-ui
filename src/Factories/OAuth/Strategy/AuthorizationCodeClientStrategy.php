@@ -6,16 +6,10 @@ namespace N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Client;
-use Laravel\Passport\ClientRepository;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 
-final readonly class AuthorizationCodeClientStrategy implements OAuthClientCreationStrategyInterface
+final readonly class AuthorizationCodeClientStrategy extends BaseStrategy
 {
-    public function __construct(
-        private ClientRepository $clients
-    ) {
-    }
-
     public function supports(OAuthClientType $type): bool
     {
         return $type === OAuthClientType::AUTHORIZATION_CODE;

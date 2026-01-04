@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy;
 
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
-use Laravel\Passport\Client;
-use Laravel\Passport\ClientRepository;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Laravel\Passport\Client;
+use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 
-final readonly class PersonalAccessClientStrategy implements OAuthClientCreationStrategyInterface
+final readonly class PersonalAccessClientStrategy extends BaseStrategy
 {
-    public function __construct(
-        private ClientRepository $clients
-    ) {
-    }
-
     public function supports(OAuthClientType $type): bool
     {
         return $type === OAuthClientType::PERSONAL_ACCESS;
