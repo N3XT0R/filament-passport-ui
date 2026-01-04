@@ -117,4 +117,17 @@ class ScopeGrantRepository
             ->with(['resource', 'action'])
             ->get();
     }
+
+    /**
+     * Delete all scope grants for the given tokenable.
+     * @param HasPassportScopeGrantsInterface $tokenable
+     * @return bool
+     */
+    public function deleteAllGrantsForTokenable(
+        HasPassportScopeGrantsInterface $tokenable,
+    ): bool {
+        return PassportScopeGrant::where('tokenable_type', $tokenable->getMorphClass())
+            ->where('tokenable_id', $tokenable->getKey())
+            ->delete();
+    }
 }
