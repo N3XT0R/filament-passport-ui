@@ -10,10 +10,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\Passport;
+use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\FormatUserIdState;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Repositories\TokenRepository;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Pages;
-use N3XT0R\FilamentPassportUi\Services\ClientService;
 
 class TokenResource extends BaseManagementResource
 {
@@ -28,10 +28,8 @@ class TokenResource extends BaseManagementResource
             ->columns([
                 TextColumn::make('user_id')
                     ->label(__('filament-passport-ui::passport-ui.token_resource.column.user_name'))
-                    ->formatStateUsing(function (Model $record): string {
-                        return (string)app(ClientService::class)->getOwnerLabelAttribute(
-                            $record->getAttribute('client_id') ?? ''
-                        );
+                    ->formatStateUsing(function (Model $record): ?string {
+                        return app(FormatUserIdState::class)->execute($record);
                     })
                     ->searchable()
                     ->toggleable(),
