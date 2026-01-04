@@ -11,6 +11,10 @@ use Laravel\Passport\Contracts\OAuthenticatable;
 
 class OwnerRepository
 {
+    /**
+     * Get the base query for the owner model.
+     * @return Builder
+     */
     private function getBaseQuery(): Builder
     {
         /** @var class-string<Model&OAuthenticatable> $modelClass */
@@ -33,6 +37,10 @@ class OwnerRepository
         return $owner;
     }
 
+    /**
+     * Get all owners.
+     * @return Collection
+     */
     public function all(): Collection
     {
         return $this->getBaseQuery()->get();
