@@ -28,7 +28,7 @@ final class CachedResourceRepositoryDecorator extends BaseCachedRepositoryDecora
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: 'passport.scopes.resources.all',
             ttl: $this->ttl(),
-            callback: fn () => $this->innerRepository->all(),
+            callback: fn() => $this->innerRepository->all(),
         );
     }
 
@@ -37,7 +37,7 @@ final class CachedResourceRepositoryDecorator extends BaseCachedRepositoryDecora
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: 'passport.scopes.resources.active',
             ttl: $this->ttl(),
-            callback: fn () => $this->innerRepository->active(),
+            callback: fn() => $this->innerRepository->active(),
         );
     }
 
@@ -46,15 +46,7 @@ final class CachedResourceRepositoryDecorator extends BaseCachedRepositoryDecora
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: "passport.scopes.resources.by-name.{$name}",
             ttl: $this->ttl(),
-            callback: fn () => $this->innerRepository->findByName($name),
-        );
-    }
-
-    private function ttl(): int
-    {
-        return (int)config(
-            'passport-ui.cache.ttl',
-            3600
+            callback: fn() => $this->innerRepository->findByName($name),
         );
     }
 

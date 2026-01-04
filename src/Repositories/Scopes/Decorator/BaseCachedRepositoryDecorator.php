@@ -16,4 +16,12 @@ abstract class BaseCachedRepositoryDecorator implements ClearsCacheContract
     {
         Cache::tags(static::CACHE_TAGS)->flush();
     }
+
+    protected function ttl(): int
+    {
+        return (int)config(
+            'passport-ui.cache.ttl',
+            3600
+        );
+    }
 }

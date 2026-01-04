@@ -27,7 +27,7 @@ class CachedActionRepositoryDecorator extends BaseCachedRepositoryDecorator impl
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: 'passport.scopes.actions.all',
             ttl: $this->ttl(),
-            callback: fn () => $this->innerRepository->all(),
+            callback: fn() => $this->innerRepository->all(),
         );
     }
 
@@ -36,7 +36,7 @@ class CachedActionRepositoryDecorator extends BaseCachedRepositoryDecorator impl
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: 'passport.scopes.actions.active',
             ttl: $this->ttl(),
-            callback: fn () => $this->innerRepository->active(),
+            callback: fn() => $this->innerRepository->active(),
         );
     }
 
@@ -45,15 +45,7 @@ class CachedActionRepositoryDecorator extends BaseCachedRepositoryDecorator impl
         return Cache::tags(self::CACHE_TAGS)->remember(
             key: "passport.scopes.actions.by-name.{$name}",
             ttl: $this->ttl(),
-            callback: fn () => $this->innerRepository->findByName($name),
-        );
-    }
-
-    private function ttl(): int
-    {
-        return (int)config(
-            'passport-ui.cache.ttl',
-            3600
+            callback: fn() => $this->innerRepository->findByName($name),
         );
     }
 
