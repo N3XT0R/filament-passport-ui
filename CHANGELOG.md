@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - introduced tests for stability
 
+### Changed
+
+- Moved Logic from UI layer to Usecase layer for better separation of concerns
+
 ### Fixed
 
 - some minor bugs on method declarations and edge cases fixed
