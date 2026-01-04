@@ -73,9 +73,9 @@ readonly class ClientService
         $client->name = $data->isNameEmpty() ? $client->name : $data->name;
         $client->redirect_uris = $data->isRedirectUrisEmpty() ? $client->redirect_uris : $data->redirectUris;
         $client->revoked = $data->revoked;
+        $client->owner()->dissociate();
 
         if ($data->owner) {
-            $client->owner()->dissociate();
             $client->owner()->associate($data->owner);
         }
 
