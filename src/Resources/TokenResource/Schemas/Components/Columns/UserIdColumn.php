@@ -7,8 +7,9 @@ namespace N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\Components\C
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\FormatUserIdState;
+use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Columns\ColumnInterface;
 
-class UserIdColumn
+class UserIdColumn implements ColumnInterface
 {
     public static function make(string $name = 'user_id'): TextColumn
     {

@@ -6,8 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\Components\C
 
 use Filament\Tables\Columns\TextColumn;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\FormatClientIdState;
+use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Columns\ColumnInterface;
 
-class ClientIdColumn
+class ClientIdColumn implements ColumnInterface
 {
     public static function make(string $name = 'client_id'): TextColumn
     {

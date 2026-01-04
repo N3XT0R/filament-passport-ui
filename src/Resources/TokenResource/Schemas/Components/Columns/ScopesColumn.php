@@ -7,12 +7,13 @@ namespace N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\Components\C
 use Filament\Tables\Columns\TextColumn;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Columns\ColumnInterface;
 
-class NameColumn implements ColumnInterface
+class ScopesColumn implements ColumnInterface
 {
-    public static function make(string $name = 'name'): TextColumn
+    public static function make(string $name = 'scopes'): TextColumn
     {
         return TextColumn::make($name)
-            ->label(__('filament-passport-ui::passport-ui.token_resource.column.name'))
+            ->label(__('filament-passport-ui::passport-ui.token_resource.column.scopes'))
+            ->listWithLineBreaks()
             ->sortable()
             ->searchable()
             ->toggleable()

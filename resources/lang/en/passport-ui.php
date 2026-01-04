@@ -6,8 +6,9 @@ return [
         'group' => 'API Management',
     ],
     'common' => [
-        'updated_at' => 'updated at',
-        'created_at' => 'created at',
+        'updated_at' => 'Updated at',
+        'created_at' => 'Created at',
+        'expires_at' => 'Expires At',
         'scopes' => 'scopes',
         'none' => 'none',
     ],
