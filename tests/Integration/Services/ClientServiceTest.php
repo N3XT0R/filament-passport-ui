@@ -191,4 +191,33 @@ final class ClientServiceTest extends DatabaseTestCase
         ]);
     }
 
+    public function testUpdateClientLogsActivityWithActor(): void
+    {
+        $actor = User::factory()->create();
+
+        $client = Client::factory()->create([
+            'name' => 'Before',
+            'revoked' => false,
+        ]);
+
+        $data = new OAuthClientData(
+            name: 'After',
+            revoked: true,
+        );
+
+        $this->service->updateClient(
+            $client,
+            $data,
+            $actor
+        );
+
+        $this->assertDatabaseHas('activity_log', [
+            'log_name' => 'oauth',
+            'causer_id' => $actor->getKey(),
+            'causer_type' => $actor::class,
+            'description' => 'OAuth client updated',
+        ]);
+    }
+
+
 }
