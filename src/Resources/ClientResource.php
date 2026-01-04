@@ -94,8 +94,7 @@ class ClientResource extends BaseManagementResource
                     __('filament-passport-ui::passport-ui.client_resource.form.secret_description')
                 )
                 ->disabled()
-                ->copyable()
-                ->visibleOn(['view', 'edit']),
+                ->copyable(),
         ];
 
         /**
