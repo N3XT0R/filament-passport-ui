@@ -137,7 +137,7 @@ class ScopeGrantRepository
      */
     public function deleteTokenableOrphans(): int
     {
-        return PassportScopeGrant::whereDoesntHave('tokenable')
+        return (int)PassportScopeGrant::whereDoesntHave('tokenable')
             ->delete();
     }
 }
