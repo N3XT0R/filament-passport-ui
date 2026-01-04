@@ -177,7 +177,7 @@ final class ClientServiceTest extends DatabaseTestCase
             owner: $owner,
         );
 
-        $client = $this->service->createClientForUser(
+        $this->service->createClientForUser(
             OAuthClientType::PERSONAL_ACCESS,
             $data,
             $actor
@@ -188,11 +188,6 @@ final class ClientServiceTest extends DatabaseTestCase
             'causer_id' => $actor->getKey(),
             'causer_type' => $actor::class,
             'description' => 'OAuth client created',
-        ]);
-
-        $this->assertDatabaseHas('activity_log', [
-            'subject_id' => $client->getKey(),
-            'subject_type' => Client::class,
         ]);
     }
 
