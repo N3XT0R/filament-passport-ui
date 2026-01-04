@@ -7,11 +7,11 @@ namespace N3XT0R\FilamentPassportUi\ValueObjects\Scopes;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 
-class ScopeName
+readonly class ScopeName
 {
     private function __construct(
-        private readonly string $value,
-        private readonly ?string $description = null,
+        private string $value,
+        private ?string $description = null,
     ) {
     }
 
