@@ -11,7 +11,12 @@ return new class () extends Migration {
     {
         Schema::create('passport_scope_grants', static function (Blueprint $table) {
             $table->id();
-            $table->morphs('tokenable');
+            /**
+             * polymorphic relation to the token owner (User, ServiceAccount, etc.)
+             */
+            $table->string('tokenable_id');
+            $table->string('tokenable_type');
+
 
             $table->foreignId('resource_id')
                 ->constrained('passport_scope_resources')
