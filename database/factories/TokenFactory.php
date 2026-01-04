@@ -17,7 +17,7 @@ class TokenFactory extends Factory
         return [
             'id' => $this->faker->uuid,
             'user_id' => null,
-            'client_id' => null,
+            'client_id' => Client::factory(),
             'name' => $this->faker->word,
             'scopes' => [],
             'revoked' => false,
@@ -30,7 +30,14 @@ class TokenFactory extends Factory
     public function withClient(?Client $client = null): self
     {
         return $this->state([
-            'client_id' => $client?->getKey() ?? Client::factory()->create()->getKey(),
+            'client_id' => $client?->getKey() ?? Client::factory(),
+        ]);
+    }
+
+    public function withUserId(?int $userId = null): self
+    {
+        return $this->state([
+            'user_id' => $userId,
         ]);
     }
 }
