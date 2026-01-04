@@ -6,11 +6,15 @@ return [
         'group' => 'API Management',
     ],
     'common' => [
+        'id' => 'ID',
+        'name' => 'Name',
+        'description' => 'Description',
         'updated_at' => 'Updated at',
         'created_at' => 'Created at',
         'expires_at' => 'Expires At',
         'scopes' => 'scopes',
         'none' => 'none',
+        'is_active' => 'Is Active',
     ],
     'resource' => [
         'global_action' => 'global action',

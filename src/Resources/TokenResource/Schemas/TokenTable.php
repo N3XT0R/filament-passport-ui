@@ -6,9 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas;
 
 use Filament\Tables\Table;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Columns\CreatedAtColumn;
+use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Columns\NameColumn;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\TableInterface;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\Components\Columns\ClientIdColumn;
-use N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\Components\Columns\NameColumn;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\Components\Columns\RevokedColumn;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\Components\Columns\ScopesColumn;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\Components\Columns\UserIdColumn;
@@ -20,7 +20,9 @@ class TokenTable implements TableInterface
         return $table->columns([
             UserIdColumn::make(),
             ClientIdColumn::make(),
-            NameColumn::make(),
+            NameColumn::make()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
             ScopesColumn::make(),
             RevokedColumn::make(),
             CreatedAtColumn::make(),
