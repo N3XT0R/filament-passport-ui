@@ -117,17 +117,19 @@ readonly class ClientService
         $client->owner()->associate($newOwner);
         $client->saveOrFail();
 
-        activity('oauth')
-            ->causedBy($actor)
-            ->withProperties([
-                'name' => $client->getAttribute('name'),
-                'new_owner_id' => $newOwner->getAuthIdentifier(),
-                'client' => [
-                    'client_id' => $client->getKey(),
-                    'client_type' => $client::class,
-                ],
-            ])
-            ->log('OAuth client ownership changed');
+        if ($actor) {
+            activity('oauth')
+                ->causedBy($actor)
+                ->withProperties([
+                    'name' => $client->getAttribute('name'),
+                    'new_owner_id' => $newOwner->getAuthIdentifier(),
+                    'client' => [
+                        'client_id' => $client->getKey(),
+                        'client_type' => $client::class,
+                    ],
+                ])
+                ->log('OAuth client ownership changed');
+        }
 
         return $client;
     }
