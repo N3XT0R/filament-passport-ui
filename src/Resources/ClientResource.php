@@ -18,7 +18,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Laravel\Passport\Passport;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\FormatClientGrantTypeState;
+use N3XT0R\FilamentPassportUi\Application\UseCases\Client\FormatClientGrantTypeState;
+use N3XT0R\FilamentPassportUi\Application\UseCases\Client\FormatOwnerState;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
 use N3XT0R\FilamentPassportUi\Models\Passport\Client;
@@ -65,11 +66,7 @@ class ClientResource extends BaseManagementResource
                 ->placeholder(__('filament-passport-ui::passport-ui.common.none'))
                 ->options(app(GetAllOwnersRelationshipUseCase::class)->execute())
                 ->formatStateUsing(function (?string $state, ?Client $record): string|int|null {
-                    if ($record === null) {
-                        return $state;
-                    }
-
-                    return $record->owner?->getKey();
+                    return app(FormatOwnerState::class)->execute($state, $record);
                 })
                 ->default(null)
                 ->nullable()
