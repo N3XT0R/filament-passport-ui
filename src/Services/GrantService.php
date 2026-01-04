@@ -99,7 +99,7 @@ readonly class GrantService
                 $action->getKey(),
             ) > 0;
 
-        if ($result && $actor) {
+        if (true === $result && $actor) {
             activity('oauth')
                 ->causedBy($actor)
                 ->withProperties([
