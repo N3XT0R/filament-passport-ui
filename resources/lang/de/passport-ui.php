@@ -20,6 +20,8 @@ return [
         'plural_model_label' => 'Clients',
         'form' => [
             'owner_hint' => 'Der Eigentümer dieses Clients. Wird verwendet, um den Client einem Benutzer zuzuordnen.',
+            'secret_label' => 'Geheimer Schlüssel',
+            'secret_description' => 'Dieses Feld ist nur einmalig sichtbar nach der Erstellung der Resource. Stellen Sie sicher, dass Sie es an einem sicheren Ort speichern.',
         ],
         'column' => [
             'name' => 'Name',
