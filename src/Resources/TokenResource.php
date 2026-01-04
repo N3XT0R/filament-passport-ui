@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Resources;
 
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\Passport;
-use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\FormatClientIdState;
-use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\FormatUserIdState;
 use N3XT0R\FilamentPassportUi\Repositories\TokenRepository;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Pages;
+use N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\TokenTable;
 
 class TokenResource extends BaseManagementResource
 {
@@ -24,48 +20,7 @@ class TokenResource extends BaseManagementResource
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('user_id')
-                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.user_name'))
-                    ->formatStateUsing(function (Model $record): ?string {
-                        return app(FormatUserIdState::class)->execute($record);
-                    })
-                    ->searchable()
-                    ->toggleable(),
-                TextColumn::make('client_id')
-                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.client'))
-                    ->formatStateUsing(function (string $state): ?string {
-                        return app(FormatClientIdState::class)->execute($state);
-                    })
-                    ->searchable(),
-                TextColumn::make('name')
-                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.name'))
-                    ->sortable()
-                    ->searchable()
-                    ->toggleable()
-                    ->toggledHiddenByDefault(),
-                TextColumn::make('scopes')
-                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.scopes'))
-                    ->listWithLineBreaks()
-                    ->sortable()
-                    ->searchable()
-                    ->toggleable()
-                    ->toggledHiddenByDefault(),
-                IconColumn::make('revoked')
-                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.revoked'))
-                    ->boolean()
-                    ->sortable()
-                    ->toggleable(),
-                TextColumn::make('created_at')
-                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.created_at'))
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('expires_at')
-                    ->label(__('filament-passport-ui::passport-ui.token_resource.column.expires_at'))
-                    ->dateTime()
-                    ->sortable(),
-            ])
+        return TokenTable::configure($table)
             ->defaultSort('updated_at', 'desc');
     }
 

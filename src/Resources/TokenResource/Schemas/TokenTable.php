@@ -24,6 +24,8 @@ class TokenTable implements TableInterface
             ScopesColumn::make(),
             RevokedColumn::make(),
             CreatedAtColumn::make(),
+            CreatedAtColumn::make('expires_at')
+                ->label(__('filament-passport-ui::passport-ui.common.expires_at'))
         ]);
     }
 }
