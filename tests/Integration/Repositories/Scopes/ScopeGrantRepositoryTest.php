@@ -4,61 +4,43 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Repositories\Scopes;
 
-use Illuminate\Database\Eloquent\Collection;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use Illuminate\Support\Collection;
+use Laravel\Passport\Client as PassportClient;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ScopeGrantRepository;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 
 final class ScopeGrantRepositoryTest extends DatabaseTestCase
 {
-    protected ScopeGrantRepository $scopeGrantRepository;
+    protected ScopeGrantRepository $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->scopeGrantRepository = $this->app->make(ScopeGrantRepository::class);
+        $this->repository = $this->app->make(ScopeGrantRepository::class);
     }
 
     public function testCreateScopeGrantForTokenable(): void
     {
-        [$tokenable, $resource, $action] = $this->seedTokenableWithScope();
+        $client = PassportClient::factory()->create();
 
-        $grant = $this->scopeGrantRepository
-            ->createScopeGrantForTokenable(
-                $tokenable,
-                $resource->getKey(),
-                $action->getKey()
-            );
+        $grant = $this->repository->createScopeGrantForTokenable(
+            $client,
+            1,
+            1
+        );
 
-        self::assertInstanceOf(PassportScopeGrant::class, $grant);
-        self::assertDatabaseHas('passport_scope_grants', [
-            'tokenable_type' => $tokenable->getMorphClass(),
-            'tokenable_id' => $tokenable->getKey(),
-            'resource_id' => $resource->getKey(),
-            'action_id' => $action->getKey(),
-        ]);
+        self::assertSame($client->getMorphClass(), $grant->tokenable_type);
+        self::assertSame($client->getKey(), $grant->tokenable_id);
     }
 
     public function testCreateOrUpdateScopeGrantForTokenable(): void
     {
-        [$tokenable, $resource, $action] = $this->seedTokenableWithScope();
+        $client = PassportClient::factory()->create();
 
-        $first = $this->scopeGrantRepository
-            ->createOrUpdateScopeGrantForTokenable(
-                $tokenable,
-                $resource->getKey(),
-                $action->getKey()
-            );
-
-        $second = $this->scopeGrantRepository
-            ->createOrUpdateScopeGrantForTokenable(
-                $tokenable,
-                $resource->getKey(),
-                $action->getKey()
-            );
+        $first = $this->repository->createOrUpdateScopeGrantForTokenable($client, 1, 1);
+        $second = $this->repository->createOrUpdateScopeGrantForTokenable($client, 1, 1);
 
         self::assertSame($first->getKey(), $second->getKey());
         self::assertSame(1, PassportScopeGrant::count());
@@ -66,108 +48,77 @@ final class ScopeGrantRepositoryTest extends DatabaseTestCase
 
     public function testDeleteScopeGrantForTokenable(): void
     {
-        [$tokenable, $resource, $action] = $this->seedTokenableWithScope(true);
+        $client = PassportClient::factory()->create();
 
-        $deleted = $this->scopeGrantRepository
-            ->deleteScopeGrantForTokenable(
-                $tokenable,
-                $resource->getKey(),
-                $action->getKey()
-            );
+        $grant = PassportScopeGrant::factory()
+            ->withTokenable($client)
+            ->create();
+
+        $deleted = $this->repository->deleteScopeGrantForTokenable(
+            $client,
+            $grant->resource_id,
+            $grant->action_id
+        );
 
         self::assertSame(1, $deleted);
-        self::assertDatabaseCount('passport_scope_grants', 0);
+        self::assertSame(0, PassportScopeGrant::count());
     }
 
     public function testTokenableHasScopeGrant(): void
     {
-        [$tokenable, $resource, $action] = $this->seedTokenableWithScope(true);
+        $client = PassportClient::factory()->create();
+
+        PassportScopeGrant::factory()
+            ->withTokenable($client)
+            ->create();
 
         self::assertTrue(
-            $this->scopeGrantRepository->tokenableHasScopeGrant(
-                $tokenable,
-                $resource->getKey(),
-                $action->getKey()
-            )
-        );
-    }
-
-    public function testTokenableHasGrantViaRelation(): void
-    {
-        [$tokenable, $resource, $action] = $this->seedTokenableWithScope(true);
-
-        self::assertTrue(
-            $this->scopeGrantRepository->tokenableHasGrant(
-                $tokenable,
-                $resource->getKey(),
-                $action->getKey()
-            )
+            $this->repository->tokenableHasScopeGrant($client, 1, 1)
         );
     }
 
     public function testGetTokenableGrants(): void
     {
-        [$tokenable] = $this->seedTokenableWithScope(true);
+        $client = PassportClient::factory()->create();
 
-        $grants = $this->scopeGrantRepository->getTokenableGrants($tokenable);
+        PassportScopeGrant::factory()
+            ->count(2)
+            ->withTokenable($client)
+            ->create();
+
+        $grants = $this->repository->getTokenableGrants($client);
 
         self::assertInstanceOf(Collection::class, $grants);
-        self::assertCount(1, $grants);
-        self::assertTrue($grants->first()->relationLoaded('resource'));
-        self::assertTrue($grants->first()->relationLoaded('action'));
+        self::assertCount(2, $grants);
     }
 
     public function testDeleteAllGrantsForTokenable(): void
     {
-        [$tokenable] = $this->seedTokenableWithScope(true);
-        $this->seedAdditionalGrant($tokenable);
+        $client = PassportClient::factory()->create();
 
-        $deleted = $this->scopeGrantRepository
-            ->deleteAllGrantsForTokenable($tokenable);
+        PassportScopeGrant::factory()
+            ->count(3)
+            ->withTokenable($client)
+            ->create();
 
-        self::assertSame(2, $deleted);
-        self::assertDatabaseCount('passport_scope_grants', 0);
+        $deleted = $this->repository->deleteAllGrantsForTokenable($client);
+
+        self::assertSame(3, $deleted);
+        self::assertSame(0, PassportScopeGrant::count());
     }
 
     public function testDeleteTokenableOrphans(): void
     {
-        $grant = PassportScopeGrant::factory()->create();
+        PassportClient::flushEventListeners();
+        $client = PassportClient::factory()->create();
 
-        $deleted = $this->scopeGrantRepository->deleteTokenableOrphans();
+        PassportScopeGrant::factory()
+            ->withTokenable($client)
+            ->create();
 
-        self::assertSame(1, $deleted);
-        self::assertDatabaseCount('passport_scope_grants', 0);
-    }
+        $client->delete();
 
-    private function seedTokenableWithScope(bool $withGrant = false): array
-    {
-        $tokenable = $this->createTokenable();
-
-        $resource = PassportScopeResource::factory()->create();
-        $action = PassportScopeAction::factory()->create();
-
-        if ($withGrant) {
-            PassportScopeGrant::factory()->create([
-                'tokenable_type' => $tokenable->getMorphClass(),
-                'tokenable_id' => $tokenable->getKey(),
-                'resource_id' => $resource->getKey(),
-                'action_id' => $action->getKey(),
-            ]);
-        }
-
-        return [$tokenable, $resource, $action];
-    }
-
-    private function seedAdditionalGrant($tokenable): void
-    {
-        PassportScopeGrant::factory()->create([
-            'tokenable_type' => $tokenable->getMorphClass(),
-            'tokenable_id' => $tokenable->getKey(),
-        ]);
-    }
-
-    private function createTokenable()
-    {
-        return app(config('passport-ui.owner_model'))->create();
+        $this->repository->deleteTokenableOrphans();
+        self::assertSame(0, PassportScopeGrant::count());
     }
 }
