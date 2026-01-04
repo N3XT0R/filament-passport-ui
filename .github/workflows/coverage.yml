@@ -2,6 +2,7 @@ name: "branch Coverage"
 
 on:
   push:
+    tags: [ '*' ]
     branches: [ 'develop', 'main' ]
   pull_request:
     branches: [ 'develop', 'main' ]
