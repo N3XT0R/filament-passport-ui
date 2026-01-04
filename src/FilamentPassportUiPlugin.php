@@ -45,6 +45,12 @@ class FilamentPassportUiPlugin implements FilamentPlugin
         //
     }
 
+    /**
+     * Create a new plugin instance from the container.
+     * @note This method assumes the plugin is registered with Filament
+     * and is possible to override/extend the plugin class via DI.
+     * @return static
+     */
     public static function make(): static
     {
         return app(static::class);
@@ -52,14 +58,12 @@ class FilamentPassportUiPlugin implements FilamentPlugin
 
     /**
      * Get the plugin instance from the Filament container.
-     * @note This method assumes the plugin is registered with Filament
-     * and is possible to override/extend the plugin class via DI.
      * @return static
      */
     public static function get(): static
     {
         /** @var static $plugin */
-        $plugin = filament(app(static::class)->getId());
+        $plugin = filament(static::make()->getId());
 
         return $plugin;
     }
