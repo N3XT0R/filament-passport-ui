@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases;
+namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Grant;
 
 use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
