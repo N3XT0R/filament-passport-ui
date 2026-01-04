@@ -11,13 +11,12 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Pages;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\RelationManagers;
+use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Schemas\PassportScopeResourceTable;
 
 class PassportScopeResourceResource extends BaseManagementResource
 {
@@ -48,23 +47,7 @@ class PassportScopeResourceResource extends BaseManagementResource
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('id')
-                    ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.column.id'))
-                    ->sortable(),
-                TextColumn::make('name')
-                    ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.column.name'))
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('description')
-                    ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.column.description'))
-                    ->sortable()
-                    ->searchable(),
-                IconColumn::make('is_active')
-                    ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.column.is_active'))
-                    ->boolean(),
-            ])
+        return PassportScopeResourceTable::configure($table)
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()
