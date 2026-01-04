@@ -16,7 +16,7 @@ class DeleteTokenableOrphansCommand extends Command
         try {
             $cleanUpUseCase->execute();
         } catch (\Throwable $e) {
-            $this->error('An error occurred while deleting tokenable orphans: ' . $e->getMessage());
+            $this->error('An error occurred while cleanup: ' . $e->getMessage());
             return self::FAILURE;
         }
 
