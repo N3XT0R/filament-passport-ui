@@ -25,6 +25,7 @@ class ClientObserver extends BaseObserver
     }
 
     /**
+     * Handle the Client "updated" event.
      * @param Client $model
      * @return void
      */
