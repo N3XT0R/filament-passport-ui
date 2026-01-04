@@ -12,7 +12,6 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -89,12 +88,13 @@ class ClientResource extends BaseManagementResource
                 ->disabled(fn(?Client $record): bool => $record !== null)
                 ->preload()
                 ->required(),
-            TextEntry::make('secret')
+            TextInput::make('secret')
                 ->label(__('filament-passport-ui::passport-ui.client_resource.form.secret_label'))
                 ->helperText(
                     __('filament-passport-ui::passport-ui.client_resource.form.secret_description')
                 )
                 ->disabled()
+                ->copyable()
                 ->visibleOn(['view', 'edit']),
         ];
 
