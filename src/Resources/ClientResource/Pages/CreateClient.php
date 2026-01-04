@@ -32,6 +32,7 @@ class CreateClient extends CreateRecord
         );
 
         /**
+         * @note
          * Ugly implementation but Laravel Passport only shows the client secret
          * upon creation. So we store it in the session to show it in the view page
          * right after creation. Filament always redirects to the view page after creation.
