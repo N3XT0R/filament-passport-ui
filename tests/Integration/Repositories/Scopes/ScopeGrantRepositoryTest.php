@@ -121,4 +121,22 @@ final class ScopeGrantRepositoryTest extends DatabaseTestCase
         $this->repository->deleteTokenableOrphans();
         self::assertSame(0, PassportScopeGrant::count());
     }
+
+    public function testTokenableHasGrantUsesRelation(): void
+    {
+        $client = PassportClient::factory()->create();
+
+        $grant = PassportScopeGrant::factory()
+            ->withTokenable($client)
+            ->create();
+
+        self::assertTrue(
+            $this->repository->tokenableHasGrant(
+                $client,
+                $grant->resource_id,
+                $grant->action_id
+            )
+        );
+    }
+
 }
