@@ -17,6 +17,14 @@ class CreateClient extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
+        if (isset($data['scopes']) && is_array($data['scopes'])) {
+            $data['scopes'] = collect($data['scopes'])
+                ->flatten()
+                ->unique()
+                ->values()
+                ->all();
+        }
+
         return app(CreateClientUseCase::class)->execute(
             data: $data,
             actor: Filament::auth()->user(),

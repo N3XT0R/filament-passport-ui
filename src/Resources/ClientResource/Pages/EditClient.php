@@ -21,6 +21,15 @@ class EditClient extends EditRecord
             throw new \RuntimeException('Record is not an instance of Client model.');
         }
 
+        if (isset($data['scopes']) && is_array($data['scopes'])) {
+            $data['scopes'] = collect($data['scopes'])
+                ->flatten()
+                ->unique()
+                ->values()
+                ->all();
+        }
+
+
         return app(EditClientUseCase::class)->execute(
             client: $record,
             data: $data,

@@ -47,7 +47,8 @@ readonly class ScopeFormSectionBuilder
 
         return Section::make($resource)
             ->schema([
-                CheckboxList::make('scopes')
+                CheckboxList::make($resource)
+                    ->statePath("scopes.$resource")
                     ->options(
                         $scopes->mapWithKeys(
                             fn(ScopeDTO $dto) => [
