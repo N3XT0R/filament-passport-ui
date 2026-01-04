@@ -35,7 +35,6 @@ readonly class CreateClientUseCase
     public function execute(array $data, ?Authenticatable $actor = null): Client
     {
         $owner = $data['owner'] ?? null;
-        $clientType = OAuthClientType::from($data['grant_type']);
 
         if ($owner instanceof OAuthenticatable === false) {
             $owner = $this->ownerRepository->findByKey($owner);
@@ -47,7 +46,7 @@ readonly class CreateClientUseCase
 
 
         $client = $this->clientService->createClientForUser(
-            type: $clientType,
+            type: OAuthClientType::from($data['grant_type']),
             data: $dto,
             actor: $actor
         );
