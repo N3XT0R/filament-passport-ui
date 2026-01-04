@@ -108,6 +108,7 @@ class ClientResource extends BaseManagementResource
             ->components($components);
     }
 
+
     /**
      * Build the table for the resource.
      * @param Table $table
