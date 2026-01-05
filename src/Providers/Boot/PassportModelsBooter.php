@@ -32,10 +32,10 @@ class PassportModelsBooter implements BooterInterface
     /**
      * Register a custom Passport model based on the model type.
      * @param string $modelType
-     * @param string $modelClass
+     * @param string|null $modelClass
      * @return void
      */
-    private function registerModel(string $modelType, string $modelClass): void
+    private function registerModel(string $modelType, ?string $modelClass = null): void
     {
         match ($modelType) {
             'client' => Passport::useClientModel(empty($modelClass) ? Client::class : $modelClass),
