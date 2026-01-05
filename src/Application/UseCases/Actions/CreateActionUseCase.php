@@ -6,6 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Application\UseCases\Actions;
 
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Services\ActionService;
+use RectorPrefix202512\Illuminate\Contracts\Auth\Authenticatable;
 
 readonly class CreateActionUseCase
 {
@@ -13,8 +14,8 @@ readonly class CreateActionUseCase
     {
     }
 
-    public function execute(array $data): PassportScopeAction
+    public function execute(array $data, ?Authenticatable $actor = null): PassportScopeAction
     {
-        return $this->actionService->createAction($data);
+        return $this->actionService->createAction($data, $actor);
     }
 }
