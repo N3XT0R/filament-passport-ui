@@ -80,4 +80,16 @@ class ActionRepository implements ActionRepositoryContract
     {
         return $action->delete();
     }
+
+    /**
+     * Update a scope action.
+     * @param PassportScopeAction $action
+     * @param array $data
+     * @return PassportScopeAction
+     */
+    public function updateAction(PassportScopeAction $action, array $data): PassportScopeAction
+    {
+        $action->update($data);
+        return $action;
+    }
 }
