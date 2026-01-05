@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Facades\Session;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource;
+use N3XT0R\FilamentPassportUi\Resources\ClientResource\Actions\DeleteAction;
 
 class ViewClient extends ViewRecord
 {
@@ -30,8 +30,7 @@ class ViewClient extends ViewRecord
     {
         return [
             EditAction::make(),
-            DeleteAction::make()
-                ->requiresConfirmation(),
+            DeleteAction::make(),
         ];
     }
 }
