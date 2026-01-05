@@ -35,4 +35,21 @@ readonly class ResourceService
 
         return $resource;
     }
+
+    public function updateResource(array $data, ?Authenticatable $actor = null)
+    {
+        $resource = $this->resourceRepository->updateResource($data);
+
+        if ($actor) {
+            activity('oauth_scope_resource')
+                ->by($actor)
+                ->withProperties([
+                    'resource_id' => $resource->getKey(),
+                    'resource_name' => $resource->getAttribute('name'),
+                ])
+                ->log('OAuth scope resource updated');
+        }
+
+        return $resource;
+    }
 }
