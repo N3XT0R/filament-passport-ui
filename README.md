@@ -69,6 +69,13 @@ This package operates entirely at the application and UI level.
 - Consistent UX aligned with Filament conventions
 - No custom panels or hacks required
 
+### Auditability & Compliance
+
+- Administrative actions (e.g. creating, updating, revoking clients or tokens) are fully auditable
+- Changes are recorded via `spatie/laravel-activitylog`
+- Enables traceability of security-relevant actions for compliance requirements (e.g. ISO/IEC 27001)
+- Audit logs remain application-owned and can be integrated into existing ISMS processes
+
 ### Design Principles
 
 - No changes to Passport internals
