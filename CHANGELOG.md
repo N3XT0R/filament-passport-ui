@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed a bug where wrong model was used in `LastLoginColumn`
+- Fixed owner resolution in `EditClientUseCase` when receiving an identifier instead of an entity.
+
 ### [1.0.0-beta.2] - 2026-01-05
 
 ### Added
