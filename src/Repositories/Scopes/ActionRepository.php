@@ -60,4 +60,24 @@ class ActionRepository implements ActionRepositoryContract
     {
         return PassportScopeAction::query()->count();
     }
+
+    /**
+     * Create a new scope action.
+     * @param array $data
+     * @return PassportScopeAction
+     */
+    public function createAction(array $data): PassportScopeAction
+    {
+        return PassportScopeAction::query()->create($data);
+    }
+
+    /**
+     * Delete a scope action.
+     * @param PassportScopeAction $action
+     * @return void
+     */
+    public function deleteAction(PassportScopeAction $action): void
+    {
+        $action->delete();
+    }
 }

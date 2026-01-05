@@ -28,4 +28,18 @@ interface ActionRepositoryContract extends IsMigratedContract
      * @return PassportScopeAction|null
      */
     public function findByName(string $name): ?PassportScopeAction;
+
+    /**
+     * Create a new scope action.
+     * @param array $data
+     * @return PassportScopeAction
+     */
+    public function createAction(array $data): PassportScopeAction;
+
+    /**
+     * Delete a scope action.
+     * @param PassportScopeAction $action
+     * @return void
+     */
+    public function deleteAction(PassportScopeAction $action): void;
 }

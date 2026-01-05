@@ -53,4 +53,16 @@ class CachedActionRepositoryDecorator extends BaseCachedRepositoryDecorator impl
     {
         return $this->innerRepository->isMigrated();
     }
+
+    public function createAction(array $data): PassportScopeAction
+    {
+        return $this->innerRepository->createAction($data);
+    }
+    
+    public function deleteAction(PassportScopeAction $action): void
+    {
+        $this->innerRepository->deleteAction($action);
+    }
+
+
 }
