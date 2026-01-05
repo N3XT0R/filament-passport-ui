@@ -30,6 +30,8 @@ readonly class ResourceService
                 ->withProperties([
                     'resource_id' => $resource->getKey(),
                     'resource_name' => $resource->getAttribute('name'),
+                    'description' => $resource->getAttribute('description'),
+                    'is_active' => $resource->getAttribute('is_active'),
                 ])
                 ->log('OAuth scope resource created');
         }
@@ -57,6 +59,8 @@ readonly class ResourceService
                 ->withProperties([
                     'resource_id' => $resource->getKey(),
                     'resource_name' => $resource->getAttribute('name'),
+                    'description' => $resource->getAttribute('description'),
+                    'is_active' => $resource->getAttribute('is_active'),
                 ])
                 ->log('OAuth scope resource updated');
         }
@@ -74,6 +78,8 @@ readonly class ResourceService
                 ->withProperties([
                     'resource_id' => $resource->getKey(),
                     'resource_name' => $resource->getAttribute('name'),
+                    'description' => $resource->getAttribute('description'),
+                    'is_active' => $resource->getAttribute('is_active'),
                 ])
                 ->log('OAuth scope resource deleted');
         }

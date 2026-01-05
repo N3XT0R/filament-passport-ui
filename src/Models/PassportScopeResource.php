@@ -17,7 +17,6 @@ class PassportScopeResource extends Model
     protected $fillable = [
         'name',
         'description',
-        'group',
         'is_active',
     ];
 

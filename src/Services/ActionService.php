@@ -30,6 +30,9 @@ readonly class ActionService
                 ->withProperties([
                     'action_id' => $action->getKey(),
                     'action_name' => $action->getAttribute('name'),
+                    'resource_id' => $action->getAttribute('resource_id'),
+                    'description' => $action->getAttribute('description'),
+                    'is_active' => $action->getAttribute('is_active'),
                 ])
                 ->log('OAuth scope action deleted');
         }
@@ -53,6 +56,9 @@ readonly class ActionService
                 ->withProperties([
                     'action_id' => $action->getKey(),
                     'action_name' => $action->getAttribute('name'),
+                    'resource_id' => $action->getAttribute('resource_id'),
+                    'description' => $action->getAttribute('description'),
+                    'is_active' => $action->getAttribute('is_active'),
                 ])
                 ->log('OAuth scope action created');
         }
@@ -80,6 +86,9 @@ readonly class ActionService
                 ->withProperties([
                     'action_id' => $updatedAction->getKey(),
                     'action_name' => $updatedAction->getAttribute('name'),
+                    'resource_id' => $action->getAttribute('resource_id'),
+                    'description' => $action->getAttribute('description'),
+                    'is_active' => $action->getAttribute('is_active'),
                 ])
                 ->log('OAuth scope action updated');
         }
