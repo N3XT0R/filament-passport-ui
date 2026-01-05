@@ -174,7 +174,6 @@ composer test
 
 ```bash
 composer install
-./vendor/bin/testbench filament:install --panels
 composer serve
 ```
 
