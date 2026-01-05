@@ -176,7 +176,7 @@ readonly class ClientService
 
         $result = $this->clientRepository->deleteClient($client);
 
-        if ($actor) {
+        if ($result && $actor) {
             activity('oauth')
                 ->causedBy($actor)
                 ->withProperties([
