@@ -76,6 +76,9 @@ This package operates entirely at the application and UI level.
 - Enables traceability of security-relevant actions for compliance requirements (e.g. ISO/IEC 27001)
 - Audit logs remain application-owned and can be integrated into existing ISMS processes
 
+> Note: ISO/IEC 27001 certification applies to organizations and processes.
+> This package supports auditability requirements but does not constitute certification or compliance by itself.
+
 ### Design Principles
 
 - No changes to Passport internals
