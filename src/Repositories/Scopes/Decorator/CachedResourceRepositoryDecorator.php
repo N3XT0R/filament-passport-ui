@@ -57,12 +57,15 @@ final class CachedResourceRepositoryDecorator extends BaseCachedRepositoryDecora
 
     public function createResource(array $data): PassportScopeResource
     {
-        return $this->innerRepository->createResource($data);
+        $result = $this->innerRepository->createResource($data);
+        $this->clearCache();
+        return $result;
     }
 
     public function deleteResource(PassportScopeResource $resource): void
     {
         $this->innerRepository->deleteResource($resource);
+        $this->clearCache();
     }
 
 
