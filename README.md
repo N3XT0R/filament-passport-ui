@@ -183,6 +183,8 @@ Open:
 http://localhost:8000/admin
 ```
 
+login with `test@example.com` and `password`.
+
 ---
 
 ## Status

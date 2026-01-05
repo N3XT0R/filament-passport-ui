@@ -16,11 +16,14 @@ class DatabaseSeeder extends Seeder
     {
         // UserFactory::new()->times(10)->create();
 
-        UserFactory::new()
-            ->withPassword('password')
-            ->create([
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-            ]);
+        $factory = UserFactory::new();
+        if (app()->runningInConsole()) {
+            $factory->withPassword('password');
+        }
+
+        $factory->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
     }
 }
