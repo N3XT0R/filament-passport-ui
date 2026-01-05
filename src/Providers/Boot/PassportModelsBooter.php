@@ -18,7 +18,7 @@ class PassportModelsBooter implements BooterInterface
 {
     public function boot(): void
     {
-        $config = config('passport-ui.models');
+        $config = (array)config('passport-ui.models');
 
         foreach ($config as $modelType => $modelClass) {
             if (empty($modelClass) && $modelType !== 'client') {
