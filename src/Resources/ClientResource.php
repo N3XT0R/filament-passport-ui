@@ -8,20 +8,13 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Laravel\Passport\Passport;
-use N3XT0R\FilamentPassportUi\Application\StateResolvers\Client\FormatClientGrantTypeState;
-use N3XT0R\FilamentPassportUi\Application\StateResolvers\Client\FormatOwnerState;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
+use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientResourceForm;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientResourceTable;
 use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
 
@@ -52,50 +45,15 @@ class ClientResource extends BaseManagementResource
      */
     public static function form(Schema $schema): Schema
     {
-        $components = [
-            Hidden::make('id')
-                ->unique('oauth_clients', 'id'),
-            TextInput::make('name')
-                ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                ->required()
-                ->maxLength(255),
-            Select::make('owner')
-                ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
-                ->placeholder(__('filament-passport-ui::passport-ui.common.none'))
-                ->options(app(GetAllOwnersRelationshipUseCase::class)->execute())
-                ->formatStateUsing(function (?string $state, ?Client $record): string|int|null {
-                    return app(FormatOwnerState::class)->execute($state, $record);
-                })
-                ->default(null)
-                ->nullable()
-                ->helperText(__('filament-passport-ui::passport-ui.client_resource.form.owner_hint')),
-            Select::make('grant_type')
-                ->label(__('filament-passport-ui::passport-ui.client_resource.column.grant_type'))
-                ->options(app(GetAllowedGrantTypeOptions::class)->execute())
-                ->formatStateUsing(function (?string $state, ?Client $record): ?string {
-                    return app(FormatClientGrantTypeState::class)->execute($state, $record);
-                })
-                ->disabled(fn(?Client $record): bool => $record !== null)
-                ->preload()
-                ->required(),
-            TextInput::make('secret')
-                ->label(__('filament-passport-ui::passport-ui.client_resource.form.secret_label'))
-                ->helperText(
-                    __('filament-passport-ui::passport-ui.client_resource.form.secret_description')
-                )
-                ->disabled()
-                ->copyable(),
-        ];
-
+        $components = [];
         /**
          * merge getResourceFormComponents if enabled
          */
         if (static::isResourceFormComponentsEnabled()) {
-            $components = array_merge($components, static::getResourceFormComponents($schema->getRecord()));
+            $components = static::getResourceFormComponents($schema->getRecord());
         }
 
-        return $schema
-            ->components($components);
+        return ClientResourceForm::configure($schema, $components);
     }
 
 
