@@ -24,14 +24,26 @@ class PassportModelsBooter implements BooterInterface
             if (empty($modelClass) && $modelType !== 'client') {
                 continue;
             }
-            match ($modelType) {
-                'client' => Passport::useClientModel(empty($modelClass) ? Client::class : $modelClass),
-                'token' => Passport::useTokenModel($modelClass),
-                'auth_code' => Passport::useAuthCodeModel($modelClass),
-                'refresh_token' => Passport::useRefreshTokenModel($modelClass),
-                default => null,
-            };
+
+            $this->registerModel($modelType, $modelClass);
         }
+    }
+
+    /**
+     * Register a custom Passport model based on the model type.
+     * @param string $modelType
+     * @param string $modelClass
+     * @return void
+     */
+    private function registerModel(string $modelType, string $modelClass): void
+    {
+        match ($modelType) {
+            'client' => Passport::useClientModel(empty($modelClass) ? Client::class : $modelClass),
+            'token' => Passport::useTokenModel($modelClass),
+            'auth_code' => Passport::useAuthCodeModel($modelClass),
+            'refresh_token' => Passport::useRefreshTokenModel($modelClass),
+            default => null,
+        };
     }
 
 }
