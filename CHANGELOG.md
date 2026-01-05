@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added `IdColumn` to `TokenTable` for better token identification
+- introduce custom actions bound to use cases
 
 ### Fixed
 
