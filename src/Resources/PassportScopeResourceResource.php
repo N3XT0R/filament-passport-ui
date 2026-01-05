@@ -6,9 +6,6 @@ namespace N3XT0R\FilamentPassportUi\Resources;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
@@ -16,6 +13,7 @@ use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Pages;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\RelationManagers;
+use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Schemas\PassportScopeResourceForm;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Schemas\PassportScopeResourceTable;
 
 class PassportScopeResourceResource extends BaseManagementResource
@@ -27,22 +25,7 @@ class PassportScopeResourceResource extends BaseManagementResource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema->components([
-            TextInput::make('name')
-                ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.form.name'))
-                ->unique('passport_scope_resources', 'name')
-                ->required()
-                ->maxLength(255)
-                ->columnSpanFull(),
-            Textarea::make('description')
-                ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.form.description'))
-                ->required()
-                ->maxLength(255)
-                ->columnSpanFull(),
-            Checkbox::make('is_active')
-                ->label(__('filament-passport-ui::passport-ui.passport_scope_resource_resource.form.is_active'))
-                ->default(true),
-        ]);
+        return PassportScopeResourceForm::configure($schema);
     }
 
     public static function table(Table $table): Table
