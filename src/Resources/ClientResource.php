@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources;
 
-use Carbon\CarbonInterface;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -14,17 +13,16 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Client\FormatClientGrantTypeState;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Client\FormatOwnerState;
-use N3XT0R\FilamentPassportUi\Application\StateResolvers\Common\FormatHeadlineState;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
 use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
+use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientResourceTable;
 use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
 
 class ClientResource extends BaseManagementResource
@@ -108,32 +106,7 @@ class ClientResource extends BaseManagementResource
      */
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('name')
-                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.name'))
-                    ->formatStateUsing(fn(string $state): string => app(FormatHeadlineState::class)->execute($state))
-                    ->searchable(),
-                TextColumn::make('owner.name')
-                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.owner'))
-                    ->searchable(),
-                TextColumn::make('grant_types')
-                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.grant_type'))
-                    ->listWithLineBreaks()
-                    ->searchable(),
-                TextColumn::make('last_login')
-                    ->label(__('filament-passport-ui::passport-ui.client_resource.column.last_login'))
-                    ->dateTime()
-                    ->getStateUsing(function (Client $record): ?CarbonInterface {
-                        return app(ClientRepository::class)->getLastLoginAtForClient($record);
-                    }),
-                TextColumn::make('created_at')
-                    ->label(__('filament-passport-ui::passport-ui.common.created_at'))
-                    ->dateTime(),
-                TextColumn::make('updated_at')
-                    ->label(__('filament-passport-ui::passport-ui.common.updated_at'))
-                    ->dateTime(),
-            ])
+        return ClientResourceTable::configure($table)
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
