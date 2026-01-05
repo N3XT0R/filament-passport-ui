@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Services;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 
 readonly class ResourceService
@@ -17,9 +18,9 @@ readonly class ResourceService
      * Create a new scope resource.
      * @param array $data
      * @param Authenticatable|null $actor
-     * @return \N3XT0R\FilamentPassportUi\Models\PassportScopeResource
+     * @return PassportScopeResource
      */
-    public function createResource(array $data, ?Authenticatable $actor = null)
+    public function createResource(array $data, ?Authenticatable $actor = null): PassportScopeResource
     {
         $resource = $this->resourceRepository->createResource($data);
 
@@ -36,9 +37,19 @@ readonly class ResourceService
         return $resource;
     }
 
-    public function updateResource(array $data, ?Authenticatable $actor = null)
-    {
-        $resource = $this->resourceRepository->updateResource($data);
+    /**
+     * Update a scope resource.
+     * @param PassportScopeResource $resource
+     * @param array $data
+     * @param Authenticatable|null $actor
+     * @return PassportScopeResource
+     */
+    public function updateResource(
+        PassportScopeResource $resource,
+        array $data,
+        ?Authenticatable $actor = null
+    ): PassportScopeResource {
+        $resource = $this->resourceRepository->updateResource($resource, $data);
 
         if ($actor) {
             activity('oauth_scope_resource')
@@ -51,5 +62,22 @@ readonly class ResourceService
         }
 
         return $resource;
+    }
+
+    public function deleteResource(PassportScopeResource $resource, ?Authenticatable $actor = null): bool
+    {
+        $result = $this->resourceRepository->deleteResource($resource);
+
+        if ($result && $actor) {
+            activity('oauth_scope_resource')
+                ->by($actor)
+                ->withProperties([
+                    'resource_id' => $resource->getKey(),
+                    'resource_name' => $resource->getAttribute('name'),
+                ])
+                ->log('OAuth scope resource deleted');
+        }
+
+        return $result;
     }
 }
