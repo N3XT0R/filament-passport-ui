@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources;
 
-use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
+use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Actions\DeleteAction;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Pages;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Schemas\PassportScopeActionsResourceForm;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Schemas\PassportScopeActionsResourceTable;
@@ -33,8 +33,7 @@ class PassportScopeActionsResource extends BaseManagementResource
         return PassportScopeActionsResourceTable::configure($table)
             ->recordActions([
                 EditAction::make('edit'),
-                DeleteAction::make('delete')
-                    ->requiresConfirmation(),
+                DeleteAction::make(),
             ]);
     }
 
