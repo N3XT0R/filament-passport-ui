@@ -34,6 +34,13 @@ readonly class EditClientUseCase
     public function execute(Client $client, array $data, ?Authenticatable $actor = null): Client
     {
         $owner = $data['owner'] ?? null;
+
+        if ($owner instanceof OAuthenticatable === false) {
+            $owner = $this->ownerRepository->findByKey($owner);
+        }
+
+        $data['owner'] = $owner;
+
         $dto = new OAuthClientData(
             name: $data['name'],
             redirectUris: $data['redirect_uris'] ?? [],
@@ -43,11 +50,8 @@ readonly class EditClientUseCase
             revoked: $data['revoked'] ?? false,
             owner: $data['owner'] ?? null,
         );
-        $scopes = $data['scopes'] ?? [];
 
-        if ($owner instanceof OAuthenticatable === false) {
-            $owner = $this->ownerRepository->findByKey($owner);
-        }
+        $scopes = $data['scopes'] ?? [];
 
         $client = $this->clientService->updateClient($client, $dto, $actor);
         $this->grantService->upsertGrantsForTokenable(
