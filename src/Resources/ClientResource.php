@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources;
 
-use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -13,6 +12,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
+use N3XT0R\FilamentPassportUi\Resources\ClientResource\Actions\DeleteAction;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientResourceForm;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientResourceTable;
@@ -68,8 +68,7 @@ class ClientResource extends BaseManagementResource
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make()
-                    ->requiresConfirmation(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 DeleteBulkAction::make()
