@@ -58,8 +58,8 @@ class ResourceRepository implements ResourceRepositoryContract
         return PassportScopeResource::query()->create($data);
     }
 
-    public function deleteResource(PassportScopeResource $resource): void
+    public function deleteResource(PassportScopeResource $resource): bool
     {
-        $resource->delete();
+        return $resource->delete();
     }
 }

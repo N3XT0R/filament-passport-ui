@@ -74,10 +74,10 @@ class ActionRepository implements ActionRepositoryContract
     /**
      * Delete a scope action.
      * @param PassportScopeAction $action
-     * @return void
+     * @return bool
      */
-    public function deleteAction(PassportScopeAction $action): void
+    public function deleteAction(PassportScopeAction $action): bool
     {
-        $action->delete();
+        return $action->delete();
     }
 }

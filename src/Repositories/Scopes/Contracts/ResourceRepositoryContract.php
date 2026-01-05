@@ -39,7 +39,7 @@ interface ResourceRepositoryContract extends IsMigratedContract
     /**
      * Delete a scope resource.
      * @param PassportScopeResource $resource
-     * @return void
+     * @return bool
      */
-    public function deleteResource(PassportScopeResource $resource): void;
+    public function deleteResource(PassportScopeResource $resource): bool;
 }
