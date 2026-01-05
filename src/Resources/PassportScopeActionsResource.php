@@ -6,9 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Resources;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
@@ -17,6 +15,8 @@ use Filament\Tables\Table;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
+use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Fields\DescriptionTextarea;
+use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Fields\IsActiveCheckbox;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Pages;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Schemas\PassportScopeActionsResourceTable;
 
@@ -63,22 +63,11 @@ class PassportScopeActionsResource extends BaseManagementResource
                             ),
                     ])
                     ->columnSpanFull(),
-                Textarea::make('description')
-                    ->label(
-                        __(
-                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.description'
-                        )
-                    )
+                DescriptionTextarea::make()
                     ->required()
                     ->maxLength(255)
                     ->columnSpanFull(),
-                Checkbox::make('is_active')
-                    ->label(
-                        __(
-                            'filament-passport-ui::passport-ui.passport_scope_actions_resource.form.is_active'
-                        )
-                    )
-                    ->default(true),
+                IsActiveCheckbox::make(),
             ]);
     }
 
