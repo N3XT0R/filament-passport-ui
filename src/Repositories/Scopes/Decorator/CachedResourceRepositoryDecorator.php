@@ -54,4 +54,16 @@ final class CachedResourceRepositoryDecorator extends BaseCachedRepositoryDecora
     {
         return $this->innerRepository->isMigrated();
     }
+
+    public function createResource(array $data): PassportScopeResource
+    {
+        return $this->innerRepository->createResource($data);
+    }
+
+    public function deleteResource(PassportScopeResource $resource): void
+    {
+        $this->innerRepository->deleteResource($resource);
+    }
+
+
 }

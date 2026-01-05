@@ -28,4 +28,18 @@ interface ResourceRepositoryContract extends IsMigratedContract
      * @return PassportScopeResource|null
      */
     public function findByName(string $name): ?PassportScopeResource;
+
+    /**
+     * Create a new scope resource.
+     * @param array $data
+     * @return PassportScopeResource
+     */
+    public function createResource(array $data): PassportScopeResource;
+
+    /**
+     * Delete a scope resource.
+     * @param PassportScopeResource $resource
+     * @return void
+     */
+    public function deleteResource(PassportScopeResource $resource): void;
 }

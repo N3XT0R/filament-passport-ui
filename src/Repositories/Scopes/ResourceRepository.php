@@ -52,4 +52,14 @@ class ResourceRepository implements ResourceRepositoryContract
     {
         return Schema::hasTable('passport_scope_resources');
     }
+
+    public function createResource(array $data): PassportScopeResource
+    {
+        return PassportScopeResource::query()->create($data);
+    }
+
+    public function deleteResource(PassportScopeResource $resource): void
+    {
+        $resource->delete();
+    }
 }
