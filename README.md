@@ -2,12 +2,12 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/n3xt0r/filament-passport-ui.svg?style=flat-square)](https://packagist.org/packages/n3xt0r/filament-passport-ui)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=N3XT0R_filament-passport-ui&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=N3XT0R_filament-passport-ui)
+![ISO 27001 Audit Ready](https://img.shields.io/badge/ISO%2027001-audit--ready-blue?style=flat-square)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/n3xt0r/filament-passport-ui/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/n3xt0r/filament-passport-ui/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![Maintainability](https://qlty.sh/gh/N3XT0R/projects/filament-passport-ui/maintainability.svg)](https://qlty.sh/gh/N3XT0R/projects/filament-passport-ui)
 [![Code Coverage](https://qlty.sh/gh/N3XT0R/projects/filament-passport-ui/coverage.svg)](https://qlty.sh/gh/N3XT0R/projects/filament-passport-ui)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/n3xt0r/filament-passport-ui/php-code-style.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/n3xt0r/filament-passport-ui/actions?query=workflow%3A"PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/n3xt0r/filament-passport-ui.svg?style=flat-square)](https://packagist.org/packages/n3xt0r/filament-passport-ui)
-
 ---
 
 > ⚠️ **Work in Progress**  
