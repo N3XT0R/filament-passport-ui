@@ -61,11 +61,14 @@ readonly class ConfigRepository
 
     /**
      * Get the navigation group name for OAuth Management
-     * @param string $default
+     * @param string|null $default
      * @return string
      */
-    public function getNavigationGroup(string $default = 'OAuth Management'): string
+    public function getNavigationGroup(?string $default = null): string
     {
+        if (null === $default) {
+            $default = 'OAuth Management';
+        }
         return (string)$this->config->get(self::CONFIG_ROOT . 'navigation.group', $default);
     }
 
@@ -77,8 +80,11 @@ readonly class ConfigRepository
      */
     public function getNavigationIcon(
         string $resource,
-        string|ScalableIcon|null $icon = Heroicon::OutlinedKey
+        string|ScalableIcon|null $icon = null
     ): string|ScalableIcon|null {
+        if (null === $icon) {
+            $icon = Heroicon::OutlinedKey;
+        }
         return $this->config->get(self::CONFIG_ROOT . 'navigation.' . $resource . '.icon', $icon);
     }
 
