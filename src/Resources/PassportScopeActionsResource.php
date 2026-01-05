@@ -13,14 +13,12 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use N3XT0R\FilamentPassportUi\Application\StateResolvers\ScopeAction\FormatIsGlobalState;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Pages;
+use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Schemas\PassportScopeActionsResourceTable;
 
 class PassportScopeActionsResource extends BaseManagementResource
 {
@@ -86,29 +84,7 @@ class PassportScopeActionsResource extends BaseManagementResource
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('id')
-                    ->label(__('filament-passport-ui::passport-ui.passport_scope_actions_resource.column.id'))
-                    ->sortable(),
-                TextColumn::make('name')
-                    ->label(__('filament-passport-ui::passport-ui.passport_scope_actions_resource.column.name'))
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('description')
-                    ->label(__('filament-passport-ui::passport-ui.passport_scope_actions_resource.column.description'))
-                    ->sortable()
-                    ->searchable(),
-                IconColumn::make('is_active')
-                    ->label(__('filament-passport-ui::passport-ui.passport_scope_actions_resource.column.is_active'))
-                    ->boolean()
-                    ->sortable(),
-                IconColumn::make('is_global')
-                    ->label(__('filament-passport-ui::passport-ui.passport_scope_actions_resource.column.is_global'))
-                    ->boolean()
-                    ->sortable()
-                    ->state(fn(PassportScopeAction $record): bool => app(FormatIsGlobalState::class)->execute($record)),
-            ])
+        return PassportScopeActionsResourceTable::configure($table)
             ->recordActions([
                 EditAction::make('edit'),
                 DeleteAction::make('delete')
