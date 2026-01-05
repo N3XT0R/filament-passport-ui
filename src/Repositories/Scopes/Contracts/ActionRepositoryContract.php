@@ -42,4 +42,6 @@ interface ActionRepositoryContract extends IsMigratedContract
      * @return bool
      */
     public function deleteAction(PassportScopeAction $action): bool;
+
+    public function updateAction(PassportScopeAction $action, array $data): PassportScopeAction;
 }

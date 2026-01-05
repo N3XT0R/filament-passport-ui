@@ -45,8 +45,9 @@ interface ResourceRepositoryContract extends IsMigratedContract
 
     /**
      * Update a scope resource.
+     * @param PassportScopeResource $resource
      * @param array $data
      * @return PassportScopeResource
      */
-    public function updateResource(array $data): PassportScopeResource;
+    public function updateResource(PassportScopeResource $resource, array $data): PassportScopeResource;
 }

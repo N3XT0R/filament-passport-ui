@@ -69,9 +69,9 @@ final class CachedResourceRepositoryDecorator extends BaseCachedRepositoryDecora
         return $result;
     }
 
-    public function updateResource(array $data): PassportScopeResource
+    public function updateResource(PassportScopeResource $resource, array $data): PassportScopeResource
     {
-        $result = $this->innerRepository->updateResource($data);
+        $result = $this->innerRepository->updateResource($resource, $data);
         $this->clearCache();
         return $result;
     }

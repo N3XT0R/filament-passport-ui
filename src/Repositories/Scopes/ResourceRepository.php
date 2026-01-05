@@ -63,13 +63,8 @@ class ResourceRepository implements ResourceRepositoryContract
         return $resource->delete();
     }
 
-    public function updateResource(array $data): PassportScopeResource
+    public function updateResource(PassportScopeResource $resource, array $data): PassportScopeResource
     {
-        $resource = $this->findByName($data['name']);
-        if (!$resource) {
-            throw new \RuntimeException("Resource not found");
-        }
-
         $resource->update($data);
         return $resource;
     }
