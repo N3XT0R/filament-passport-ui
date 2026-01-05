@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Columns;
 
 use Carbon\CarbonInterface;
 use Filament\Tables\Columns\TextColumn;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
+use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Columns\ColumnInterface;
 
