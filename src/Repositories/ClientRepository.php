@@ -86,6 +86,11 @@ class ClientRepository extends BaseRepository
         }
     }
 
+    public function deleteClient(Client $client): bool
+    {
+        return $client->delete();
+    }
+
 
     /**
      * Update the given OAuth client.

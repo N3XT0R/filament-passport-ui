@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Services;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Laravel\Passport\Client;
 use Laravel\Passport\Contracts\OAuthenticatable;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Exceptions\Domain\ClientAlreadyExists;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use Throwable;
@@ -161,5 +161,34 @@ readonly class ClientService
         }
 
         return null;
+    }
+
+    /**
+     * Delete the given OAuth client
+     * @param Client $client
+     * @param Authenticatable|null $actor
+     * @return bool
+     */
+    public function deleteClient(Client $client, ?Authenticatable $actor = null): bool
+    {
+        $clientName = $client->getAttribute('name');
+        $clientId = $client->getKey();
+
+        $result = $this->clientRepository->deleteClient($client);
+
+        if ($actor) {
+            activity('oauth')
+                ->causedBy($actor)
+                ->withProperties([
+                    'name' => $clientName,
+                    'client' => [
+                        'client_id' => $clientId,
+                        'client_type' => $client::class,
+                    ],
+                ])
+                ->log('OAuth client deleted');
+        }
+
+        return $result;
     }
 }
