@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `IdColumn` to `TokenTable` for better token identification
 - introduce custom actions bound to use cases
+
+### Changed
+
 - Replaced default DeleteAction and record create/update handlers with use case-based implementations for unified
   logging.
 
