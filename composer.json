@@ -1,13 +1,25 @@
 {
     "name": "n3xt0r/filament-passport-ui",
-    "description": "Filament admin UI for managing Laravel Passport OAuth clients, tokens, and scopes.",
+    "description": "Filament v4 admin resources for managing Laravel Passport OAuth2 clients, tokens, and scopes with full auditability.",
     "keywords": [
-        "N3XT0R",
-        "laravel",
-        "filamentphp",
-        "filament-passport-ui",
-        "laravel-passport",
-        "passport-ui"
+      "laravel",
+      "filament",
+      "filamentphp",
+      "passport",
+      "laravel-passport",
+      "oauth",
+      "oauth2",
+      "oauth2-server",
+      "admin",
+      "admin-panel",
+      "ui",
+      "access-token",
+      "personal-access-token",
+      "client-credentials",
+      "authorization-code",
+      "scopes",
+      "audit",
+      "activitylog"
     ],
     "homepage": "https://github.com/n3xt0r/filament-passport-ui",
     "support": {
