@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Application\UseCases\Client;
 
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
+use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 
 readonly class DeleteClientUseCase

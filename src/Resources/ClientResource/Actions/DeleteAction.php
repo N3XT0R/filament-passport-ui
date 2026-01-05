@@ -6,6 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Actions;
 
 use Filament\Actions\DeleteAction as FilamentDeleteAction;
 use Laravel\Passport\Client;
+use N3XT0R\FilamentPassportUi\Application\UseCases\Client\DeleteClientUseCase;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Actions\ActionInterface;
 
 class DeleteAction implements ActionInterface
@@ -16,7 +17,7 @@ class DeleteAction implements ActionInterface
         return FilamentDeleteAction::make($name)
             ->requiresConfirmation()
             ->action(function (Client $record): bool {
-                return $record->delete();
+                return app(DeleteClientUseCase::class)->execute($record);
             });
     }
 }
