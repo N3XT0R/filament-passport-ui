@@ -7,28 +7,100 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-01-06
+
 ### Added
 
-- Use Cases were extended to explicitly dispatch domain events for all relevant lifecycle operations (create, update,
-  delete, revoke).  
-  Events are now emitted only when actions are executed through Use Cases, ensuring explicit, traceable, and non-magical
-  domain behavior.
-- Introduced a `ClearCacheUseCase` to centralize and standardize cache cleanup logic.
-- Added the `filament-passport-ui:cleanup-cache` console command to trigger cache clearing explicitly, including the
-  scope registry cache.
-- Added `RevokeColumn` to `ClientTable` for revoke-status visibility.
-- Added `RevokeToggle` to `ClientForm` for client revocation.
+- **Filament v4 Plugin** for Laravel Passport OAuth2 administration via `FilamentPassportUiPlugin`.
 
-### Fixed
+- **OAuth Client Management** through a dedicated Filament resource (`ClientResource`) with full support for all
+  Passport grant types:
+    - Authorization Code
+    - Client Credentials
+    - Password Grant
+    - Personal Access
+    - Implicit Grant
+    - Device Grant
 
-- Fixed an issue where scope checkbox selections could be marked as invalid due to field name collisions and unfiltered
-  hydration state in dynamic scope form sections.  
-  Checkbox lists are now uniquely named per resource, default to an empty state, and only hydrate scopes relevant to
-  their respective resource, ensuring stable validation and predictable form behavior.
+- **Token Management Resource** (`TokenResource`) for inspecting, identifying, and revoking issued access tokens,
+  including an explicit token ID column for improved traceability.
 
-### Removed
+- **Database-backed Scope Management** with structured *resource + action* modeling:
+    - `PassportScopeResourceResource` for managing scope resources
+    - `PassportScopeActionsResource` for managing scope actions
+    - `PassportScopeGrant` model for granular scope-to-owner assignments
 
-- Observer classes dropped in favor of event listeners for better scalability.
+- **Application Use Case Layer** following Clean Architecture principles, providing explicit and auditable domain
+  operations:
+    - `CreateClientUseCase`
+    - `EditClientUseCase`
+    - `GetAllowedGrantTypeOptions`
+    - `GetAllOwnersUseCase`
+    - `GetAllOwnersRelationshipUseCase`
+    - `SaveOwnershipRelationUseCase`
+    - `ClearCacheUseCase` for centralized cache invalidation
+
+- **Explicit Domain Event Dispatching** for all relevant lifecycle operations (create, update, delete, revoke), ensuring
+  that domain events are emitted only when actions are executed through use cases, resulting in predictable and
+  traceable behavior.
+
+- **OAuth Client Factory** using a strategy-based approach to encapsulate grant-specific client creation logic:
+    - `AuthorizationCodeClientStrategy`
+    - `ClientCredentialsClientStrategy`
+    - `PasswordGrantClientStrategy`
+    - `PersonalAccessClientStrategy`
+    - `ImplicitGrantClientStrategy`
+    - `DeviceGrantClientStrategy`
+
+- **Service Layer Abstractions** for core authorization concerns:
+    - `ClientService` for OAuth client lifecycle and ownership handling
+    - `GrantService` for granting and revoking scopes on tokenable models
+    - `ScopeRegistryService` for scope discovery, registration, and caching
+
+- **Repository Pattern with Contracts** for all core domain models:
+    - `ClientRepository`, `TokenRepository`, `OwnerRepository`
+    - `ResourceRepository`, `ActionRepository`, `ScopeGrantRepository`
+    - Cached repository decorators to improve performance and reduce query overhead
+
+- **UI Enhancements for Client Administration**:
+    - `RevokeColumn` for explicit revoke-state visibility in client tables
+    - `RevokeToggle` for controlled client revocation via forms
+    - Custom Filament actions bound directly to use cases for consistent logging and behavior
+
+- **Event System** covering OAuth and scope lifecycle changes:
+    - `OAuthClientCreated`, `OAuthClientRevoked`
+    - `ScopeCreated`, `ScopeDeactivated`
+
+- **Audit Logging Integration** via `spatie/laravel-activitylog`, providing full traceability of security-relevant
+  administrative actions.
+
+- **Value Objects and DTOs** for stricter domain modeling and type safety:
+    - `ScopeName` value object for structured scope naming
+    - `CreateOAuthClientData`, `ScopeDTO` for explicit data transfer
+
+- **Configurable Package Options** via `config/passport-ui.php`, including:
+    - Custom owner model and label attribute
+    - Toggle for database-backed scopes
+    - Custom Passport model mappings
+    - Navigation customization options
+
+- **Console Commands** for operational support:
+    - Interactive install command
+    - `filament-passport-ui:cleanup-cache` for explicit cache invalidation, including scope registry cache
+
+- **Localization Support** with English and German translations.
+
+- **Database Migrations and Seeders** for scope management:
+    - `passport_scope_resources`
+    - `passport_scope_actions`
+    - `passport_scope_grant`
+    - Default seed data for initial scope setup
+
+- **Test Coverage for Stability**, ensuring predictable behavior across authorization, ownership, and scope management
+  features.
+
+- **Comprehensive Documentation** covering installation, configuration, scoped authorization concepts, and testing
+  strategies.
 
 ### [1.0.0-beta.3] - 2026-01-06
 
