@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Resources;
 
+use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Resources\DeleteResourceUseCase;
+use N3XT0R\FilamentPassportUi\Events\PassportScopeResource\ResourceDeletedEvent;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 
@@ -15,7 +17,7 @@ final class DeleteResourceUseCaseTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
+        Event::fake();
         $this->useCase = $this->app->make(DeleteResourceUseCase::class);
     }
 
@@ -28,9 +30,11 @@ final class DeleteResourceUseCaseTest extends DatabaseTestCase
         $result = $this->useCase->execute($resource);
 
         self::assertTrue($result);
-        self::assertDatabaseMissing($resource->getTable(), [
+        $this->assertDatabaseMissing($resource->getTable(), [
             'id' => $resource->getKey(),
             'name' => 'temporary-resource',
         ]);
+
+        Event::assertDispatched(ResourceDeletedEvent::class);
     }
 }

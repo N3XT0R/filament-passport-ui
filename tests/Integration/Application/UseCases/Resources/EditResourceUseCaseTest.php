@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Resources;
 
+use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Resources\EditResourceUseCase;
+use N3XT0R\FilamentPassportUi\Events\PassportScopeResource\ResourceUpdatedEvent;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 
@@ -15,7 +17,7 @@ final class EditResourceUseCaseTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
+        Event::fake();
         $this->useCase = $this->app->make(EditResourceUseCase::class);
     }
 
@@ -43,5 +45,7 @@ final class EditResourceUseCaseTest extends DatabaseTestCase
             'name' => 'posts',
             'is_active' => false,
         ]);
+
+        Event::assertDispatched(ResourceUpdatedEvent::class);
     }
 }
