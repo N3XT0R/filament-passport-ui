@@ -42,7 +42,7 @@ final class ClientServiceTest extends DatabaseTestCase
         self::assertSame('Test Client', $client->name);
         self::assertSame($owner->getKey(), $client->owner?->getKey());
 
-        self::assertDatabaseHas($client->getTable(), [
+        $this->assertDatabaseHas($client->getTable(), [
             'id' => $client->getKey(),
             'name' => 'Test Client',
         ]);
