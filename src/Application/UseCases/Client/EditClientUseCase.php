@@ -7,6 +7,7 @@ namespace N3XT0R\FilamentPassportUi\Application\UseCases\Client;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Contracts\OAuthenticatable;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
+use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientRevokedEvent;
 use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
@@ -54,6 +55,11 @@ readonly class EditClientUseCase
         $scopes = $data['scopes'] ?? [];
 
         $client = $this->clientService->updateClient($client, $dto, $actor);
+
+        if ($dto->revoked) {
+            OAuthClientRevokedEvent::dispatch($client, $actor);
+        }
+
         $this->grantService->upsertGrantsForTokenable(
             tokenable: $client,
             scopes: $scopes,

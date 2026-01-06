@@ -9,6 +9,7 @@ use Laravel\Passport\Contracts\OAuthenticatable;
 use N3XT0R\FilamentPassportUi\DTO\Client\ClientResultDTO;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientCreatedEvent;
 use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 use N3XT0R\FilamentPassportUi\Services\GrantService;
@@ -56,7 +57,7 @@ readonly class CreateClientUseCase
             actor: $actor
         );
 
-
+        OAuthClientCreatedEvent::dispatch($client, $actor);
         return new ClientResultDTO($client, $client->plainSecret);
     }
 }

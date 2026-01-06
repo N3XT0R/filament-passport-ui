@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Laravel\Passport\Client;
 
-class OAuthClientRevoked
+abstract class BaseOauthClientEvent
 {
     use Dispatchable;
     use InteractsWithSockets;
