@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Client\EditClientUseCase;
 use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientRevokedEvent;
+use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientUpdatedEvent;
 use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 
@@ -49,6 +50,8 @@ final class EditClientUseCaseTest extends DatabaseTestCase
             'name' => 'After Edit',
             'revoked' => true,
         ]);
+
         Event::assertDispatched(OAuthClientRevokedEvent::class);
+        Event::assertDispatched(OAuthClientUpdatedEvent::class);
     }
 }
