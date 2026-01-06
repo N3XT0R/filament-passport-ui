@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Actions;
 
+use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Actions\EditActionUseCase;
+use N3XT0R\FilamentPassportUi\Events\PassportScopeAction\ActionUpdatedEvent;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
@@ -16,7 +18,7 @@ final class EditActionUseCaseTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
+        Event::fake();
         $this->useCase = $this->app->make(EditActionUseCase::class);
     }
 
@@ -54,5 +56,7 @@ final class EditActionUseCaseTest extends DatabaseTestCase
             'resource_id' => $newResource->getKey(),
             'is_active' => false,
         ]);
+
+        Event::assertDispatched(ActionUpdatedEvent::class);
     }
 }
