@@ -77,7 +77,8 @@ This ensures that the system’s behavior is always:
 
 ## Events
 
-| Category                    | Description                                                                |
-|-----------------------------|----------------------------------------------------------------------------|
-| [Clients](events/client.md) | Domain events related to OAuth client lifecycle and security state changes |
-| [Actions](events/action.md) | Domain events related to OAuth Passport scope actions and their lifecycle  |
+| Category                        | Description                                                                 |
+|---------------------------------|-----------------------------------------------------------------------------|
+| [Clients](events/client.md)     | Domain events related to OAuth client lifecycle and security state changes  |
+| [Actions](events/action.md)     | Domain events related to OAuth Passport scope actions and their lifecycle   |
+| [Resources](events/resource.md) | Domain events related to OAuth Passport scope recources and their lifecycle |
