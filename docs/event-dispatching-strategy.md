@@ -72,3 +72,11 @@ This ensures that the system’s behavior is always:
 - intentional
 - explainable
 - structurally sound
+
+---
+
+## Events
+
+| Category                           | Description                                                                |
+|------------------------------------|----------------------------------------------------------------------------|
+| [Clients](events/client-events.md) | Domain events related to OAuth client lifecycle and security state changes |
