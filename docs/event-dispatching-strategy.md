@@ -77,6 +77,6 @@ This ensures that the system’s behavior is always:
 
 ## Events
 
-| Category                           | Description                                                                |
-|------------------------------------|----------------------------------------------------------------------------|
-| [Clients](events/client-events.md) | Domain events related to OAuth client lifecycle and security state changes |
+| Category                    | Description                                                                |
+|-----------------------------|----------------------------------------------------------------------------|
+| [Clients](events/client.md) | Domain events related to OAuth client lifecycle and security state changes |
