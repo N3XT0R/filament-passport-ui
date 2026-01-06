@@ -17,6 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the `filament-passport-ui:cleanup-cache` console command to trigger cache clearing explicitly, including the
   scope registry cache.
 
+### Fixed
+
+- Fixed an issue where scope checkbox selections could be marked as invalid due to field name collisions and unfiltered
+  hydration state in dynamic scope form sections.  
+  Checkbox lists are now uniquely named per resource, default to an empty state, and only hydrate scopes relevant to
+  their respective resource, ensuring stable validation and predictable form behavior.
+
 ### Removed
 
 - Observer classes dropped in favor of event listeners for better scalability.
