@@ -10,6 +10,7 @@ use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeS
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\IdHidden;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelect;
+use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\RevokeToggle;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\SecretInput;
 
 class ClientResourceForm implements FormInterface
@@ -23,6 +24,7 @@ class ClientResourceForm implements FormInterface
             OwnerSelect::make(),
             GrantTypeSelect::make(),
             SecretInput::make(),
+            RevokeToggle::make(),
         ];
 
         return $schema->components(

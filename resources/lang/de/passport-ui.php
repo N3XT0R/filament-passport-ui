@@ -27,6 +27,7 @@ return [
             'owner_hint' => 'Der Eigentümer dieses Clients. Wird verwendet, um den Client einem Benutzer zuzuordnen.',
             'secret_label' => 'Geheimer Schlüssel',
             'secret_description' => 'Dieses Feld ist nur einmalig sichtbar nach der Erstellung der Resource. Stellen Sie sicher, dass Sie es an einem sicheren Ort speichern.',
+            'revoke_label' => 'Client widerrufen',
         ],
         'column' => [
             'name' => 'Name',

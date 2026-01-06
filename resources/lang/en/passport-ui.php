@@ -27,6 +27,7 @@ return [
             'owner_hint' => 'The owner of this client. Used to associate the client with a user.',
             'secret_label' => 'Client Secret',
             'secret_helper_text' => 'This is the client secret. Make sure to copy it now as it will not be shown again.',
+            'revoke_label' => 'Revoke Client',
         ],
         'column' => [
             'name' => 'Name',
