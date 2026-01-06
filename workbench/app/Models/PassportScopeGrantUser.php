@@ -11,5 +11,6 @@ use N3XT0R\FilamentPassportUi\Models\Traits\HasPassportScopeGrantsTrait;
 #[UseFactory(\Database\Factories\PassportScopeGrantUserFactory::class)]
 class PassportScopeGrantUser extends User implements HasPassportScopeGrantsInterface
 {
+    protected $table = 'users';
     use HasPassportScopeGrantsTrait;
 }
