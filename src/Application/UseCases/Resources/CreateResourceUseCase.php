@@ -9,6 +9,9 @@ use N3XT0R\FilamentPassportUi\Events\PassportScopeResource\ResourceCreatedEvent;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Services\ResourceService;
 
+/**
+ * Create a new Passport Scope Resource Use Case.
+ */
 readonly class CreateResourceUseCase
 {
     public function __construct(private ResourceService $resourceService)
