@@ -7,8 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [Unreleased]
-
 ### Added
 
 - Use Cases were extended to explicitly dispatch domain events for all relevant lifecycle operations (create, update,
