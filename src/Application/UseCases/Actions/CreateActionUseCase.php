@@ -9,6 +9,9 @@ use N3XT0R\FilamentPassportUi\Events\PassportScopeAction\ActionCreatedEvent;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Services\ActionService;
 
+/**
+ * Create Action Use Case for OAuth Passport Scope Actions.
+ */
 readonly class CreateActionUseCase
 {
     public function __construct(private ActionService $actionService)
