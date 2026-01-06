@@ -96,4 +96,50 @@ final class CachedResourceRepositoryDecoratorTest extends DatabaseTestCase
 
         self::assertCount(3, $this->repository->all());
     }
+
+    public function testCreateResourceClearsCache(): void
+    {
+        PassportScopeResource::factory()->create();
+
+        self::assertCount(1, $this->repository->all());
+
+        $this->repository->createResource(
+            PassportScopeResource::factory()->raw([
+                'name' => 'projects',
+            ])
+        );
+
+        self::assertCount(2, $this->repository->all());
+    }
+
+    public function testUpdateResourceClearsCache(): void
+    {
+        $resource = PassportScopeResource::factory()->create([
+            'name' => 'users',
+        ]);
+
+        self::assertSame('users', $this->repository->findByName('users')?->name);
+
+        $this->repository->updateResource($resource, [
+            'name' => 'accounts',
+        ]);
+
+        self::assertNull($this->repository->findByName('users'));
+        self::assertSame('accounts', $this->repository->findByName('accounts')?->name);
+    }
+
+    public function testDeleteResourceClearsCache(): void
+    {
+        [$first, $second] = PassportScopeResource::factory()->count(2)->create();
+
+        self::assertCount(2, $this->repository->all());
+
+        $this->repository->deleteResource($first);
+
+        $result = $this->repository->all();
+
+        self::assertCount(1, $result);
+        self::assertFalse($result->contains('id', $first->id));
+        self::assertTrue($result->contains('id', $second->id));
+    }
 }
