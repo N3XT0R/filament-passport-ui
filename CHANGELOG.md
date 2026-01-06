@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [Unreleased]
+
+### Added
+
+- Use Cases were extended to explicitly dispatch domain events for all relevant lifecycle operations (create, update,
+  delete, revoke).  
+  Events are now emitted only when actions are executed through Use Cases, ensuring explicit, traceable, and non-magical
+  domain behavior.
+- Introduced a `ClearCacheUseCase` to centralize and standardize cache cleanup logic.
+- Added the `filament-passport-ui:cleanup-cache` console command to trigger cache clearing explicitly, including the
+  scope registry cache.
+
+### Removed
+
+- Observer classes dropped in favor of event listeners for better scalability.
+
 ### [1.0.0-beta.3] - 2026-01-06
 
 ### Added
