@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Introduced a `ClearCacheUseCase` to centralize and standardize cache cleanup logic.
 - Added the `filament-passport-ui:cleanup-cache` console command to trigger cache clearing explicitly, including the
   scope registry cache.
+- Added `RevokeColumn` to `ClientTable` for revoke-status visibility.
+- Added `RevokeToggle` to `ClientForm` for client revocation.
 
 ### Fixed
 
