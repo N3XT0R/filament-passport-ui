@@ -96,4 +96,50 @@ final class CachedActionRepositoryDecoratorTest extends DatabaseTestCase
 
         self::assertCount(3, $this->repository->all());
     }
+
+    public function testCreateActionClearsCache(): void
+    {
+        PassportScopeAction::factory()->create();
+
+        self::assertCount(1, $this->repository->all());
+
+        $this->repository->createAction(
+            PassportScopeAction::factory()->raw([
+                'name' => 'write',
+            ])
+        );
+
+        self::assertCount(2, $this->repository->all());
+    }
+
+    public function testUpdateActionClearsCache(): void
+    {
+        $action = PassportScopeAction::factory()->create([
+            'name' => 'read',
+        ]);
+
+        self::assertSame('read', $this->repository->findByName('read')?->name);
+
+        $this->repository->updateAction($action, [
+            'name' => 'edit',
+        ]);
+
+        self::assertNull($this->repository->findByName('read'));
+        self::assertSame('edit', $this->repository->findByName('edit')?->name);
+    }
+
+    public function testDeleteActionClearsCache(): void
+    {
+        [$first, $second] = PassportScopeAction::factory()->count(2)->create();
+
+        self::assertCount(2, $this->repository->all());
+
+        $this->repository->deleteAction($first);
+
+        $result = $this->repository->all();
+
+        self::assertCount(1, $result);
+        self::assertFalse($result->contains('id', $first->id));
+        self::assertTrue($result->contains('id', $second->id));
+    }
 }

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace N3XT0R\FilamentPassportUi\Tests\Integration\Services;
+namespace N3XT0R\FilamentPassportUi\Tests\Integration\Services\ClientService;
 
 use App\Models\User;
-use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Exceptions\Domain\ClientAlreadyExists;
+use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 
 final class ClientServiceTest extends DatabaseTestCase
 {
-    protected ClientService $service;
+    private ClientService $service;
 
     protected function setUp(): void
     {
@@ -69,6 +69,35 @@ final class ClientServiceTest extends DatabaseTestCase
         );
     }
 
+    public function testCreateClientForUserLogsActivityWithActor(): void
+    {
+        $owner = User::factory()->create();
+        $actor = User::factory()->create();
+
+        $data = new OAuthClientData(
+            name: 'Actor Client',
+            redirectUris: [],
+            owner: $owner,
+        );
+
+        $client = $this->service->createClientForUser(
+            OAuthClientType::PERSONAL_ACCESS,
+            $data,
+            $actor
+        );
+
+        $this->assertDatabaseHas('activity_log', [
+            'log_name' => 'oauth',
+            'causer_id' => $actor->getKey(),
+            'causer_type' => $actor::class,
+            'description' => 'OAuth client created',
+        ]);
+
+        $this->assertDatabaseHas($client->getTable(), [
+            'id' => $client->getKey(),
+        ]);
+    }
+
     public function testUpdateClientUpdatesProvidedFields(): void
     {
         $client = Client::factory()->create([
@@ -114,83 +143,6 @@ final class ClientServiceTest extends DatabaseTestCase
         self::assertFalse($updated->revoked);
     }
 
-    public function testChangeOwnerOfClient(): void
-    {
-        $client = Client::factory()->create();
-        $newOwner = User::factory()->create();
-
-        $updated = $this->service->changeOwnerOfClient(
-            $client,
-            $newOwner
-        );
-
-        self::assertSame(
-            $newOwner->getAuthIdentifier(),
-            $updated->owner?->getAuthIdentifier()
-        );
-    }
-
-    public function testGetOwnerLabelAttributeReturnsConfiguredLabel(): void
-    {
-        config([
-            'passport-ui.owner_label_attribute' => 'name',
-        ]);
-
-        $owner = User::factory()->create([
-            'name' => 'test',
-        ]);
-
-        $client = Client::factory()->create();
-        $client->owner()->associate($owner);
-        $client->save();
-
-        self::assertSame(
-            'test',
-            $this->service->getOwnerLabelAttribute($client)
-        );
-    }
-
-    public function testGetOwnerLabelAttributeReturnsNullWhenClientNotFound(): void
-    {
-        self::assertNull(
-            $this->service->getOwnerLabelAttribute(999999)
-        );
-    }
-
-    public function testGetOwnerLabelAttributeReturnsNullWhenNoOwner(): void
-    {
-        $client = Client::factory()->create();
-
-        self::assertNull(
-            $this->service->getOwnerLabelAttribute($client)
-        );
-    }
-
-    public function testCreateClientForUserLogsActivityWithActor(): void
-    {
-        $owner = User::factory()->create();
-        $actor = User::factory()->create();
-
-        $data = new OAuthClientData(
-            name: 'Actor Client',
-            redirectUris: [],
-            owner: $owner,
-        );
-
-        $this->service->createClientForUser(
-            OAuthClientType::PERSONAL_ACCESS,
-            $data,
-            $actor
-        );
-
-        $this->assertDatabaseHas('activity_log', [
-            'log_name' => 'oauth',
-            'causer_id' => $actor->getKey(),
-            'causer_type' => $actor::class,
-            'description' => 'OAuth client created',
-        ]);
-    }
-
     public function testUpdateClientLogsActivityWithActor(): void
     {
         $actor = User::factory()->create();
@@ -219,6 +171,22 @@ final class ClientServiceTest extends DatabaseTestCase
         ]);
     }
 
+    public function testChangeOwnerOfClient(): void
+    {
+        $client = Client::factory()->create();
+        $newOwner = User::factory()->create();
+
+        $updated = $this->service->changeOwnerOfClient(
+            $client,
+            $newOwner
+        );
+
+        self::assertSame(
+            $newOwner->getAuthIdentifier(),
+            $updated->owner?->getAuthIdentifier()
+        );
+    }
+
     public function testChangeOwnerOfClientLogsActivityWithActor(): void
     {
         $actor = User::factory()->create();
@@ -240,4 +208,118 @@ final class ClientServiceTest extends DatabaseTestCase
         ]);
     }
 
+    public function testGetOwnerLabelAttributeReturnsConfiguredLabel(): void
+    {
+        config([
+            'passport-ui.owner_label_attribute' => 'name',
+        ]);
+
+        $owner = User::factory()->create([
+            'name' => 'test',
+        ]);
+
+        $client = Client::factory()->create();
+        $client->owner()->associate($owner);
+        $client->save();
+
+        self::assertSame(
+            'test',
+            $this->service->getOwnerLabelAttribute($client)
+        );
+    }
+
+    public function testGetOwnerLabelAttributeReturnsLabelUsingClientId(): void
+    {
+        config([
+            'passport-ui.owner_label_attribute' => 'name',
+        ]);
+
+        $owner = User::factory()->create([
+            'name' => 'from id',
+        ]);
+
+        $client = Client::factory()->create();
+        $client->owner()->associate($owner);
+        $client->save();
+
+        self::assertSame(
+            'from id',
+            $this->service->getOwnerLabelAttribute($client->getKey())
+        );
+    }
+
+    public function testGetOwnerLabelAttributeReturnsNullWhenClientNotFound(): void
+    {
+        self::assertNull(
+            $this->service->getOwnerLabelAttribute(999999)
+        );
+    }
+
+    public function testGetOwnerLabelAttributeReturnsNullWhenNoOwner(): void
+    {
+        $client = Client::factory()->create();
+
+        self::assertNull(
+            $this->service->getOwnerLabelAttribute($client)
+        );
+    }
+
+    public function testGetOwnerLabelAttributeReturnsNullWhenConfiguredLabelMissing(): void
+    {
+        config([
+            'passport-ui.owner_label_attribute' => 'non_existing_property',
+        ]);
+
+        $owner = User::factory()->create([
+            'name' => 'unused label',
+        ]);
+
+        $client = Client::factory()->create();
+        $client->owner()->associate($owner);
+        $client->save();
+
+        self::assertNull(
+            $this->service->getOwnerLabelAttribute($client)
+        );
+    }
+
+    public function testDeleteClientRemovesClientWithoutActor(): void
+    {
+        $client = Client::factory()->create([
+            'name' => 'Delete Me',
+        ]);
+
+        $result = $this->service->deleteClient($client);
+
+        self::assertTrue($result);
+
+        $this->assertDatabaseMissing($client->getTable(), [
+            'id' => $client->getKey(),
+        ]);
+
+        $this->assertDatabaseCount('activity_log', 0);
+    }
+
+    public function testDeleteClientLogsActivityWithActor(): void
+    {
+        $actor = User::factory()->create();
+        $client = Client::factory()->create([
+            'name' => 'Delete Me Too',
+        ]);
+
+        $result = $this->service->deleteClient($client, $actor);
+
+        self::assertTrue($result);
+
+        $this->assertDatabaseMissing($client->getTable(), [
+            'id' => $client->getKey(),
+        ]);
+
+        $this->assertDatabaseHas('activity_log', [
+            'log_name' => 'oauth',
+            'causer_id' => $actor->getKey(),
+            'causer_type' => $actor::class,
+            'description' => 'OAuth client deleted',
+        ]);
+    }
 }
