@@ -43,11 +43,13 @@ readonly class ScopeFormSectionBuilder
         Collection $scopes,
         ?HasPassportScopeGrantsInterface $record = null
     ): Section {
-        $grantedScopes = $this->getGrantedScopesForRecord($record);
+        $grantedScopes = $this->getGrantedScopesForRecord($record)
+            ->filter(fn(string $scope) => str_starts_with($scope, "$resource:"))
+            ->values();
 
         return Section::make($resource)
             ->schema([
-                CheckboxList::make($resource)
+                CheckboxList::make("scopes_$resource")
                     ->statePath("scopes.$resource")
                     ->options(
                         $scopes->mapWithKeys(
@@ -66,10 +68,9 @@ readonly class ScopeFormSectionBuilder
                     ->columns(3)
                     ->bulkToggleable()
                     ->afterStateHydrated(function (CheckboxList $component) use ($grantedScopes) {
-                        $component->state(
-                            $grantedScopes->map(fn(string $scope) => $scope)->all()
-                        );
-                    }),
+                        $component->state($grantedScopes->all());
+                    })
+                    ->default([]),
             ])
             ->columnSpanFull()
             ->collapsible();
