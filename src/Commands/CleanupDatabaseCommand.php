@@ -9,7 +9,9 @@ use N3XT0R\FilamentPassportUi\Application\UseCases\Cleanup\CleanUpUseCase;
 
 class CleanupDatabaseCommand extends Command
 {
-    public $signature = 'filament-passport-ui:cleanup-database';
+    protected $signature = 'filament-passport-ui:cleanup-database';
+
+    protected $description = 'Cleans up obsolete data from the Filament Passport UI database.';
 
     public function handle(CleanUpUseCase $cleanUpUseCase): int
     {
