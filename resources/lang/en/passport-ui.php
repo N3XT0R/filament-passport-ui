@@ -34,6 +34,7 @@ return [
             'owner' => 'Owner',
             'grant_type' => 'Grant Type',
             'last_login' => 'Last Login',
+            'revoked' => 'Revoked',
         ],
     ],
     'passport_scope_resource_resource' => [
