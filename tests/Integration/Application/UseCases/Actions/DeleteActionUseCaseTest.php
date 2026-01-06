@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Actions;
 
+use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Actions\DeleteActionUseCase;
+use N3XT0R\FilamentPassportUi\Events\PassportScopeAction\ActionDeletedEvent;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
@@ -16,7 +18,7 @@ final class DeleteActionUseCaseTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
+        Event::fake();
         $this->useCase = $this->app->make(DeleteActionUseCase::class);
     }
 
@@ -30,9 +32,10 @@ final class DeleteActionUseCaseTest extends DatabaseTestCase
         $result = $this->useCase->execute($action);
 
         self::assertTrue($result);
-        self::assertDatabaseMissing($action->getTable(), [
+        $this->assertDatabaseMissing($action->getTable(), [
             'id' => $action->getKey(),
             'name' => 'delete',
         ]);
+        Event::assertDispatched(ActionDeletedEvent::class);
     }
 }
