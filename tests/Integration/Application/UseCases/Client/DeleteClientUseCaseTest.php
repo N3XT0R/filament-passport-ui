@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Client;
 
+use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Client\DeleteClientUseCase;
+use N3XT0R\FilamentPassportUi\Events\Clients\OauthClientDeletedEvent;
 use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 
@@ -15,7 +17,7 @@ final class DeleteClientUseCaseTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
+        Event::fake();
         $this->useCase = $this->app->make(DeleteClientUseCase::class);
     }
 
@@ -28,9 +30,11 @@ final class DeleteClientUseCaseTest extends DatabaseTestCase
         $result = $this->useCase->execute($client);
 
         self::assertTrue($result);
-        self::assertDatabaseMissing($client->getTable(), [
+        $this->assertDatabaseMissing($client->getTable(), [
             'id' => $client->getKey(),
             'name' => 'Client to delete',
         ]);
+
+        Event::assertDispatched(OauthClientDeletedEvent::class);
     }
 }

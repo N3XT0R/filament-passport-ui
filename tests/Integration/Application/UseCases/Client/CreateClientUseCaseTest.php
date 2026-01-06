@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Client;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Client\CreateClientUseCase;
 use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientCreatedEvent;
 use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 
@@ -17,7 +19,7 @@ final class CreateClientUseCaseTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
+        Event::fake();
         $this->useCase = $this->app->make(CreateClientUseCase::class);
     }
 
@@ -42,5 +44,7 @@ final class CreateClientUseCaseTest extends DatabaseTestCase
             'id' => $result->client->getKey(),
             'name' => 'Integration Client',
         ]);
+
+        Event::assertDispatched(OAuthClientCreatedEvent::class);
     }
 }
