@@ -5,4 +5,5 @@
 - [Configuration](configuration.md)
 - [Using Database-Backed Scopes](using-database-backed-scopes.md)
 - [Scoped Controllers](scoped-controllers.md)
+- [Event Dispatching Strategy](event-dispatching-strategy.md)
 - [Testing](testing.md)
