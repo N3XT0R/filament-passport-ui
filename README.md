@@ -189,3 +189,18 @@ login with `test@example.com` and `password`.
 This package is actively developed and evolving.
 
 Feedback, issues, and architectural discussion are welcome.
+
+--- 
+
+### Future Architecture Notes
+
+In a future release, non-Filament-related authorization and domain logic will be extracted into a dedicated core
+package:
+
+https://github.com/N3XT0R/laravel-passport-authorization-core
+
+The goal of this change is to keep **Filament Passport UI** focused purely on administrative UI concerns, while shared
+authorization concepts and domain logic can be reused independently of Filament.
+
+This extraction is intended as an internal architectural refinement.  
+The Filament-facing API and user-facing behavior of this package are expected to remain stable.
