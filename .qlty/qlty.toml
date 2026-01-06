@@ -22,6 +22,7 @@ exclude_patterns = [
   "**/assets/**",
   "**/bower_components/**",
   "**/build/**",
+  "**/bin/**",
   "**/cache/**",
   "**/config/**",
   "**/database/**",
@@ -70,6 +71,7 @@ enabled = true
 [similar_code]
 exclude_patterns = [
   "**/tests/**",
+  "**/bin/**",
   "**/workbench/**",
   "**/dist/**",
   "**/vendor/**",
@@ -85,6 +87,7 @@ exclude_patterns = [
 include = ["src/"]
 exclude = [
   "vendor/**",
+  "**/bin/**",
   "tests/**",
   "workbench/**",
   "dist/**",
