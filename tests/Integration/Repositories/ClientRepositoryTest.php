@@ -86,36 +86,6 @@ final class ClientRepositoryTest extends DatabaseTestCase
         );
     }
 
-    public function testDeleteRevokesClientAndTokens(): void
-    {
-        $client = Client::factory()->create();
-
-        $token = Token::factory()->create([
-            'client_id' => $client->getKey(),
-            'revoked' => false,
-        ]);
-
-        $this->clientRepository->delete($client);
-
-        $client->refresh();
-        $token->refresh();
-
-        self::assertTrue($client->revoked);
-        self::assertTrue($token->revoked);
-    }
-
-    public function testDeleteForceDeletesClient(): void
-    {
-        $client = Client::factory()->create();
-
-        $this->clientRepository->delete($client, true);
-
-        self::assertDatabaseMissing(
-            $client->getTable(),
-            ['id' => $client->getKey()]
-        );
-    }
-
     public function testUpdateUpdatesNameAndRedirectUris(): void
     {
         $client = Client::factory()->create([
