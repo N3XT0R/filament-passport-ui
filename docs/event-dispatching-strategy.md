@@ -80,3 +80,4 @@ This ensures that the system’s behavior is always:
 | Category                    | Description                                                                |
 |-----------------------------|----------------------------------------------------------------------------|
 | [Clients](events/client.md) | Domain events related to OAuth client lifecycle and security state changes |
+| [Actions](events/action.md) | Domain events related to OAuth Passport scope actions and their lifecycle  |
