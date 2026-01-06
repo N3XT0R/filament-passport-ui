@@ -10,9 +10,6 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/n3xt0r/filament-passport-ui.svg?style=flat-square)](https://packagist.org/packages/n3xt0r/filament-passport-ui)
 ---
 
-> ⚠️ **Work in Progress**  
-> This package is under active development. APIs and internal behavior may change until a stable release is published.
-
 ![Filament Passport UI Logo](art/logo.png)
 
 **Filament Passport UI** provides a structured administrative interface for managing **Laravel Passport** OAuth
