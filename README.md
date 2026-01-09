@@ -151,12 +151,25 @@ By default, the package uses the standard Laravel Passport models.
 If your application uses custom Passport models, publish the configuration file and adjust the model mappings
 accordingly.
 
+
 ---
 
 ## Documentation
 
 Additional documentation is available at:
 [Docs](docs/index.md)
+
+## Migration to v2
+
+Starting with v2, Filament Passport UI builds on the
+**Laravel Passport Authorization Core** package.
+
+Database schema changes and optional configuration are now owned by the core
+package and are **not published automatically**.
+
+Please follow the dedicated migration guide for detailed instructions:
+
+**[Migration to v2](docs/migration-to-v2.md)**
 
 ---
 
