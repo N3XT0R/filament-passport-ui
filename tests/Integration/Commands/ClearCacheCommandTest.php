@@ -7,9 +7,6 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client as PassportClient;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 use N3XT0R\LaravelPassportAuthorizationCore\Repositories\Scopes\ActionRepository;
 use N3XT0R\LaravelPassportAuthorizationCore\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use N3XT0R\LaravelPassportAuthorizationCore\Repositories\Scopes\Contracts\ResourceRepositoryContract;
@@ -24,8 +21,6 @@ final class ClearCacheCommandTest extends DatabaseTestCase
         parent::setUp();
 
         Cache::flush();
-
-        $this->disableObservers();
         $this->enableCachedRepositories();
     }
 
@@ -79,13 +74,6 @@ final class ClearCacheCommandTest extends DatabaseTestCase
                 'passport.scopes.actions',
             ])->get('action-cache-key')
         );
-    }
-
-    private function disableObservers(): void
-    {
-        PassportClient::flushEventListeners();
-        PassportScopeResource::flushEventListeners();
-        PassportScopeAction::flushEventListeners();
     }
 
     private function enableCachedRepositories(): void

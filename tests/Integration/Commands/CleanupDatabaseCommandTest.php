@@ -8,19 +8,12 @@ use App\Models\User;
 use Illuminate\Console\Command;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 use N3XT0R\LaravelPassportAuthorizationCore\Database\Factories\PassportScopeGrantFactory;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client as PassportClient;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeGrant;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class CleanupDatabaseCommandTest extends DatabaseTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->disableObservers();
-    }
 
     public function testCommandRemovesOrphanedGrantsAndSucceeds(): void
     {
@@ -45,21 +38,15 @@ final class CleanupDatabaseCommandTest extends DatabaseTestCase
         $this->artisan('filament-passport-ui:cleanup-database')
             ->assertExitCode(Command::SUCCESS);
 
-        self::assertDatabaseMissing('passport_scope_grants', [
+        $this->assertDatabaseMissing('passport_scope_grants', [
             'tokenable_id' => 999999,
             'tokenable_type' => User::class,
         ]);
 
-        self::assertDatabaseHas('passport_scope_grants', [
+        $this->assertDatabaseHas('passport_scope_grants', [
             'tokenable_id' => $owner->getKey(),
             'tokenable_type' => $owner->getMorphClass(),
         ]);
     }
 
-    private function disableObservers(): void
-    {
-        PassportClient::flushEventListeners();
-        PassportScopeResource::flushEventListeners();
-        PassportScopeAction::flushEventListeners();
-    }
 }
