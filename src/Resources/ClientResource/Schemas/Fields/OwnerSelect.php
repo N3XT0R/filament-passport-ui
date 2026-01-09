@@ -6,9 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields;
 
 use Filament\Forms\Components\Select;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Client\FormatOwnerState;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Fields\FieldInterface;
+use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Owners\GetAllOwnersRelationshipUseCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 class OwnerSelect implements FieldInterface
 {
