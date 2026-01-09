@@ -162,7 +162,7 @@ Additional documentation is available at:
 ## Migration to v2
 
 Starting with v2, Filament Passport UI builds on the
-**Laravel Passport Authorization Core** package.
+**[Laravel Passport Authorization Core](https://github.com/N3XT0R/laravel-passport-authorization-core)** package.
 
 Database schema changes and optional configuration are now owned by the core
 package and are **not published automatically**.
