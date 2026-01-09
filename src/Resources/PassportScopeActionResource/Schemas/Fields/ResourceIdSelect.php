@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Schemas\Fields;
 
 use Filament\Forms\Components\Select;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Fields\FieldInterface;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\Scopes\ResourceRepository;
 
 class ResourceIdSelect implements FieldInterface
 {
