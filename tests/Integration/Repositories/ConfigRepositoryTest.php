@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Repositories;
 
 use Filament\Support\Icons\Heroicon;
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 
 final class ConfigRepositoryTest extends DatabaseTestCase
 {
@@ -23,7 +23,7 @@ final class ConfigRepositoryTest extends DatabaseTestCase
     public function testGetAllowedGrantTypesReturnsEnumInstances(): void
     {
         config([
-            'passport-ui.oauth.allowed_grant_types' => [
+            'passport-authorization-core.oauth.allowed_grant_types' => [
                 OAuthClientType::PASSWORD->value,
                 OAuthClientType::CLIENT_CREDENTIALS->value,
             ],
@@ -42,7 +42,7 @@ final class ConfigRepositoryTest extends DatabaseTestCase
 
     public function testGetAllowedGrantTypesReturnsEmptyArrayWhenNotConfigured(): void
     {
-        config(['passport-ui.oauth.allowed_grant_types' => []]);
+        config(['passport-authorization-core.oauth.allowed_grant_types' => []]);
 
         self::assertSame(
             [],
@@ -53,7 +53,7 @@ final class ConfigRepositoryTest extends DatabaseTestCase
     public function testGetOwnerModelReturnsConfiguredValue(): void
     {
         config([
-            'passport-ui.owner_model' => '\\App\\Models\\Admin',
+            'passport-authorization-core.owner_model' => '\\App\\Models\\Admin',
         ]);
 
         self::assertSame(
@@ -73,7 +73,7 @@ final class ConfigRepositoryTest extends DatabaseTestCase
     public function testGetOwnerLabelAttribute(): void
     {
         config([
-            'passport-ui.owner_label_attribute' => 'email',
+            'passport-authorization-core.owner_label_attribute' => 'email',
         ]);
 
         self::assertSame(
@@ -125,7 +125,7 @@ final class ConfigRepositoryTest extends DatabaseTestCase
     public function testIsUsingDatabaseScopesReturnsTrueWhenEnabled(): void
     {
         config([
-            'passport-ui.use_database_scopes' => true,
+            'passport-authorization-core.use_database_scopes' => true,
         ]);
 
         self::assertTrue(
@@ -136,7 +136,7 @@ final class ConfigRepositoryTest extends DatabaseTestCase
     public function testIsUsingDatabaseScopesReturnsFalseWhenDisabled(): void
     {
         config([
-            'passport-ui.use_database_scopes' => false,
+            'passport-authorization-core.use_database_scopes' => false,
         ]);
 
         self::assertFalse(

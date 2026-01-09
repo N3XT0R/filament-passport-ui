@@ -1,1 +1,0 @@
-../../config/passport-ui.php

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Grant;
 
 use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 
 final class GetAllowedGrantTypeOptionsTest extends DatabaseTestCase
 {
@@ -22,7 +22,7 @@ final class GetAllowedGrantTypeOptionsTest extends DatabaseTestCase
     public function testExecuteReturnsConfiguredGrantTypesAsOptions(): void
     {
         config([
-            'passport-ui.oauth.allowed_grant_types' => [
+            'passport-authorization-core.oauth.allowed_grant_types' => [
                 OAuthClientType::AUTHORIZATION_CODE->value,
                 OAuthClientType::CLIENT_CREDENTIALS->value,
             ],

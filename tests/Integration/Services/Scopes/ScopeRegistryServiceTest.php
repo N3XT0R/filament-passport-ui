@@ -6,12 +6,12 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Services\Scopes;
 
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedActionRepositoryDecorator;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedResourceRepositoryDecorator;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class ScopeRegistryServiceTest extends DatabaseTestCase
 {

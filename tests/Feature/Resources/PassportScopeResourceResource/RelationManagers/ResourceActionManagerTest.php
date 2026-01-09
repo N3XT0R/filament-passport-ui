@@ -6,12 +6,12 @@ namespace N3XT0R\FilamentPassportUi\Tests\Feature\Resources\PassportScopeResourc
 
 use App\Models\User;
 use Livewire\Livewire;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Pages\EditResource;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\RelationManagers\ResourceActionManager;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 use N3XT0R\LaravelPassportAuthorizationCore\Database\Factories\PassportScopeActionFactory;
 use N3XT0R\LaravelPassportAuthorizationCore\Database\Factories\PassportScopeResourceFactory;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 
 class ResourceActionManagerTest extends DatabaseTestCase
 {

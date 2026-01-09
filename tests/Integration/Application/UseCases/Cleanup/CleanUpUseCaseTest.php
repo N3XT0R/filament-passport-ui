@@ -7,10 +7,10 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Clean
 use App\Models\User;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Cleanup\CleanUpUseCase;
 use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeGrantFactory;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeGrant;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class CleanUpUseCaseTest extends DatabaseTestCase
 {

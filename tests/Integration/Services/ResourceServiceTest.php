@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Services;
 
 use App\Models\User;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Services\ResourceService;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class ResourceServiceTest extends DatabaseTestCase
 {
@@ -31,7 +31,7 @@ final class ResourceServiceTest extends DatabaseTestCase
         ], $actor);
 
         self::assertInstanceOf(PassportScopeResource::class, $resource);
-        self::assertDatabaseHas('passport_scope_resources', [
+        $this->assertDatabaseHas('passport_scope_resources', [
             'id' => $resource->getKey(),
             'name' => 'projects',
             'description' => 'Manage projects',

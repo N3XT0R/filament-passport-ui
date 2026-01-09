@@ -6,11 +6,11 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Services\ClientService;
 
 use App\Models\User;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Exceptions\Domain\ClientAlreadyExists;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 final class ClientServiceTest extends DatabaseTestCase
 {
@@ -267,7 +267,7 @@ final class ClientServiceTest extends DatabaseTestCase
     public function testGetOwnerLabelAttributeReturnsNullWhenConfiguredLabelMissing(): void
     {
         config([
-            'passport-ui.owner_label_attribute' => 'non_existing_property',
+            'passport-authorization-core.owner_label_attribute' => 'non_existing_property',
         ]);
 
         $owner = User::factory()->create([

@@ -7,8 +7,8 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Resou
 use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Resources\DeleteResourceUseCase;
 use N3XT0R\FilamentPassportUi\Events\PassportScopeResource\ResourceDeletedEvent;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class DeleteResourceUseCaseTest extends DatabaseTestCase
 {

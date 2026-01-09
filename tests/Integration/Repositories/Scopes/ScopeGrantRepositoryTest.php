@@ -6,9 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Repositories\Scopes;
 
 use Illuminate\Support\Collection;
 use Laravel\Passport\Client as PassportClient;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ScopeGrantRepository;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeGrant;
 
 final class ScopeGrantRepositoryTest extends DatabaseTestCase
 {

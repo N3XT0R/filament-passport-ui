@@ -7,7 +7,7 @@ namespace N3XT0R\FilamentPassportUi\Services;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Contracts\OAuthenticatable;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Exceptions\Domain\ClientAlreadyExists;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;

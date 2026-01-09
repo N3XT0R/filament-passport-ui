@@ -6,9 +6,6 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client as PassportClient;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
@@ -16,6 +13,9 @@ use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedActionReposito
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedResourceRepositoryDecorator;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client as PassportClient;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class ClearCacheCommandTest extends DatabaseTestCase
 {
@@ -43,32 +43,42 @@ final class ClearCacheCommandTest extends DatabaseTestCase
             'passport.scopes.actions',
         ])->put('action-cache-key', 'action-entry', 600);
 
-        self::assertSame('resource-entry', Cache::tags([
-            'passport',
-            'passport.scopes',
-            'passport.scopes.resources',
-        ])->get('resource-cache-key'));
+        self::assertSame(
+            'resource-entry',
+            Cache::tags([
+                'passport',
+                'passport.scopes',
+                'passport.scopes.resources',
+            ])->get('resource-cache-key')
+        );
 
-        self::assertSame('action-entry', Cache::tags([
-            'passport',
-            'passport.scopes',
-            'passport.scopes.actions',
-        ])->get('action-cache-key'));
+        self::assertSame(
+            'action-entry',
+            Cache::tags([
+                'passport',
+                'passport.scopes',
+                'passport.scopes.actions',
+            ])->get('action-cache-key')
+        );
 
         $this->artisan('filament-passport-ui:cleanup-cache')
             ->assertExitCode(Command::SUCCESS);
 
-        self::assertNull(Cache::tags([
-            'passport',
-            'passport.scopes',
-            'passport.scopes.resources',
-        ])->get('resource-cache-key'));
+        self::assertNull(
+            Cache::tags([
+                'passport',
+                'passport.scopes',
+                'passport.scopes.resources',
+            ])->get('resource-cache-key')
+        );
 
-        self::assertNull(Cache::tags([
-            'passport',
-            'passport.scopes',
-            'passport.scopes.actions',
-        ])->get('action-cache-key'));
+        self::assertNull(
+            Cache::tags([
+                'passport',
+                'passport.scopes',
+                'passport.scopes.actions',
+            ])->get('action-cache-key')
+        );
     }
 
     private function disableObservers(): void

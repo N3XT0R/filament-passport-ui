@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Models;
 
 use App\Models\User;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeGrant;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 class PassportScopeGrantTest extends DatabaseTestCase
 {
@@ -33,7 +33,7 @@ class PassportScopeGrantTest extends DatabaseTestCase
 
         $grant = PassportScopeGrant::create([
             'tokenable_type' => $tokenable::class,
-            'tokenable_id' => (string) $tokenable->getKey(),
+            'tokenable_id' => (string)$tokenable->getKey(),
             'resource_id' => $resource->id,
             'action_id' => $action->id,
         ]);

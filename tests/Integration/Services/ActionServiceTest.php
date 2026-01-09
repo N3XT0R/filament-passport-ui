@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Services;
 
 use App\Models\User;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Services\ActionService;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class ActionServiceTest extends DatabaseTestCase
 {

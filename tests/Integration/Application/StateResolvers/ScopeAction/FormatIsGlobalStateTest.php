@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\StateResolvers\ScopeAction;
 
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\ScopeAction\FormatIsGlobalState;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class FormatIsGlobalStateTest extends DatabaseTestCase
 {

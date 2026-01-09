@@ -7,11 +7,11 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeGrantFactory;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client as PassportClient;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client as PassportClient;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeGrant;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class CleanupDatabaseCommandTest extends DatabaseTestCase
 {

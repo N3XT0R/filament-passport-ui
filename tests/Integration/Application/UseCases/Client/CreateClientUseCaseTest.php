@@ -7,10 +7,10 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Clien
 use App\Models\User;
 use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Client\CreateClientUseCase;
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientCreatedEvent;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 final class CreateClientUseCaseTest extends DatabaseTestCase
 {

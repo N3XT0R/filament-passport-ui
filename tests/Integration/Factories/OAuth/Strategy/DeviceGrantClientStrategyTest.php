@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Factories\OAuth\Strategy;
 
 use App\Models\User;
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy\DeviceGrantClientStrategy;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 final class DeviceGrantClientStrategyTest extends DatabaseTestCase
 {

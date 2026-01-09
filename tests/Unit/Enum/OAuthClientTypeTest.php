@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Tests\Unit\Enum;
 
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 use PHPUnit\Framework\TestCase;
 
 final class OAuthClientTypeTest extends TestCase

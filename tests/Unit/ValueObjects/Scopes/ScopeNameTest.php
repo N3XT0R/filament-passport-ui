@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Tests\Unit\ValueObjects\Scopes;
 
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\ValueObjects\Scopes\ScopeName;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 use PHPUnit\Framework\TestCase;
 
 final class ScopeNameTest extends TestCase

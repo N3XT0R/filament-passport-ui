@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Models\Concerns;
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface as BaseInterface;
 
-interface HasPassportScopeGrantsInterface extends HasRelationshipsInterface
+interface HasPassportScopeGrantsInterface extends BaseInterface
 {
-    /**
-     * Get all the passport scope grants for the tokenable model.
-     * @return MorphMany
-     */
-    public function passportScopeGrants(): MorphMany;
 }

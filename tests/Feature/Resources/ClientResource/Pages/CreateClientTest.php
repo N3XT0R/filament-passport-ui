@@ -6,17 +6,17 @@ namespace N3XT0R\FilamentPassportUi\Tests\Feature\Resources\ClientResource\Pages
 
 use App\Models\User;
 use Livewire\Livewire;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeActionFactory;
 use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeResourceFactory;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages\CreateClient;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 class CreateClientTest extends DatabaseTestCase
 {
     public function testClientCanBeCreatedAndSecretIsStoredInSession(): void
     {
-        config()->set('passport-ui.use_database_scopes', false);
+        config()->set('passport-authorization-core.use_database_scopes', false);
 
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -39,7 +39,7 @@ class CreateClientTest extends DatabaseTestCase
 
     public function testScopeResourcesAndActionsAreShownInForm(): void
     {
-        config()->set('passport-ui.use_database_scopes', true);
+        config()->set('passport-authorization-core.use_database_scopes', true);
 
         $user = User::factory()->create();
         $this->actingAs($user);

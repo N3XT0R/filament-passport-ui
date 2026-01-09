@@ -6,71 +6,14 @@ namespace N3XT0R\FilamentPassportUi\Repositories;
 
 use Filament\Support\Contracts\ScalableIcon;
 use Filament\Support\Icons\Heroicon;
-use Illuminate\Contracts\Config\Repository;
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\ConfigRepository as BaseRepository;
 
 /**
  * Configuration Repository for Filament Passport UI
  */
-readonly class ConfigRepository
+readonly class ConfigRepository extends BaseRepository
 {
     private const string CONFIG_ROOT = 'passport-ui.';
-
-
-    public function __construct(private Repository $config)
-    {
-    }
-
-    /**
-     * Get active OAuth client types based on configuration
-     * @return OAuthClientType[]
-     */
-    public function getAllowedGrantTypes(): array
-    {
-        $values = $this->config->get(
-            self::CONFIG_ROOT . 'oauth.allowed_grant_types',
-            []
-        );
-
-        $types = [];
-
-        foreach ($values as $value) {
-            $types[] = OAuthClientType::from($value);
-        }
-
-        return $types;
-    }
-
-    /**
-     * Get the owner model class name for OAuth clients
-     * @return string
-     */
-    public function getOwnerModel(): string
-    {
-        return (string)$this->config->get(self::CONFIG_ROOT . 'owner_model', '\\App\\Models\\User');
-    }
-
-    /**
-     * Get the attribute used as label for owner relationships for OAuth clients
-     * @return string
-     */
-    public function getOwnerLabelAttribute(): string
-    {
-        return (string)$this->config->get(self::CONFIG_ROOT . 'owner_label_attribute', 'name');
-    }
-
-    /**
-     * Get the navigation group name for OAuth Management
-     * @param string|null $default
-     * @return string
-     */
-    public function getNavigationGroup(?string $default = null): string
-    {
-        if (null === $default) {
-            $default = 'OAuth Management';
-        }
-        return (string)$this->config->get(self::CONFIG_ROOT . 'navigation.group', $default);
-    }
 
     /**
      * Get the navigation icon for a given resource
@@ -89,12 +32,16 @@ readonly class ConfigRepository
     }
 
     /**
-     * Check if database scopes are used for Passport
-     * @return bool
+     * Get the navigation group name for OAuth Management
+     * @param string|null $default
+     * @return string
      */
-    public function isUsingDatabaseScopes(): bool
+    public function getNavigationGroup(?string $default = null): string
     {
-        return (bool)$this->config->get(self::CONFIG_ROOT . 'use_database_scopes', false);
+        if (null === $default) {
+            $default = 'OAuth Management';
+        }
+        return (string)$this->config->get(self::CONFIG_ROOT . 'navigation.group', $default);
     }
 
 }

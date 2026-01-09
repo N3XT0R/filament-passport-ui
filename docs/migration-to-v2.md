@@ -141,6 +141,8 @@ Before considering the migration complete, ensure that:
 - [ ] Optional core configuration is published (if needed)
 - [ ] No UI-level authorization logic remains
 - [ ] All authorization writes go through core use cases
+- [ ] Migrates traits from UI models to core models (if applicable)
+- [ ] Migrate traits from UI policies to core policies (if applicable)
 
 ---
 

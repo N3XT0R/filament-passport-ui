@@ -34,7 +34,6 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
      */
     protected array $booter = [
         Providers\Boot\ScopeBooter::class,
-        Providers\Boot\PassportModelsBooter::class,
         Providers\Boot\OAuthClientFactoryBooter::class,
     ];
 

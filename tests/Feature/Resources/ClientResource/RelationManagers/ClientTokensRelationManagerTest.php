@@ -8,10 +8,10 @@ use App\Models\User;
 use Livewire\Livewire;
 use N3XT0R\FilamentPassportUi\Database\Factories\ClientFactory;
 use N3XT0R\FilamentPassportUi\Database\Factories\TokenFactory;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages\ViewClient;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\RelationManagers\ClientTokensRelationManager;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 class ClientTokensRelationManagerTest extends DatabaseTestCase
 {

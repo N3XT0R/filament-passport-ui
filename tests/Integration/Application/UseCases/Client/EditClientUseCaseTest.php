@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Client\EditClientUseCase;
 use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientRevokedEvent;
 use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientUpdatedEvent;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 final class EditClientUseCaseTest extends DatabaseTestCase
 {

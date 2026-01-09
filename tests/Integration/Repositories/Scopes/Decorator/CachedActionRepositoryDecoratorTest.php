@@ -6,9 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Repositories\Scopes\Decora
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedActionRepositoryDecorator;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 
 final class CachedActionRepositoryDecoratorTest extends DatabaseTestCase
 {

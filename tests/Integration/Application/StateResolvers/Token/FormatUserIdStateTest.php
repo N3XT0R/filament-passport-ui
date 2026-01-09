@@ -7,8 +7,8 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\StateResolvers
 use App\Models\Token;
 use App\Models\User;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\FormatUserIdState;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 final class FormatUserIdStateTest extends DatabaseTestCase
 {

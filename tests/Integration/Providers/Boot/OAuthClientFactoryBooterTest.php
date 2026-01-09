@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Providers\Boot;
 
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactory;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;
 use N3XT0R\FilamentPassportUi\Tests\TestCase;

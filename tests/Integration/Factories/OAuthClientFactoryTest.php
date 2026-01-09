@@ -7,7 +7,7 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Factories;
 use App\Models\User;
 use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 use N3XT0R\FilamentPassportUi\Exceptions\UnsupportedOAuthClientTypeException;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactory;
 use N3XT0R\FilamentPassportUi\Factories\OAuth\OAuthClientFactoryInterface;

@@ -7,8 +7,8 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Clien
 use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Client\DeleteClientUseCase;
 use N3XT0R\FilamentPassportUi\Events\Clients\OauthClientDeletedEvent;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 final class DeleteClientUseCaseTest extends DatabaseTestCase
 {

@@ -7,7 +7,7 @@ namespace N3XT0R\FilamentPassportUi\Factories\OAuth;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 
 interface OAuthClientFactoryInterface
 {

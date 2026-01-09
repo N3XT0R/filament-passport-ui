@@ -7,9 +7,9 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Actio
 use Illuminate\Support\Facades\Event;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Actions\EditActionUseCase;
 use N3XT0R\FilamentPassportUi\Events\PassportScopeAction\ActionUpdatedEvent;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class EditActionUseCaseTest extends DatabaseTestCase
 {

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Models\Concerns;
 
-interface HasRelationshipsInterface
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasRelationshipsInterface as BaseInterface;
+
+interface HasRelationshipsInterface extends BaseInterface
 {
-    public function morphMany($related, $name, $type = null, $id = null, $localKey = null);
 }

@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Models\Traits;
 
 use App\Models\HasApiTokensUser;
-use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeActionFactory;
-use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeGrantFactory;
-use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeResourceFactory;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
-use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
-use N3XT0R\FilamentPassportUi\Services\GrantService;
 use Laravel\Passport\AccessToken;
+use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeGrantFactory;
+use N3XT0R\FilamentPassportUi\Services\GrantService;
+use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 class HasApiTokensTraitTest extends DatabaseTestCase
 {
@@ -26,10 +24,10 @@ class HasApiTokensTraitTest extends DatabaseTestCase
     {
         parent::setUp();
 
-        $this->resource = PassportScopeResourceFactory::new()->create([
+        $this->resource = PassportScopeResource::factory()->create([
             'name' => 'users',
         ]);
-        $this->action = PassportScopeActionFactory::new()->create([
+        $this->action = PassportScopeAction::factory()->create([
             'name' => 'update',
         ]);
 

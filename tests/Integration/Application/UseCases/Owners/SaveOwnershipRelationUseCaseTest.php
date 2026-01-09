@@ -7,8 +7,8 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Application\UseCases\Owner
 use App\Models\User;
 use InvalidArgumentException;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Owners\SaveOwnershipRelationUseCase;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 final class SaveOwnershipRelationUseCaseTest extends DatabaseTestCase
 {

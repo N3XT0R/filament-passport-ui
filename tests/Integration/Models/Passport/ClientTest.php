@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Tests\Integration\Models\Passport;
 
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeGrant;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 final class ClientTest extends DatabaseTestCase
 {
     public function testHasScopeUsesParentBehaviorWhenDatabaseScopesDisabled(): void
     {
-        config(['passport-ui.use_database_scopes' => false]);
+        config(['passport-authorization-core.use_database_scopes' => false]);
 
         $client = Client::factory()->create();
 

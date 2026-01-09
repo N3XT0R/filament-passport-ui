@@ -14,7 +14,7 @@ class ListClientsTest extends DatabaseTestCase
 {
     public function testListClientsPageShowsCreateAction(): void
     {
-        config()->set('passport-ui.use_database_scopes', false);
+        config()->set('passport-authorization-core.use_database_scopes', false);
 
         $user = User::factory()->create();
         $this->actingAs($user);

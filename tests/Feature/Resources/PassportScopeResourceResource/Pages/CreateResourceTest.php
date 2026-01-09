@@ -6,9 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Tests\Feature\Resources\PassportScopeResourc
 
 use App\Models\User;
 use Livewire\Livewire;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Pages\CreateResource;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 class CreateResourceTest extends DatabaseTestCase
 {

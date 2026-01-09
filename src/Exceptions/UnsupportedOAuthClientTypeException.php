@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Exceptions;
 
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 use RuntimeException;
 
 final class UnsupportedOAuthClientTypeException extends RuntimeException

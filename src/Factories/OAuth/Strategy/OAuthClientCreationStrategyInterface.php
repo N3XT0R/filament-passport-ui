@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Factories\OAuth\Strategy;
 
-use N3XT0R\FilamentPassportUi\Enum\OAuthClientType;
+use N3XT0R\LaravelPassportAuthorizationCore\Enum\OAuthClientType;
 use Laravel\Passport\Client;
 use Illuminate\Contracts\Auth\Authenticatable;
 
