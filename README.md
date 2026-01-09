@@ -123,7 +123,7 @@ This is especially useful in systems with multiple integrations, services, or te
 
 - PHP ^8.4
 - Laravel ^12
-- Laravel Passport
+- Laravel Passport ^13
 - Filament v4
 
 ---
