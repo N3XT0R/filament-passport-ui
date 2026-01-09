@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-01-10
+
+### Changed
+
+- Refactored Filament Passport UI to delegate all authorization domain logic to the
+  **[Laravel Passport Authorization Core](https://github.com/N3XT0R/laravel-passport-authorization-core)** package.
+- Removed duplicated authorization logic from the UI layer in favor of shared,
+  reusable use cases provided by the core package.
+- Established a clear separation between administrative UI concerns and
+  authorization domain responsibilities as part of the v2 architecture.
+
 ## [1.0.0] - 2026-01-06
 
 ### Added
