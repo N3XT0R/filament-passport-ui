@@ -1,42 +1,116 @@
 # Configuration
 
-This document explains how to configure Filament Passport UI after installation. It covers both the package-provided
-installer and the alternative Composer installation (useful when distributing the package with Spatie's Package Tools).
+Filament Passport UI exposes **very limited configuration** by design.
 
-1. Installation
+Starting with v2, all authorization- and domain-related configuration has been
+moved to the **Laravel Passport Authorization Core** package.
+
+Filament Passport UI itself only provides configuration for **UI-specific
+concerns**.
+
+---
+
+## Installation
 
 ```bash
 composer require n3xt0r/filament-passport-ui
 ```
 
-## Option A — Use the package installer (recommended when available):
+After installation, run the installer command:
 
 ```bash
 php artisan filament-passport-ui:install
 ```
 
-This command will publish the package configuration to your application's `config` directory and perform any other
-installation tasks the package provides.
+The installer performs the following tasks:
 
-## Option B - Install via Composer (for packages published on Packagist or when using Spatie's Package Tools):
+- publishes the Filament Passport UI configuration file
+- triggers required seeders
+- ensures required core package assets are available
 
-If the package does not automatically publish configuration or other assets, run vendor:publish. Replace the provider
-and tag placeholders with the package's actual ServiceProvider class and publish tag (check the package README if
-unsure):
+> Note:  
+> Core-related migrations and configuration are owned by
+> `laravel-passport-authorization-core` and are documented separately.
 
-```bash
-php artisan vendor:publish --provider="N3XT0R\FilamentPassportUiServiceProvider" --tag="config"
-# optional: publish other tags if provided, e.g. migrations, views, assets
-php artisan vendor:publish --provider="N3XT0R\FilamentPassportUiServiceProvider" --tag="migrations"
-php artisan vendor:publish --provider="N3XT0R\FilamentPassportUiServiceProvider" --tag="assets"
+---
+
+## Configuration File
+
+After installation, the configuration file is available at:
+
+```
+config/passport-ui.php
 ```
 
-2. Configuration file
+### Available Options
 
-After publishing, the main configuration file will typically appear at `config/passport-ui.php`. Edit this file
-to adjust package-specific settings such as route prefixes, guard settings, and UI-related options.
+#### Navigation Group
 
-3. Verify
+Filament Passport UI allows configuring the **Filament navigation group**
+under which all Passport-related resources are registered.
 
-- Check that `config/passport-ui.php` exists and contains the expected keys.
+```php
+return [
 
+   /*
+    |--------------------------------------------------------------------------
+    | Navigation Groups
+    |--------------------------------------------------------------------------
+    |
+    | This values controls the navigation group name used by Filament
+    | for all Passport-related resources.
+    |
+    */
+
+    'navigation_group' => 'Authentication',
+];
+```
+
+This is the **only configurable option** provided by Filament Passport UI.
+
+All authorization rules, scope definitions, grants, and context handling
+are configured and resolved by the core package.
+
+---
+
+## Authorization Core Configuration
+
+Authorization-related configuration, including:
+
+- scope resources
+- scope actions
+- grants
+- authorization context
+
+is handled by the **Laravel Passport Authorization Core** package.
+
+Refer to the core documentation for details:
+
+```
+docs/migration-to-v2.md
+```
+
+and the core package repository:
+
+https://github.com/N3XT0R/laravel-passport-authorization-core
+
+---
+
+## Seeders
+
+The `filament-passport-ui:install` command triggers the required seeders
+to ensure that default authorization structures are available.
+
+These seeders may also be triggered independently via the core package
+installer if needed.
+
+Running both installers is safe and idempotent.
+
+---
+
+## Summary
+
+- Filament Passport UI exposes **UI-only configuration**
+- Authorization configuration lives exclusively in the core package
+- Only the navigation group is configurable at the UI level
+- Installer commands remain the recommended integration path
