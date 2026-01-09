@@ -7,10 +7,10 @@ namespace N3XT0R\FilamentPassportUi\Support\Builder;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Schemas\Components\Section;
 use Illuminate\Support\Collection;
-use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
+use N3XT0R\LaravelPassportAuthorizationCore\DTO\Scopes\ScopeDTO;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
-use N3XT0R\FilamentPassportUi\Services\GrantService;
-use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
+use N3XT0R\LaravelPassportAuthorizationCore\Services\GrantService;
+use N3XT0R\LaravelPassportAuthorizationCore\Services\Scopes\ScopeRegistryService;
 
 readonly class ScopeFormSectionBuilder
 {

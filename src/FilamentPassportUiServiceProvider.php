@@ -22,21 +22,6 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
 
     public static string $viewNamespace = 'filament-passport-ui';
 
-    /**
-     * @var array|class-string[]
-     */
-    protected array $registrars = [
-        Providers\Register\RepositoryRegistrar::class,
-        Providers\Register\OAuthStrategyRegistrar::class,
-    ];
-    /**
-     * @var array|class-string[]
-     */
-    protected array $booter = [
-        Providers\Boot\ScopeBooter::class,
-        Providers\Boot\OAuthClientFactoryBooter::class,
-    ];
-
     public function configurePackage(Package $package): void
     {
         /*
@@ -73,17 +58,6 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-        $this->executeRegistrars();
-    }
-
-    private function executeRegistrars(): void
-    {
-        foreach ($this->registrars as $registrar) {
-            $registrarInstance = app($registrar);
-            if ($registrarInstance instanceof Providers\Register\Concerns\RegistrarInterface) {
-                $registrarInstance->register();
-            }
-        }
     }
 
     public function packageBooted(): void
@@ -113,18 +87,6 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
 
         // Testing
         Testable::mixin(new TestsFilamentPassportUi());
-
-        $this->executeBooter();
-    }
-
-    private function executeBooter(): void
-    {
-        foreach ($this->booter as $booterClass) {
-            $booter = app($booterClass);
-            if ($booter instanceof Providers\Boot\Concerns\BooterInterface) {
-                $booter->boot();
-            }
-        }
     }
 
     protected function getAssetPackageName(): ?string

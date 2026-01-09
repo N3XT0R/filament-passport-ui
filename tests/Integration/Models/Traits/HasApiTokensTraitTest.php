@@ -6,11 +6,11 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Models\Traits;
 
 use App\Models\HasApiTokensUser;
 use Laravel\Passport\AccessToken;
-use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeGrantFactory;
-use N3XT0R\FilamentPassportUi\Services\GrantService;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Database\Factories\PassportScopeGrantFactory;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
+use N3XT0R\LaravelPassportAuthorizationCore\Services\GrantService;
 
 class HasApiTokensTraitTest extends DatabaseTestCase
 {

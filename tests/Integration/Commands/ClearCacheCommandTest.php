@@ -6,16 +6,16 @@ namespace N3XT0R\FilamentPassportUi\Tests\Integration\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedActionRepositoryDecorator;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\CachedResourceRepositoryDecorator;
-use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client as PassportClient;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\Scopes\ActionRepository;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\Scopes\Contracts\ActionRepositoryContract;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\Scopes\Contracts\ResourceRepositoryContract;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\Scopes\Decorator\CachedActionRepositoryDecorator;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\Scopes\Decorator\CachedResourceRepositoryDecorator;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\Scopes\ResourceRepository;
 
 final class ClearCacheCommandTest extends DatabaseTestCase
 {

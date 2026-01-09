@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Models\Traits;
 
 use Laravel\Passport\HasApiTokens as BaseHasApiTokens;
-use N3XT0R\FilamentPassportUi\Services\GrantService;
+use N3XT0R\LaravelPassportAuthorizationCore\Services\GrantService;
 
 trait HasApiTokensTrait
 {
