@@ -11,12 +11,12 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Laravel\Passport\Passport;
-use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Actions\DeleteAction;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientResourceForm;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientResourceTable;
 use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\ClientRepository;
 
 class ClientResource extends BaseManagementResource
 {

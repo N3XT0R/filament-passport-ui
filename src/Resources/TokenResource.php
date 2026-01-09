@@ -7,9 +7,9 @@ namespace N3XT0R\FilamentPassportUi\Resources;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Laravel\Passport\Passport;
-use N3XT0R\FilamentPassportUi\Repositories\TokenRepository;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Pages;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\TokenTable;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\TokenRepository;
 
 class TokenResource extends BaseManagementResource
 {
