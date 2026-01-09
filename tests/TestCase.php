@@ -5,6 +5,7 @@ namespace N3XT0R\FilamentPassportUi\Tests;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use N3XT0R\FilamentPassportUi\FilamentPassportUiServiceProvider;
+use N3XT0R\LaravelPassportAuthorizationCore\LaravelPassportAuthorizationCoreServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\Activitylog\ActivitylogServiceProvider;
@@ -31,6 +32,7 @@ class TestCase extends Orchestra
     {
         return [
             ActivitylogServiceProvider::class,
+            LaravelPassportAuthorizationCoreServiceProvider::class,
             FilamentPassportUiServiceProvider::class
         ];
     }
