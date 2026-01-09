@@ -47,7 +47,7 @@ jobs:
         run: composer show -D
 
       - name: Execute tests
-        run: vendor/bin/phpunit --coverage-clover=coverage/clover.xml --coverage-html=report
+        run: vendor/bin/paratest --coverage-clover=coverage/clover.xml --coverage-html=report
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v6
