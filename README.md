@@ -205,18 +205,25 @@ Feedback, issues, and architectural discussion are welcome.
 
 --- 
 
-## Future Architecture Notes
+## Authorization Core
 
-A dedicated core package for non-Filament-related authorization and domain logic already exists:
+All non-Filament-related authorization and domain logic is implemented in the
+**Laravel Passport Authorization Core** package:
 
 https://github.com/N3XT0R/laravel-passport-authorization-core
 
-In future releases, additional shared authorization concepts and domain logic **will be progressively consolidated**
-into this core package as part of the planned architectural evolution.
+This package acts as the **domain core** for Filament Passport UI and provides:
 
-The goal is to keep **Filament Passport UI** focused purely on **administrative UI concerns**, while all reusable and
-Filament-agnostic authorization logic is maintained within the core package.
+- structured scope and grant modeling
+- authorization context resolution
+- reusable, UI-agnostic authorization use cases
 
-This consolidation is a deliberate and planned architectural step.  
-The Filament-facing API and user-facing behavior of this package are expected to remain stable throughout this process.
+**Filament Passport UI** is intentionally limited to **administrative UI concerns** and
+consumes the core package exclusively for all authorization-related behavior.
+
+This separation is a deliberate architectural decision and represents the stable,
+long-term structure of the project.
+
+The Filament-facing API and user-facing behavior of this package are expected to remain
+stable while authorization logic continues to evolve within the core package.
 
