@@ -6,9 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Page
 
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Resources\EditResourceUseCase;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource;
+use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Resources\EditResourceUseCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 class EditResource extends EditRecord
 {

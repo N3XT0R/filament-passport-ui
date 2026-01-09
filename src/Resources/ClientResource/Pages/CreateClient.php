@@ -8,8 +8,8 @@ use Filament\Facades\Filament;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Client\CreateClientUseCase;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource;
+use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Client\CreateClientUseCase;
 
 class CreateClient extends CreateRecord
 {

@@ -7,8 +7,8 @@ namespace N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Pages;
 use Filament\Facades\Filament;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Actions\CreateActionUseCase;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionsResource;
+use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Actions\CreateActionUseCase;
 
 class CreateAction extends CreateRecord
 {

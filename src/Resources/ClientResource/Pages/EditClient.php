@@ -7,9 +7,9 @@ namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use Filament\Facades\Filament;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Client\EditClientUseCase;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource;
+use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Client\EditClientUseCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 class EditClient extends EditRecord
 {
