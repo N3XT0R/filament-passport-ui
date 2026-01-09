@@ -112,8 +112,8 @@ If your application uses custom Passport models, publish the configuration file 
 
 The package maintains strict separation of concerns:
 
-- **Domain Logic:
-  ** [Laravel Passport Authorization Core](https://github.com/N3XT0R/laravel-passport-authorization-core) (scope and
+- **Domain Logic:**
+  [Laravel Passport Authorization Core](https://github.com/N3XT0R/laravel-passport-authorization-core) (scope and
   grant modeling, authorization context resolution)
 - **UI Layer:** Filament Passport UI (administration interface, visibility, governance)
 
