@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Application\UseCases\Client;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use N3XT0R\FilamentPassportUi\Events\Clients\OauthClientDeletedEvent;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ScopeGrantRepository;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 

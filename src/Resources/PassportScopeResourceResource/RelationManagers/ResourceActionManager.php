@@ -10,7 +10,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\ScopeAction\FormatIsGlobalState;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionsResource;
 
 class ResourceActionManager extends RelationManager

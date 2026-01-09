@@ -8,7 +8,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 abstract class BaseResourceEvent
 {

@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Services\Scopes;
 
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ResourceRepositoryContract;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator\BaseCachedRepositoryDecorator;

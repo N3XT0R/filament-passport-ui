@@ -8,7 +8,7 @@ use Filament\Facades\Filament;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Actions\EditActionUseCase;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeActionsResource;
 
 class EditAction extends EditRecord

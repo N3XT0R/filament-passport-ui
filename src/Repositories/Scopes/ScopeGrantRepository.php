@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Repositories\Scopes;
 
 use Illuminate\Support\Collection;
-use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeGrant;
 
 class ScopeGrantRepository
 {

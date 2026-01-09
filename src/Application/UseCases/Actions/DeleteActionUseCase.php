@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Application\UseCases\Actions;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use N3XT0R\FilamentPassportUi\Events\PassportScopeAction\ActionDeletedEvent;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Services\ActionService;
 
 /**

@@ -9,7 +9,7 @@ use Laravel\Passport\Contracts\OAuthenticatable;
 use N3XT0R\FilamentPassportUi\DTO\Client\OAuthClientData;
 use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientRevokedEvent;
 use N3XT0R\FilamentPassportUi\Events\Clients\OAuthClientUpdatedEvent;
-use N3XT0R\FilamentPassportUi\Models\Passport\Client;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Repositories\OwnerRepository;
 use N3XT0R\FilamentPassportUi\Services\ClientService;
 use N3XT0R\FilamentPassportUi\Services\GrantService;

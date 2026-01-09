@@ -7,7 +7,7 @@ namespace N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Action
 use Filament\Actions\DeleteAction as FilamentDeleteAction;
 use Filament\Facades\Filament;
 use N3XT0R\FilamentPassportUi\Application\UseCases\Actions\DeleteActionUseCase;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Actions\ActionInterface;
 
 class DeleteAction implements ActionInterface

@@ -8,7 +8,7 @@ use Filament\Forms\Components\CheckboxList;
 use Filament\Schemas\Components\Section;
 use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\DTO\Scopes\ScopeDTO;
-use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
 use N3XT0R\FilamentPassportUi\Services\GrantService;
 use N3XT0R\FilamentPassportUi\Services\Scopes\ScopeRegistryService;
 

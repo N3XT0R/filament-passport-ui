@@ -7,8 +7,8 @@ namespace N3XT0R\FilamentPassportUi\Models\Traits;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use LogicException;
-use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeGrant;
 
 trait HasPassportScopeGrantsTrait
 {

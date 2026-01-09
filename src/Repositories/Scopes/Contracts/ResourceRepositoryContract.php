@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts;
 
 use Illuminate\Support\Collection;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Contracts\IsMigratedContract;
 
 interface ResourceRepositoryContract extends IsMigratedContract

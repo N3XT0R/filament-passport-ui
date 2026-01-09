@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Models\Passport;
 
 use Laravel\Passport\Client as PassportClient;
-use N3XT0R\FilamentPassportUi\Models\Concerns\HasPassportScopeGrantsInterface;
-use N3XT0R\FilamentPassportUi\Models\Traits\HasPassportScopeGrantsTrait;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Traits\HasPassportScopeGrantsTrait;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Services\GrantService;
 

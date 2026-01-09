@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Repositories\Scopes;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 
 class ActionRepository implements ActionRepositoryContract

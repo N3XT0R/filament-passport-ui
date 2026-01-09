@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Resources\PassportScopeActionResource\Schema
 
 use Filament\Tables\Columns\IconColumn;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\ScopeAction\FormatIsGlobalState;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Columns\ColumnInterface;
 
 class IsGlobalColumn implements ColumnInterface

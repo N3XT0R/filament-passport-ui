@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Repositories\Scopes\Decorator;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\Contracts\ActionRepositoryContract;
 
 class CachedActionRepositoryDecorator extends BaseCachedRepositoryDecorator implements ActionRepositoryContract

@@ -6,7 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Application\UseCases\Resources;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use N3XT0R\FilamentPassportUi\Events\PassportScopeResource\ResourceUpdatedEvent;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Services\ResourceService;
 
 /**

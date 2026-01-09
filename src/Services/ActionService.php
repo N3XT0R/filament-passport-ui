@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Services;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeAction;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeAction;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ActionRepository;
 
 readonly class ActionService
