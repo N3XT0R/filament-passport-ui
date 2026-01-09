@@ -6,9 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields;
 
 use Filament\Forms\Components\Select;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Client\FormatClientGrantTypeState;
-use N3XT0R\FilamentPassportUi\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Fields\FieldInterface;
+use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Grant\GetAllowedGrantTypeOptions;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 class GrantTypeSelect implements FieldInterface
 {
