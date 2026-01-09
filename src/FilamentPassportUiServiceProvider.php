@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Artisan;
 use Livewire\Features\SupportTesting\Testable;
 use N3XT0R\FilamentPassportUi\Commands\CleanupDatabaseCommand;
 use N3XT0R\FilamentPassportUi\Commands\ClearCacheCommand;
-use N3XT0R\FilamentPassportUi\Database\Seeders\FilamentPassportUiDatabaseSeeder;
 use N3XT0R\FilamentPassportUi\Testing\TestsFilamentPassportUi;
+use N3XT0R\LaravelPassportAuthorizationCore\Database\Seeders\DatabaseSeeder as FilamentPassportUiDatabaseSeeder;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -68,7 +68,6 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
                     ->askToStarRepoOnGitHub('n3xt0r/filament-passport-ui');
             })
             ->hasConfigFile('passport-ui')
-            ->hasMigrations($this->getMigrations())
             ->hasTranslations()
             ->hasViews(static::$viewNamespace);
     }
@@ -179,17 +178,5 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
     protected function getScriptData(): array
     {
         return [];
-    }
-
-    /**
-     * @return array<string>
-     */
-    protected function getMigrations(): array
-    {
-        return [
-            'create_passport_scope_resources_table',
-            'create_passport_scope_actions_table',
-            'create_passport_scope_grant_table',
-        ];
     }
 }
