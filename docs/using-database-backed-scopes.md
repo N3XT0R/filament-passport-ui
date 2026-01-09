@@ -4,10 +4,10 @@ To manage scopes via the Filament UI, you need to implement `HasPassportScopeGra
 and use `HasPassportScopeGrantsTrait` and `HasApiTokensTrait` on your User model:
 
 ```php
-use N3XT0R\FilamentPassportUI\Contracts\HasPassportScopeGrantsInterface;
-use N3XT0R\FilamentPassportUI\Traits\HasPassportScopeGrantsTrait;
+use N3XT0R\LaravelPassportAuthorizationCore\Contracts\HasPassportScopeGrantsInterface;
+use N3XT0R\LaravelPassportAuthorizationCore\Traits\HasPassportScopeGrantsTrait;
 use Laravel\Passport\Contracts\OAuthenticatable;
-use N3XT0R\FilamentPassportUi\Models\Traits\HasApiTokensTrait;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Traits\HasApiTokensTrait;
 
 class User extends Authenticatable implements OAuthenticatable, HasPassportScopeGrantsInterface
 {;
