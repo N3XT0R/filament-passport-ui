@@ -3,11 +3,10 @@ laravel: '@testbench'
 migrations:
   - workbench/database/migrations
   - vendor/laravel/passport/database/migrations
-  - database/migrations
 
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
-  - N3XT0R\FilamentPassportUi\Database\Seeders
+  - N3XT0R\LaravelPassportAuthorizationCore\Database\Seeders
 dont-discover:
   - laravel/sanctum
 
