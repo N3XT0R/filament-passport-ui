@@ -8,13 +8,13 @@ use Filament\Actions\EditAction;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeResource;
 use N3XT0R\FilamentPassportUi\Repositories\Scopes\ResourceRepository;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Actions\DeleteAction;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Pages;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\RelationManagers;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Schemas\PassportScopeResourceForm;
 use N3XT0R\FilamentPassportUi\Resources\PassportScopeResourceResource\Schemas\PassportScopeResourceTable;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\PassportScopeResource;
 
 class PassportScopeResourceResource extends BaseManagementResource
 {
