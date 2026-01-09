@@ -8,205 +8,89 @@
 [![Code Coverage](https://qlty.sh/gh/N3XT0R/projects/filament-passport-ui/coverage.svg)](https://qlty.sh/gh/N3XT0R/projects/filament-passport-ui)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/n3xt0r/filament-passport-ui/php-code-style.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/n3xt0r/filament-passport-ui/actions?query=workflow%3A"PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/n3xt0r/filament-passport-ui.svg?style=flat-square)](https://packagist.org/packages/n3xt0r/filament-passport-ui)
----
 
 ![Filament Passport UI Logo](art/logo.png)
 
 **Filament Passport UI** provides a structured administrative interface for managing **Laravel Passport** OAuth
-resources
-using **Filament v4**.
+resources using **Filament v4**.
 
-It is designed for applications that already rely on Filament as their primary admin panel and want to manage OAuth
-clients, tokens, scopes, and related authorization concepts in a clear and maintainable way without custom internal
-tooling or CLI-driven workflows.
+This package focuses on **administration, visibility, and governance** not on implementing or enforcing OAuth flows.
 
-This package focuses on **administration and visibility**, not on implementing OAuth flows themselves.
+Designed for applications that already rely on Filament as their primary admin panel and need to manage OAuth clients,
+tokens, scopes, and authorization concepts in a centralized, reviewable way without custom tooling or CLI workflows.
 
----
+## Overview
 
-## What this package does
+Filament Passport UI adds an administration layer on top of Laravel Passport:
 
-Filament Passport UI adds a domain-oriented admin layer on top of Laravel Passport:
+- Manage OAuth clients explicitly by grant type (authorization code, client credentials, password, personal access,
+  implicit, device)
+- View and revoke access tokens with full visibility into state and expiration
+- Model scopes as structured `resource:action` pairs instead of free-form strings
+- Track grants and authorization relationships centrally
+- Make all authorization decisions explicit and auditable
 
-- OAuth clients are managed explicitly instead of being created once via CLI
-- Scopes are modeled and managed in a structured way
-- Tokens and grants become visible and reviewable
-- Authorization decisions remain enforced by Passport at runtime
-
-Passport itself is **not modified or extended internally**.  
-This package operates entirely at the application and UI level.
-
----
+**Important:** Passport itself is not modified. This package operates entirely at the application and UI level.
 
 ## Features
 
-### OAuth Clients
+### Central Management
 
-- Manage OAuth clients by grant type: **authorization code**, **client credentials**, **password**, **personal access**,
-  **implicit**, and **device**
-- View client metadata and ownership
+- Filter and manage OAuth clients by grant type
 - Enable or revoke clients via UI
+- Structure scopes (not ad-hoc strings)
+- Full visibility into authorization state
 
-### Tokens
+### Filament v4 Integration
 
-- View issued **access tokens**
-- Revoke tokens explicitly
-- Inspect token state and expiration
-
-### Scopes & Authorization
-
-- Manage scopes via UI instead of static configuration
-- Model scopes as **resource + action**
-- Group and reason about permissions in a human-readable way
-- Designed to work with structured scope usage (e.g. attribute-based enforcement)
-
-### Filament Integration
-
-- Native **Filament v4 resources and pages**
+- Native Filament Resources and Pages
 - Consistent UX aligned with Filament conventions
-- No custom panels or hacks required
+- No custom panels required
 
 ### Auditability & Compliance
 
-- Administrative actions (e.g. creating, updating, revoking clients or tokens) are fully auditable
-- Changes are recorded via `spatie/laravel-activitylog`
-- Enables traceability of security-relevant actions for compliance requirements (e.g. ISO/IEC 27001)
-- Audit logs remain application-owned and can be integrated into existing ISMS processes
+- All administrative actions recorded via `spatie/laravel-activitylog`
+- Full traceability of OAuth configuration changes
+- Supports compliance requirements (e.g. ISO/IEC 27001)
+- Audit logs remain application-owned
 
-> Note: ISO/IEC 27001 certification applies to organizations and processes.
-> This package supports auditability requirements but does not constitute certification or compliance by itself.
+> Note: Certification is organization-specific. This package enables auditability but does not constitute compliance by
+> itself.
 
 ### Design Principles
 
-- No changes to Passport internals
+- No modifications to Passport internals
 - No assumptions about application architecture
-- Authorization context is defined by the application, not by this package
-- Administrative actions are explicit and reviewable
+- Authorization logic remains the responsibility of the application
+- All administrative actions are explicit and reviewable
 
----
+## What This Package Does NOT Do
 
-## What this package does *not* do
+- Implement OAuth flows
+- Replace Passport
+- Enforce authorization decisions at runtime
+- Infer application-specific security rules
 
-- It does **not** implement OAuth flows
-- It does **not** replace Passport
-- It does **not** enforce authorization decisions by itself
-- It does **not** guess application context or security rules
+Authorization logic is the responsibility of the application and its developers.
 
-Authorization logic remains the responsibility of the application and its developers.
+## Why This Exists
 
----
-
-## Why this exists
-
-Laravel Passport provides a standards-compliant OAuth2 implementation and intentionally stays neutral regarding
-administration and governance.
-
-In real-world applications, this often results in:
+Laravel Passport is standards-compliant but intentionally stays neutral on administration and governance. In real-world
+applications, this often results in:
 
 - OAuth clients created via CLI and never revisited
-- Unclear ownership of machine-to-machine clients
-- Scopes defined ad-hoc as strings without structure
-- No central overview of active tokens and permissions
+- Scopes defined ad-hoc without structure
+- No central visibility of active tokens
+- Unclear ownership of integrations across teams
 
-**Filament Passport UI fills this gap** by providing:
+**Filament Passport UI solves this** by providing:
 
-- Visibility into OAuth configuration
-- A structured mental model for scopes
+- Central visibility into OAuth configuration
+- Structured scope modeling (resource:action)
 - Explicit administrative workflows
-- A single place to review and manage OAuth-related state
+- Single point of review and governance
 
-This is especially useful in systems with multiple integrations, services, or teams.
-
----
-
-## Enterprise OAuth Visibility & Governance
-
-Filament Passport UI provides a **structured administrative interface** for managing
-OAuth2 authorization in applications using **Laravel Passport**.
-
-It is intended for systems where OAuth configuration must be **visible, reviewable,
-and governable**, rather than being implicitly defined through CLI commands, static
-configuration, or scattered middleware rules.
-
----
-
-### Visibility
-
-In real-world applications, OAuth-related state often becomes difficult to reason
-about over time:
-
-- OAuth clients are created once and never revisited
-- Scopes exist as free-form strings without structure
-- Active tokens and grants are not easily inspectable
-- Effective permissions are hard to review or explain
-
-Filament Passport UI addresses this by making OAuth authorization state
-**explicit and observable**:
-
-- OAuth clients are managed and reviewed via UI
-- Scopes are modeled as structured `resource:action` pairs
-- Tokens and grants are visible and inspectable
-- Relationships between clients, actors, and permissions are made clear
-
----
-
-### Governance
-
-This package treats OAuth authorization as a **governed administrative concern**.
-
-Instead of relying on implicit defaults or hidden configuration, all authorization-
-relevant state is managed through **explicit, reviewable actions**.
-
-Key principles include:
-
-- **Explicit administration**  
-  Clients, scopes, and grants are created, updated, and revoked intentionally.
-
-- **Least privilege**  
-  No scopes are auto-assigned or implicitly granted.
-
-- **Clear context**  
-  Authorization decisions can be reasoned about per client and per actor.
-
-- **Reviewability**  
-  OAuth state can be inspected without accessing application code or database tables.
-
-This approach is particularly useful in systems with multiple integrations,
-services, or teams.
-
----
-
-### Architectural Separation (v2)
-
-Starting with v2, Filament Passport UI is intentionally limited to
-**administrative UI concerns**.
-
-All authorization domain logic is implemented in the
-**Laravel Passport Authorization Core** package.
-
-This ensures that:
-
-- authorization behavior is not duplicated in the UI layer
-- the same domain model is reused across UI and runtime enforcement
-- authorization logic remains consistent and auditable
-
-Filament Passport UI does **not** decide or enforce permissions.
-It provides visibility and administrative control over authorization state.
-
----
-
-### Scope of responsibility
-
-To be explicit, this package:
-
-- does **not** implement OAuth flows
-- does **not** replace Laravel Passport
-- does **not** enforce authorization decisions at runtime
-- does **not** infer application-specific security rules
-
-Its responsibility is limited to **administration, visibility, and governance**
-of Passport-based OAuth configuration.
----
+Essential for systems with multiple integrations or teams managing OAuth access.
 
 ## Requirements
 
@@ -215,104 +99,47 @@ of Passport-based OAuth configuration.
 - Laravel Passport ^13
 - Filament v4
 
----
-
 ## Installation
-
-Install via Composer:
 
 ```bash
 composer require n3xt0r/filament-passport-ui
-```
-
-Run the installer:
-
-```bash
 php artisan filament-passport-ui:install
 ```
 
----
+If your application uses custom Passport models, publish the configuration file and adjust model mappings accordingly.
 
-## Models & Configuration
+## Architecture
 
-By default, the package uses the standard Laravel Passport models.
+The package maintains strict separation of concerns:
 
-If your application uses custom Passport models, publish the configuration file and adjust the model mappings
-accordingly.
+- **Domain Logic:
+  ** [Laravel Passport Authorization Core](https://github.com/N3XT0R/laravel-passport-authorization-core) (scope and
+  grant modeling, authorization context resolution)
+- **UI Layer:** Filament Passport UI (administration interface, visibility, governance)
 
-
----
-
-## Documentation
-
-Additional documentation is available at:
-[Docs](docs/index.md)
+The API remains stable while authorization logic evolves in the core package.
 
 ## Migration to v2
 
-Starting with v2, Filament Passport UI builds on the
-**[Laravel Passport Authorization Core](https://github.com/N3XT0R/laravel-passport-authorization-core)** package.
+Starting with v2, Filament Passport UI uses the *
+*[Laravel Passport Authorization Core](https://github.com/N3XT0R/laravel-passport-authorization-core)** package.
 
-Database schema changes and optional configuration are now owned by the core
-package and are **not published automatically**.
+Database schema and optional configuration are managed by the core package and not published automatically.
 
-Please follow the dedicated migration guide for detailed instructions:
+See **[Migration to v2](docs/migration-to-v2.md)** for detailed instructions.
 
-**[Migration to v2](docs/migration-to-v2.md)**
-
----
-
-## Testing
+## Development & Testing
 
 ```bash
 composer install
-composer test
+composer test       # Run tests
+composer serve      # Start local dev server
 ```
 
-### Local development
+Access admin at `http://localhost:8000/admin`  
+Login: `test@example.com` / `password`
 
-```bash
-composer install
-composer serve
-```
+## Documentation & Status
 
-Open:
-
-```
-http://localhost:8000/admin
-```
-
-login with `test@example.com` and `password`.
-
----
-
-## Status
-
-This package is actively developed and evolving.
-
-Feedback, issues, and architectural discussion are welcome.
-
---- 
-
-## Authorization Core
-
-All non-Filament-related authorization and domain logic is implemented in the
-**Laravel Passport Authorization Core** package:
-
-https://github.com/N3XT0R/laravel-passport-authorization-core
-
-This package acts as the **domain core** for Filament Passport UI and provides:
-
-- structured scope and grant modeling
-- authorization context resolution
-- reusable, UI-agnostic authorization use cases
-
-**Filament Passport UI** is intentionally limited to **administrative UI concerns** and
-consumes the core package exclusively for all authorization-related behavior.
-
-This separation is a deliberate architectural decision and represents the stable,
-long-term structure of the project.
-
-The Filament-facing API and user-facing behavior of this package are expected to remain
-stable while authorization logic continues to evolve within the core package.
-
+- **Docs:** [Full Documentation](docs/index.md)
+- **Status:** Actively developed. Feedback and discussion welcome on GitHub
