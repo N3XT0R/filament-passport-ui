@@ -5,26 +5,9 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Database\Factories;
 
 use N3XT0R\FilamentPassportUi\Models\Passport\Client;
-use N3XT0R\FilamentPassportUi\Models\PassportScopeGrant;
+use N3XT0R\LaravelPassportAuthorizationCore\Database\Factories\ClientFactory as BaseClientFactory;
 
-class ClientFactory extends \Laravel\Passport\Database\Factories\ClientFactory
+class ClientFactory extends BaseClientFactory
 {
     protected $model = Client::class;
-
-
-    public function withPassportScopeGrants(array $scopeGrants): self
-    {
-        return $this->afterCreating(function () use ($scopeGrants) {
-            foreach ($scopeGrants as $scopeGrant) {
-                $this->withPassportScopeGrant($scopeGrant);
-            }
-        });
-    }
-
-    public function withPassportScopeGrant(PassportScopeGrant $grant): self
-    {
-        return $this->afterCreating(function (Client $client) use ($grant) {
-            $client->passportScopeGrants()->save($grant);
-        });
-    }
 }
