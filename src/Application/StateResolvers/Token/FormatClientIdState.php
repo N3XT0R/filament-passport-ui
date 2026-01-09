@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Application\StateResolvers\Token;
 
-use N3XT0R\FilamentPassportUi\Repositories\ClientRepository;
+use N3XT0R\LaravelPassportAuthorizationCore\Repositories\ClientRepository;
 
 readonly class FormatClientIdState
 {

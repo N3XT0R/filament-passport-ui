@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Application\StateResolvers\Token;
 
 use Illuminate\Database\Eloquent\Model;
-use N3XT0R\FilamentPassportUi\Services\ClientService;
+use N3XT0R\LaravelPassportAuthorizationCore\Services\ClientService;
 
 readonly class FormatUserIdState
 {
