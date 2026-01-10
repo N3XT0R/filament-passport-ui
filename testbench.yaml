@@ -1,9 +1,8 @@
 laravel: '@testbench'
 
 migrations:
-  - workbench/database/migrations
   - vendor/laravel/passport/database/migrations
-
+  - workbench/database/migrations
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
   - N3XT0R\LaravelPassportAuthorizationCore\Database\Seeders
@@ -30,6 +29,7 @@ workbench:
     - db-wipe
     - migrate-refresh
     - db:seed
+    - filament:assets
   assets:
     - laravel-assets
   sync:
