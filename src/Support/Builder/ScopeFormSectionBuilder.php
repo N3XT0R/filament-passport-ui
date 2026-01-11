@@ -14,6 +14,7 @@ use N3XT0R\LaravelPassportAuthorizationCore\Services\Scopes\ScopeRegistryService
 
 /**
  * @deprecated Use \N3XT0R\FilamentPassportUi\Resources\BaseResource\Components\ScopeCheckboxList
+ * @note This class is kept for backward compatibility and will be removed in future releases.
  */
 readonly class ScopeFormSectionBuilder
 {
