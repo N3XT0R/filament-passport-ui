@@ -14,10 +14,13 @@ class ResourceCheckboxList
     public static function make(
         string $resource,
         Collection $scopes,
-        Collection $granted,
-        Collection $disabled,
+        ?Collection $granted = null,
+        ?Collection $disabled = null,
         string $statePath = 'scopes'
     ): Field {
+        $granted ??= collect();
+        $disabled ??= collect();
+
         $selectableScopes = $scopes->reject(
             fn(ScopeDTO $dto) => $disabled->contains($dto->scope)
         );
