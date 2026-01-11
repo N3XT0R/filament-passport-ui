@@ -11,6 +11,15 @@ use N3XT0R\LaravelPassportAuthorizationCore\DTO\Scopes\ScopeDTO;
 
 class ResourceCheckboxList
 {
+    /**
+     * Create a checkbox list for a given resource's scopes.
+     * @param string $resource
+     * @param Collection<ScopeDTO> $scopes
+     * @param Collection<string>|null $granted
+     * @param Collection<string>|null $disabled
+     * @param string $statePath
+     * @return Field
+     */
     public static function make(
         string $resource,
         Collection $scopes,
