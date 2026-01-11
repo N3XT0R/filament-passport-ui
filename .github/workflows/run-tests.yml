@@ -25,6 +25,8 @@ jobs:
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
       - name: Prepare test environment
         uses: ./.github/actions/prepare-tests
         with:
