@@ -39,22 +39,16 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/paratest --coverage-clover=coverage/clover.xml --coverage-html=report
-
-      - name: Upload coverage artifact
-        uses: actions/upload-artifact@v6
-        with:
-          name: clover-coverage-${{ matrix.laravel_label }}-${{ matrix.php }}
-          path: coverage/clover.xml
-
       - name: Upload HTML coverage report
         uses: actions/upload-artifact@v6
         with:
           name: coverage-report-${{ matrix.laravel_label }}-${{ matrix.php }}
           path: report/
 
-      - name: Send coverage to Qlty
-        if: success()
-        uses: qltysh/qlty-action/coverage@v2
+      - name: Publish coverage
+        uses: ./.github/actions/coverage
         with:
-          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: coverage/clover.xml
+          artifact-name: clover-coverage-${{ matrix.laravel_label }}-${{ matrix.php }}
+          coverage-file: coverage/clover.xml
+          qlty-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+
