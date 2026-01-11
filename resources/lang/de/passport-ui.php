@@ -15,13 +15,6 @@ return [
         'scopes' => 'Berechtigungen',
         'none' => 'Keine',
         'is_active' => 'Aktiv',
-        'wizard' => [
-            'steps' => [
-                'client' => [
-                    'description' => 'Füllen Sie die Client-Details aus.',
-                ],
-            ],
-        ],
     ],
     'resource' => [
         'global_action' => 'globale Aktion',
@@ -35,6 +28,13 @@ return [
             'secret_label' => 'Geheimer Schlüssel',
             'secret_description' => 'Dieses Feld ist nur einmalig sichtbar nach der Erstellung der Resource. Stellen Sie sicher, dass Sie es an einem sicheren Ort speichern.',
             'revoke_label' => 'Client widerrufen',
+            'wizard' => [
+                'steps' => [
+                    'client' => [
+                        'description' => 'Füllen Sie die Client-Details aus.',
+                    ],
+                ],
+            ],
         ],
         'column' => [
             'name' => 'Name',
