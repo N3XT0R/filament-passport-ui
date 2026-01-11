@@ -31,7 +31,7 @@ class ResourceCheckboxList
         // By default, all scopes are selectable
         $selectableScopes = $scopes;
 
-        if ($allowed !== null) {
+        if ($allowed !== null && $allowed->isNotEmpty()) {
             $selectableScopes = $scopes->filter(
                 fn(ScopeDTO $dto) => $allowed->contains($dto->scope)
             );
