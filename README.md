@@ -126,7 +126,8 @@ Starting with v2, Filament Passport UI uses the
 
 Database schema and optional configuration are managed by the core package and not published automatically.
 
-See **[Migration to v2](docs/migration-to-v2.md)** for detailed instructions.
+See **[Migration to v2](https://github.com/N3XT0R/filament-passport-ui/blob/main/docs/migration-to-v2.md)** for detailed
+instructions.
 
 ## Development & Testing
 
@@ -141,5 +142,5 @@ Login: `test@example.com` / `password`
 
 ## Documentation & Status
 
-- **Docs:** [Full Documentation](docs/index.md)
+- **Docs:** [Full Documentation](https://github.com/N3XT0R/filament-passport-ui/blob/main/docs/index.md)
 - **Status:** Actively developed. Feedback and discussion welcome on GitHub
