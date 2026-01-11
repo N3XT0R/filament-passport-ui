@@ -13,6 +13,7 @@ migrations:
   - workbench/database/migrations
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
+  - N3XT0R\LaravelPassportAuthorizationCore\Database\Seeders\DatabaseSeeder
 dont-discover:
   - laravel/sanctum
 
