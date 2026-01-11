@@ -31,6 +31,7 @@ return [
             'wizard' => [
                 'steps' => [
                     'client' => [
+                        'label' => 'Client Details',
                         'description' => 'Füllen Sie die Client-Details aus.',
                     ],
                 ],

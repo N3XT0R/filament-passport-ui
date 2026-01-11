@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas;
 
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,16 +20,20 @@ class CreateClientForm implements FormInterface
         $components = [
             Wizard::make([
                 Wizard\Step::make('client')
+                    ->label(__('filament-passport-ui::passport-ui.client_resource.form.wizard.steps.client.label'))
                     ->icon(Heroicon::OutlinedKey)
                     ->description(
                         __('filament-passport-ui::passport-ui.client_resource.form.wizard.steps.client.description')
                     )
                     ->schema([
-                        NameInput::make(),
-                        OwnerSelect::make(),
+                        Grid::make()
+                            ->schema([
+                                NameInput::make(),
+                                OwnerSelect::make(),
+                            ]),
                         GrantTypeSelect::make(),
                     ]),
-            ])
+            ])->persistStepInQueryString()
                 ->columnSpanFull(),
         ];
 
