@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   grant type.
 - Refactored scope assignment logic to explicitly distinguish between **client scopes** and **user scopes**, instead of
   handling scopes implicitly within a single form.
+- Enforced the **Principle of Least Privilege** by ensuring that user-level permissions are always restricted to a
+  subset of the scopes granted to the client.
 - Updated owner handling during client creation to treat the owner as contextual data, removing redundant owner
   configuration during the user permission step.
 - Improved form structure and readability by grouping related fields using grids and wizard steps instead of a single
