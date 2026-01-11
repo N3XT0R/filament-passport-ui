@@ -43,13 +43,14 @@ class CreateClient extends CreateRecord
             actor: Filament::auth()->user(),
         );
 
-        app(AssignGrantsToTokenableUseCase::class)->execute(
-            ownerId: $result->client->getKey(),
-            contextClientId: $result->client->getKey(),
-            scopes: $userScopes,
-            actor: Filament::auth()->user(),
-        );
-
+        if (!empty($data['owner'] ?? null) && !empty($userScopes)) {
+            app(AssignGrantsToTokenableUseCase::class)->execute(
+                ownerId: $data['owner'],
+                contextClientId: $result->client->getKey(),
+                scopes: $userScopes,
+                actor: Filament::auth()->user(),
+            );
+        }
         /**
          * @note
          * Ugly implementation but Laravel Passport only shows the client secret
