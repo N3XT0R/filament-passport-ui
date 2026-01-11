@@ -16,13 +16,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ inputs.php-version }}
-        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-        coverage: none
-
     - name: Setup problem matchers
       shell: bash
       run: |
