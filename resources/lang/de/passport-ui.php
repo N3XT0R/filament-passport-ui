@@ -36,7 +36,7 @@ return [
                     ],
                     'user_permission' => [
                         'label' => 'Benutzerberechtigung',
-                        'description' => 'Weisen Sie dem Client Benutzerberechtigungen zu.',
+                        'description' => 'Weisen Sie dem Benutzer Berechtigungen zu.',
                     ],
                 ],
             ],
