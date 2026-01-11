@@ -11,6 +11,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
+use N3XT0R\FilamentPassportUi\Resources\BaseResource\Components\ScopeCheckboxList;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
@@ -80,6 +81,11 @@ class CreateClientForm implements FormInterface
                             return app(NeedsUserPermissionState::class)
                                 ->execute($grantType);
                         }),
+                    Grid::make()
+                        ->schema([
+                            ScopeCheckboxList::make('scopes')
+                        ])
+                        ->columnSpanFull()
                 ]),
         ];
     }
