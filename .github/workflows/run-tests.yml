@@ -48,8 +48,14 @@ jobs:
       - name: List Installed Dependencies
         run: composer show -D
 
-      - name: prepare assets for tests
-        run: vendor/bin/testbench asset-publish
+      # ARCHITECTURAL NOTE:
+      # spatie/laravel-package-tools does not provide a deterministic build/test
+      # lifecycle for assets and migrations.
+      #
+      # Without an explicit build step, CI tests do not reflect the actual
+      # runtime state of the package. This step makes the environment explicit.
+      - name: prepare assets for tests (ugly step)
+        run: composer build
 
       - name: Execute tests
         run: vendor/bin/paratest --no-coverage --configuration phpunit.xml
