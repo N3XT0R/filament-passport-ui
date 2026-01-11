@@ -51,6 +51,11 @@ class ClientResource extends BaseManagementResource
         );
     }
 
+    /**
+     * Get additional form components for the resource.
+     * @param Schema $schema
+     * @return array
+     */
     public static function getAdditionalFormComponents(Schema $schema): array
     {
         $components = [];

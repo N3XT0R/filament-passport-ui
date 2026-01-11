@@ -15,6 +15,13 @@ return [
         'scopes' => 'Berechtigungen',
         'none' => 'Keine',
         'is_active' => 'Aktiv',
+        'wizard' => [
+            'steps' => [
+                'client' => [
+                    'description' => 'Füllen Sie die Client-Details aus.',
+                ],
+            ],
+        ],
     ],
     'resource' => [
         'global_action' => 'globale Aktion',
