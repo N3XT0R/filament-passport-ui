@@ -13,7 +13,7 @@ use N3XT0R\LaravelPassportAuthorizationCore\Services\GrantService;
 use N3XT0R\LaravelPassportAuthorizationCore\Services\Scopes\ScopeRegistryService;
 
 /**
- * @deprecated
+ * @deprecated Use \N3XT0R\FilamentPassportUi\Resources\BaseResource\Components\ScopeCheckboxList
  */
 readonly class ScopeFormSectionBuilder
 {
