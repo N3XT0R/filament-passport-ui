@@ -48,5 +48,8 @@ jobs:
       - name: List Installed Dependencies
         run: composer show -D
 
+      - name: prepare assets for tests
+        run: php vendor/bin/testbench asset-publish
+
       - name: Execute tests
         run: vendor/bin/paratest --no-coverage --configuration phpunit.xml
