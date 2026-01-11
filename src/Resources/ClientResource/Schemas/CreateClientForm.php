@@ -83,7 +83,7 @@ class CreateClientForm implements FormInterface
                         }),
                     Grid::make()
                         ->schema([
-                            ScopeCheckboxList::make('scopes')
+                            ScopeCheckboxList::make('client_scopes')
                         ])
                         ->columnSpanFull()
                 ]),
@@ -93,7 +93,11 @@ class CreateClientForm implements FormInterface
     public function getUserPermissionComponents(): array
     {
         return [
-            // Define user permission related components here
+            Grid::make()
+                ->schema([
+                    ScopeCheckboxList::make('user_scopes')
+                ])
+                ->columnSpanFull()
         ];
     }
 }
