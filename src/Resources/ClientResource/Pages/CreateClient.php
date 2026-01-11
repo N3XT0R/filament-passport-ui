@@ -27,6 +27,7 @@ class CreateClient extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
+        $actor = Filament::auth()->user();
         $userScopes = [];
 
         if (isset($data['client_scopes']) && is_array($data['client_scopes'])) {
@@ -40,7 +41,7 @@ class CreateClient extends CreateRecord
 
         $result = app(CreateClientUseCase::class)->execute(
             data: $data,
-            actor: Filament::auth()->user(),
+            actor: $actor,
         );
 
         if (!empty($data['owner'] ?? null) && !empty($userScopes)) {
@@ -48,10 +49,10 @@ class CreateClient extends CreateRecord
                 ownerId: $data['owner'],
                 contextClientId: $result->client->getKey(),
                 scopes: $userScopes,
-                actor: Filament::auth()->user(),
+                actor: $actor,
             );
         }
-        
+
         /**
          * @note
          * Ugly implementation but Laravel Passport only shows the client secret
