@@ -6,11 +6,11 @@ namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas;
 
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
-use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Components\ScopeCheckboxList;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
@@ -19,7 +19,7 @@ use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelec
 
 class CreateClientForm implements FormInterface
 {
-    public function __construct(private ConfigRepository $configRepository)
+    public function __construct()
     {
     }
 
@@ -83,7 +83,11 @@ class CreateClientForm implements FormInterface
                         }),
                     Grid::make()
                         ->schema([
-                            ScopeCheckboxList::make('client', 'client_scopes')
+                            ScopeCheckboxList::make(
+                                context: 'client',
+                                name: 'client_scopes',
+                                statePath: 'client_scopes',
+                            )
                         ])
                         ->columnSpanFull()
                 ]),
@@ -93,9 +97,25 @@ class CreateClientForm implements FormInterface
     public function getUserPermissionComponents(): array
     {
         return [
+            OwnerSelect::make()
+                ->live()
+                ->default(function (Set $set, Get $get) {
+                    $set('owner_select', $get('owner'));
+                })
+                ->disabled()
+                ->dehydrated(false),
             Grid::make()
-                ->schema([
-                    ScopeCheckboxList::make('user', 'user_scopes')
+                ->live()
+                ->schema(fn(Get $get) => [
+                    ScopeCheckboxList::make(
+                        context: 'user',
+                        name: 'user_scopes',
+                        statePath: 'user_scopes',
+                        allowed: collect($get('client_scopes') ?? [])
+                            ->flatten()
+                            ->filter()
+                            ->values()
+                    ),
                 ])
                 ->columnSpanFull()
         ];
