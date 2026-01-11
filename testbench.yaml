@@ -13,7 +13,6 @@ migrations:
   - workbench/database/migrations
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
-  - N3XT0R\LaravelPassportAuthorizationCore\Database\Seeders
 dont-discover:
   - laravel/sanctum
 
@@ -39,10 +38,15 @@ workbench:
     - migrate-refresh
     - db:seed
     - filament:assets
-    - lang:publish
   assets:
     - laravel-assets
+    - passport-authorization-core-migrations
   sync:
     - from: storage
       to: workbench/storage
       reverse: true
+  purge:
+    directories:
+      - database/migrations/*.php
+    files:
+      - lang/*.json
