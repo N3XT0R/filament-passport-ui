@@ -44,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   configuration during the user permission step.
 - Improved form structure and readability by grouping related fields using grids and wizard steps instead of a single
   linear schema.
+- Owner (user) is required for all grant types except client_credentials.
 
 ### Deprecated
 
