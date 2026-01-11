@@ -1,11 +1,19 @@
 laravel: '@testbench'
 
+providers:
+  - App\Providers\WorkbenchServiceProvider
+  - \Laravel\Passport\PassportServiceProvider
+  - \Spatie\Activitylog\ActivitylogServiceProvider
+  - \N3XT0R\LaravelPassportAuthorizationCore\LaravelPassportAuthorizationCoreServiceProvider
+  - \N3XT0R\FilamentPassportUi\FilamentPassportUiServiceProvider
+  - App\Providers\Filament\AdminPanelProvider
+
 migrations:
   - vendor/laravel/passport/database/migrations
   - workbench/database/migrations
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
-  - N3XT0R\LaravelPassportAuthorizationCore\Database\Seeders
+  - N3XT0R\LaravelPassportAuthorizationCore\Database\Seeders\DatabaseSeeder
 dont-discover:
   - laravel/sanctum
 
@@ -24,6 +32,7 @@ workbench:
     views: true
     guard: web
   build:
+    - package:purge-skeleton
     - asset-publish
     - create-sqlite-db
     - db-wipe
@@ -32,7 +41,13 @@ workbench:
     - filament:assets
   assets:
     - laravel-assets
+    - passport-authorization-core-migrations
   sync:
     - from: storage
       to: workbench/storage
       reverse: true
+  purge:
+    directories:
+      - database/migrations/*.php
+    files:
+      - lang/*.json
