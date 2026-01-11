@@ -20,6 +20,14 @@ class ScopeCheckboxList
     }
 
 
+    /**
+     * Create and configure the scope checkbox list section.
+     * @param string $name
+     * @param HasPassportScopeGrantsInterface|null $record
+     * @param string $statePath
+     * @param array|Collection|null $allowed
+     * @return Section
+     */
     public static function make(
         string $name = 'scopes',
         ?HasPassportScopeGrantsInterface $record = null,
@@ -34,7 +42,14 @@ class ScopeCheckboxList
         );
     }
 
-
+    /**
+     * Configure the scope checkbox list section.
+     * @param string $name
+     * @param HasPassportScopeGrantsInterface|null $record
+     * @param string $statePath
+     * @param Collection|null $allowed
+     * @return Section
+     */
     public function configure(
         string $name,
         ?HasPassportScopeGrantsInterface $record,
@@ -55,6 +70,13 @@ class ScopeCheckboxList
     }
 
 
+    /**
+     * Build form sections for scopes grouped by resource.
+     * @param HasPassportScopeGrantsInterface|null $record
+     * @param string $statePath
+     * @param Collection|null $allowedByResource
+     * @return array
+     */
     private function buildSections(
         ?HasPassportScopeGrantsInterface $record,
         string $statePath = 'scopes',
@@ -80,6 +102,11 @@ class ScopeCheckboxList
         })->values()->all();
     }
 
+    /**
+     * Group allowed scopes by resource.
+     * @param Collection $allowed
+     * @return Collection
+     */
     private function groupAllowedByResource(Collection $allowed): Collection
     {
         return $allowed
