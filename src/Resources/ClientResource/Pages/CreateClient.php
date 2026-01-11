@@ -51,6 +51,7 @@ class CreateClient extends CreateRecord
                 actor: Filament::auth()->user(),
             );
         }
+        
         /**
          * @note
          * Ugly implementation but Laravel Passport only shows the client secret
