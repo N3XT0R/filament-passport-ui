@@ -24,12 +24,14 @@ workbench:
     views: true
     guard: web
   build:
+    - package:purge-skeleton
     - asset-publish
     - create-sqlite-db
     - db-wipe
     - migrate-refresh
     - db:seed
     - filament:assets
+    - lang:publish
   assets:
     - laravel-assets
   sync:
