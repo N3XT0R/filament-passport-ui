@@ -34,10 +34,10 @@ return [
                         'label' => 'Client Details',
                         'description' => 'Füllen Sie die Client-Details aus.',
                     ],
-                ],
-                'user_permission' => [
-                    'label' => 'Benutzerberechtigung',
-                    'description' => 'Weisen Sie dem Client Benutzerberechtigungen zu.',
+                    'user_permission' => [
+                        'label' => 'Benutzerberechtigung',
+                        'description' => 'Weisen Sie dem Client Benutzerberechtigungen zu.',
+                    ],
                 ],
             ],
         ],
