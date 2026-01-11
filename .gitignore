@@ -5,7 +5,7 @@
 .vscode
 build
 composer.lock
-coverage
+/coverage
 node_modules
 phpstan.neon
 vendor
