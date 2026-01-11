@@ -62,7 +62,7 @@ class ScopeCheckboxList
         ?Collection $allowed = null,
     ): Section {
         return Section::make($name)
-            ->label(__('filament-passport-ui::passport-ui.common.scopes'))
+            ->heading(__('filament-passport-ui::passport-ui.common.scopes'))
             ->schema(
                 $this->buildSections(
                     context: $context,
