@@ -44,6 +44,14 @@ class CreateClient extends CreateRecord
             actor: $actor,
         );
 
+        /**
+         * @note
+         * Ugly implementation but Laravel Passport only shows the client secret
+         * upon creation. So we store it in the session to show it in the view page
+         * right after creation. Filament always redirects to the view page after creation.
+         */
+        Session::put('new_client_secret_' . $result->client->getKey(), $result->plainSecret);
+
         if (!empty($data['owner'] ?? null) && !empty($userScopes)) {
             app(AssignGrantsToTokenableUseCase::class)->execute(
                 ownerId: $data['owner'],
@@ -52,14 +60,6 @@ class CreateClient extends CreateRecord
                 actor: $actor,
             );
         }
-
-        /**
-         * @note
-         * Ugly implementation but Laravel Passport only shows the client secret
-         * upon creation. So we store it in the session to show it in the view page
-         * right after creation. Filament always redirects to the view page after creation.
-         */
-        Session::put('new_client_secret_' . $result->client->getKey(), $result->plainSecret);
 
         return $result->client;
     }
