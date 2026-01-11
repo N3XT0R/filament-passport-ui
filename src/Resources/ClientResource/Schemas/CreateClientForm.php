@@ -24,7 +24,7 @@ class CreateClientForm implements FormInterface
     }
 
 
-    public static function configure(Schema $schema, array $additionalComponents = []): Schema
+    public static function configure(Schema $schema): Schema
     {
         return app(static::class)->configureComponents($schema);
     }

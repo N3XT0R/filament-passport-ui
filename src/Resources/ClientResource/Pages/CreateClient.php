@@ -20,7 +20,6 @@ class CreateClient extends CreateRecord
     {
         return ClientResource\Schemas\CreateClientForm::configure(
             $schema,
-            static::getResource()::getAdditionalFormComponents($schema)
         );
     }
 
