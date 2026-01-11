@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource;
 use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Client\CreateClientUseCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Tokenable\AssignGrantsToTokenableUseCase;
 
 class CreateClient extends CreateRecord
 {
@@ -26,17 +27,26 @@ class CreateClient extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        //dd($data);
-        if (isset($data['scopes']) && is_array($data['scopes'])) {
-            $data['scopes'] = collect($data['scopes'])
-                ->flatten()
-                ->unique()
-                ->values()
-                ->all();
+        $userScopes = [];
+
+        if (isset($data['client_scopes']) && is_array($data['client_scopes'])) {
+            $data['scopes'] = $this->flattenScopes($data['client_scopes']);
+        }
+
+        if (isset($data['user_scopes']) && is_array($data['user_scopes'])) {
+            $userScopes = $this->flattenScopes($data['user_scopes']);
+            unset($data['user_scopes']);
         }
 
         $result = app(CreateClientUseCase::class)->execute(
             data: $data,
+            actor: Filament::auth()->user(),
+        );
+
+        app(AssignGrantsToTokenableUseCase::class)->execute(
+            ownerId: $result->client->getKey(),
+            contextClientId: $result->client->getKey(),
+            scopes: $userScopes,
             actor: Filament::auth()->user(),
         );
 
@@ -49,5 +59,14 @@ class CreateClient extends CreateRecord
         Session::put('new_client_secret_' . $result->client->getKey(), $result->plainSecret);
 
         return $result->client;
+    }
+
+    private function flattenScopes(array $scopes): array
+    {
+        return collect($scopes)
+            ->flatten()
+            ->unique()
+            ->values()
+            ->all();
     }
 }
