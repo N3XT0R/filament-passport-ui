@@ -4,14 +4,19 @@ description: Prepare PHP, dependencies and runtime state for package tests
 inputs:
   php-version:
     required: true
+    description: "PHP version to set up"
   laravel:
     required: true
+    description: "Laravel framework version to install"
   testbench:
     required: true
+    description: "Orchestra Testbench version to install"
   carbon:
     required: true
+    description: "Nesbot Carbon version to install"
   stability:
     required: true
+    description: "Composer stability flag (e.g., prefer-stable, prefer-lowest)"
 
 runs:
   using: "composite"
