@@ -27,6 +27,7 @@ class CreateClient extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
+        dd($data);
         if (isset($data['scopes']) && is_array($data['scopes'])) {
             $data['scopes'] = collect($data['scopes'])
                 ->flatten()
