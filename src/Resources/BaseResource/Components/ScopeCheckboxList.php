@@ -22,6 +22,7 @@ class ScopeCheckboxList
 
     /**
      * Create and configure the scope checkbox list section.
+     * @param string $context
      * @param string $name
      * @param HasPassportScopeGrantsInterface|null $record
      * @param string $statePath
@@ -29,12 +30,14 @@ class ScopeCheckboxList
      * @return Section
      */
     public static function make(
+        string $context,
         string $name,
         ?HasPassportScopeGrantsInterface $record = null,
         string $statePath = 'scopes',
         array|Collection|null $allowed = null,
     ): Section {
         return app(static::class)->configure(
+            context: $context,
             name: $name,
             record: $record,
             statePath: $statePath,
@@ -44,6 +47,7 @@ class ScopeCheckboxList
 
     /**
      * Configure the scope checkbox list section.
+     * @param string $context
      * @param string $name
      * @param HasPassportScopeGrantsInterface|null $record
      * @param string $statePath
@@ -51,6 +55,7 @@ class ScopeCheckboxList
      * @return Section
      */
     public function configure(
+        string $context,
         string $name,
         ?HasPassportScopeGrantsInterface $record,
         string $statePath = 'scopes',
@@ -60,6 +65,7 @@ class ScopeCheckboxList
             ->label(__('filament-passport-ui::passport-ui.common.scopes'))
             ->schema(
                 $this->buildSections(
+                    context: $context,
                     record: $record,
                     statePath: $statePath,
                     allowedByResource: $allowed
@@ -72,12 +78,14 @@ class ScopeCheckboxList
 
     /**
      * Build form sections for scopes grouped by resource.
+     * @param string $context
      * @param HasPassportScopeGrantsInterface|null $record
      * @param string $statePath
      * @param Collection|null $allowedByResource
      * @return array
      */
     private function buildSections(
+        string $context,
         ?HasPassportScopeGrantsInterface $record,
         string $statePath = 'scopes',
         ?Collection $allowedByResource = null,
@@ -91,13 +99,14 @@ class ScopeCheckboxList
             Collection $scopes,
             string $resource
         )
-        use ($grantedByResource, $statePath, $allowedByResource) {
+        use ($context, $grantedByResource, $statePath, $allowedByResource) {
             return ResourceCheckboxList::make(
                 resource: $resource,
                 scopes: $scopes,
                 granted: $grantedByResource->get($resource, collect()),
                 allowed: $this->groupAllowedByResource($allowedByResource),
-                statePath: $statePath
+                statePath: $statePath,
+                context: $context,
             );
         })->values()->all();
     }

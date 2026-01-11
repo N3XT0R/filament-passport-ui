@@ -25,7 +25,8 @@ class ResourceCheckboxList
         Collection $scopes,
         ?Collection $granted = null,
         ?Collection $allowed = null,
-        string $statePath = 'scopes'
+        string $statePath = 'scopes',
+        string $context = '',
     ): Field {
         $granted ??= collect();
         // By default, all scopes are selectable
@@ -37,7 +38,9 @@ class ResourceCheckboxList
             );
         }
 
-        return CheckboxList::make("scopes_$resource")
+        $checkboxListName = $context !== '' ? "{$context}_scopes_$resource" : "scopes_$resource";
+
+        return CheckboxList::make($checkboxListName)
             ->statePath("$statePath.$resource")
             ->label(ucfirst($resource))
             ->options(

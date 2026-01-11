@@ -83,7 +83,7 @@ class CreateClientForm implements FormInterface
                         }),
                     Grid::make()
                         ->schema([
-                            ScopeCheckboxList::make('client_scopes')
+                            ScopeCheckboxList::make('client', 'client_scopes')
                         ])
                         ->columnSpanFull()
                 ]),
@@ -95,7 +95,7 @@ class CreateClientForm implements FormInterface
         return [
             Grid::make()
                 ->schema([
-                    ScopeCheckboxList::make('user_scopes')
+                    ScopeCheckboxList::make('user', 'user_scopes')
                 ])
                 ->columnSpanFull()
         ];
