@@ -25,37 +25,14 @@ jobs:
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - name: Prepare test environment
+        uses: ./.github/actions/prepare-tests
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
-
-      - name: Setup problem matchers
-        run: |
-          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
-      - name: Install dependencies
-        run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "nesbot/carbon:${{ matrix.carbon }}" --no-interaction --no-update
-          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
-
-      - name: List Installed Dependencies
-        run: composer show -D
-
-      # ARCHITECTURAL NOTE:
-      # spatie/laravel-package-tools does not provide a deterministic build/test
-      # lifecycle for assets and migrations.
-      #
-      # Without an explicit build step, CI tests do not reflect the actual
-      # runtime state of the package. This step makes the environment explicit.
-      - name: prepare assets for tests (ugly step)
-        run: composer build
+          laravel: ${{ matrix.laravel }}
+          testbench: ${{ matrix.testbench }}
+          carbon: ${{ matrix.carbon }}
+          stability: ${{ matrix.stability }}
 
       - name: Execute tests
         run: vendor/bin/paratest --no-coverage --configuration phpunit.xml

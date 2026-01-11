@@ -1,0 +1,58 @@
+name: Prepare test environment
+description: Prepare PHP, dependencies and runtime state for package tests
+
+inputs:
+  php-version:
+    required: true
+  laravel:
+    required: true
+  testbench:
+    required: true
+  carbon:
+    required: true
+  stability:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+        coverage: none
+
+    - name: Setup problem matchers
+      shell: bash
+      run: |
+        echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+        echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        composer require \
+          "laravel/framework:${{ inputs.laravel }}" \
+          "orchestra/testbench:${{ inputs.testbench }}" \
+          "nesbot/carbon:${{ inputs.carbon }}" \
+          --no-interaction --no-update
+
+        composer update --${{ inputs.stability }} --prefer-dist --no-interaction
+
+    - name: List installed dependencies
+      shell: bash
+      run: composer show -D
+
+    # ARCHITECTURAL NOTE:
+    # spatie/laravel-package-tools treats migrations and assets as installation
+    # artifacts, not as part of a deterministic test lifecycle.
+    #
+    # Without an explicit build step, the CI environment diverges from the
+    # actual runtime state of the package. This step makes the state explicit.
+    - name: Build package runtime state
+      shell: bash
+      run: composer build
