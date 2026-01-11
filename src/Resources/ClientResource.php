@@ -45,15 +45,24 @@ class ClientResource extends BaseManagementResource
      */
     public static function form(Schema $schema): Schema
     {
+        return ClientResourceForm::configure(
+            $schema,
+            static::getAdditionalFormComponents($schema)
+        );
+    }
+
+    /**
+     * Get additional form components for the resource.
+     * @param Schema $schema
+     * @return array
+     */
+    public static function getAdditionalFormComponents(Schema $schema): array
+    {
         $components = [];
-        /**
-         * merge getResourceFormComponents if enabled
-         */
         if (static::isResourceFormComponentsEnabled()) {
             $components = static::getResourceFormComponents($schema->getRecord());
         }
-
-        return ClientResourceForm::configure($schema, $components);
+        return $components;
     }
 
 

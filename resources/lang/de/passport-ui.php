@@ -28,6 +28,18 @@ return [
             'secret_label' => 'Geheimer Schlüssel',
             'secret_description' => 'Dieses Feld ist nur einmalig sichtbar nach der Erstellung der Resource. Stellen Sie sicher, dass Sie es an einem sicheren Ort speichern.',
             'revoke_label' => 'Client widerrufen',
+            'wizard' => [
+                'steps' => [
+                    'client' => [
+                        'label' => 'Client Details',
+                        'description' => 'Füllen Sie die Client-Details aus.',
+                    ],
+                    'user_permission' => [
+                        'label' => 'Benutzerberechtigung',
+                        'description' => 'Weisen Sie dem Benutzer Berechtigungen zu.',
+                    ],
+                ],
+            ],
         ],
         'column' => [
             'name' => 'Name',

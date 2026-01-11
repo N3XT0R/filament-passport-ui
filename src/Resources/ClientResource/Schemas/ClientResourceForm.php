@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas;
 
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\IdHidden;
@@ -21,7 +23,11 @@ class ClientResourceForm implements FormInterface
         $components = [
             IdHidden::make(),
             NameInput::make(),
-            OwnerSelect::make(),
+            OwnerSelect::make()
+                ->requiredIf(
+                    'grant_type',
+                    fn(Get $get) => !app(NeedsUserPermissionState::class)->execute($get('grant_type'))
+                ),
             GrantTypeSelect::make(),
             SecretInput::make(),
             RevokeToggle::make(),

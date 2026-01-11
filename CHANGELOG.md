@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added explicit separation between **client scopes** and **user scopes**, enforcing a clear authorization model where
+  user permissions are always a subset of the client’s granted capabilities.
+- Added support for configuring **client-level scopes** and **user-level scopes** independently during client creation,
+  while guaranteeing that users can never receive permissions not granted to the client itself.
+- Introduced a new, component-based scope configuration system built on dedicated, reusable UI components instead of
+  form builders.
+- Added a dedicated `ScopeCheckboxList` component to encapsulate scope rendering, grouping, and and selection logic in a
+  reusable and UI-focused way.
+- Added support for dynamically restricting selectable user scopes based on the scopes selected for the client, ensuring
+  correct delegation semantics directly in the UI.
+- Established a clearer boundary between domain logic and UI concerns by moving scope grouping and rendering
+  responsibilities into purpose-built components rather than form builders.
+- Added a generic `CacheFlasher` support utility to safely transfer short-lived, one-time values across redirect and
+  lifecycle boundaries without relying on sessions or persistent storage, providing a deterministic and
+  security-conscious alternative for ephemeral state handoff.
+
+### Changed
+
+- Reworked the client creation form from a single, flat form schema to a multi-step wizard-based flow.
+- Replaced the former unified `ClientResourceForm` with a dedicated `CreateClientForm` tailored specifically for client
+  creation.
+- Introduced a step-based separation between **client configuration** and **user permission assignment**, improving
+  clarity and guiding users through the authorization setup process.
+- Changed the client creation UX to conditionally include a dedicated **user permission step** based on the selected
+  grant type.
+- Refactored scope assignment logic to explicitly distinguish between **client scopes** and **user scopes**, instead of
+  handling scopes implicitly within a single form.
+- Enforced the **Principle of Least Privilege** by ensuring that user-level permissions are always restricted to a
+  subset of the scopes granted to the client.
+- Updated owner handling during client creation to treat the owner as contextual data, removing redundant owner
+  configuration during the user permission step.
+- Improved form structure and readability by grouping related fields using grids and wizard steps instead of a single
+  linear schema.
+
+### Deprecated
+
+- Deprecated `ScopeFormSectionBuilder` in favor of the new component-based scope configuration approach.
+- Deprecated form-builder-based scope rendering in favor of explicit, reusable UI components to improve clarity,
+  composability, and long-term maintainability.
+
 ## [2.0.0] - 2026-01-10
 
 ### Changed

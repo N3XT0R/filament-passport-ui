@@ -6,9 +6,9 @@ namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
-use Illuminate\Support\Facades\Session;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Actions\DeleteAction;
+use N3XT0R\FilamentPassportUi\Support\Cache\CacheFlasher;
 
 class ViewClient extends ViewRecord
 {
@@ -17,12 +17,10 @@ class ViewClient extends ViewRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $key = 'new_client_secret_' . $this->record->getKey();
-
-        if ($secret = Session::get($key)) {
-            $data['secret'] = $secret;
-            Session::forget($key);
-        }
+        $data['secret'] = CacheFlasher::pull(
+            scope: 'passport.client.secret',
+            key: $this->record->getKey(),
+        );
         return $data;
     }
 

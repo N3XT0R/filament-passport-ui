@@ -1,0 +1,29 @@
+name: Upload and send coverage
+description: Upload coverage artifact and send it to Qlty
+
+inputs:
+  artifact-name:
+    description: Name of the uploaded coverage artifact
+    required: true
+  coverage-file:
+    description: Path to the coverage file
+    required: true
+  qlty-token:
+    description: Qlty coverage token
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Upload coverage artifact
+      uses: actions/upload-artifact@v6
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.coverage-file }}
+
+    - name: Send coverage to Qlty
+      if: success()
+      uses: qltysh/qlty-action/coverage@v2
+      with:
+        token: ${{ inputs.qlty-token }}
+        files: ${{ inputs.coverage-file }}

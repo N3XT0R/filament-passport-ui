@@ -10,15 +10,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\Contracts\OAuthenticatable;
-use Laravel\Passport\HasApiTokens;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Traits\HasApiTokensTrait;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Traits\HasPassportScopeGrantsTrait;
 
 #[UseFactory(\Database\Factories\UserFactory::class)]
-class User extends Authenticatable implements OAuthenticatable, FilamentUser
+class User extends Authenticatable implements OAuthenticatable, FilamentUser, HasPassportScopeGrantsInterface
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use Notifiable;
-    use HasApiTokens;
+    use HasApiTokensTrait;
+    use HasPassportScopeGrantsTrait;
 
     /**
      * The attributes that are mass assignable.

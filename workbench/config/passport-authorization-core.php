@@ -6,7 +6,7 @@ return [
     /**
      * Model used as the owner of the OAuth2 clients.
      */
-    'owner_model' => '\\App\\Models\\User',
+    'owner_model' => \App\Models\User::class,
     'owner_label_attribute' => 'name',
 
     /**
@@ -21,7 +21,7 @@ return [
         /**
          * Whether to cache the scopes.
          */
-        'enabled' => true,
+        'enabled' => false,
 
         /**
          * The cache ttl in seconds.

@@ -28,6 +28,18 @@ return [
             'secret_label' => 'Client Secret',
             'secret_helper_text' => 'This is the client secret. Make sure to copy it now as it will not be shown again.',
             'revoke_label' => 'Revoke Client',
+            'wizard' => [
+                'steps' => [
+                    'client' => [
+                        'label' => 'Client Details',
+                        'description' => 'Fill in the client details.',
+                    ],
+                    'user_permission' => [
+                        'label' => 'User Permission',
+                        'description' => 'Assign user permissions to the client.',
+                    ],
+                ],
+            ],
         ],
         'column' => [
             'name' => 'Name',

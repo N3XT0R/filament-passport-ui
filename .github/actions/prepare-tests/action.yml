@@ -1,0 +1,53 @@
+name: Prepare test environment
+description: Prepare PHP, dependencies and runtime state for package tests
+
+inputs:
+  php-version:
+    required: true
+    description: "PHP version to set up"
+  laravel:
+    required: true
+    description: "Laravel framework version to install"
+  testbench:
+    required: true
+    description: "Orchestra Testbench version to install"
+  carbon:
+    required: true
+    description: "Nesbot Carbon version to install"
+  stability:
+    required: true
+    description: "Composer stability flag (e.g., prefer-stable, prefer-lowest)"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup problem matchers
+      shell: bash
+      run: |
+        echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+        echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        composer require \
+          "laravel/framework:${{ inputs.laravel }}" \
+          "orchestra/testbench:${{ inputs.testbench }}" \
+          "nesbot/carbon:${{ inputs.carbon }}" \
+          --no-interaction --no-update
+
+        composer update --${{ inputs.stability }} --prefer-dist --no-interaction
+
+    - name: List installed dependencies
+      shell: bash
+      run: composer show -D
+
+    # ARCHITECTURAL NOTE:
+    # spatie/laravel-package-tools treats migrations and assets as installation
+    # artifacts, not as part of a deterministic test lifecycle.
+    #
+    # Without an explicit build step, the CI environment diverges from the
+    # actual runtime state of the package. This step makes the state explicit.
+    - name: Build package runtime state
+      shell: bash
+      run: composer build
