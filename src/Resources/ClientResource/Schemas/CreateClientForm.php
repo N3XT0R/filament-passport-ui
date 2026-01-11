@@ -69,7 +69,8 @@ class CreateClientForm implements FormInterface
                 ->live(),
             Grid::make()
                 ->schema([
-                    NameInput::make(),
+                    NameInput::make()
+                        ->unique('oauth_clients', 'name'),
                     OwnerSelect::make()
                         ->required(function (Get $get): bool {
                             $grantType = $get('grant_type');
