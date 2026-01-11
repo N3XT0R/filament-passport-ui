@@ -10,6 +10,7 @@ use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
+use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
@@ -17,9 +18,24 @@ use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelec
 
 class CreateClientForm implements FormInterface
 {
+    public function __construct(private ConfigRepository $configRepository)
+    {
+    }
+
+
     public static function configure(Schema $schema, array $additionalComponents = []): Schema
     {
-        $components = [
+        return app(static::class)->configureComponents($schema);
+    }
+
+    public function configureComponents(Schema $schema): Schema
+    {
+        return $schema->components($this->getComponents());
+    }
+
+    public function getComponents(): array
+    {
+        return [
             Wizard::make([
                 Wizard\Step::make('client')
                     ->label(__('filament-passport-ui::passport-ui.client_resource.form.wizard.steps.client.label'))
@@ -27,25 +43,7 @@ class CreateClientForm implements FormInterface
                     ->description(
                         __('filament-passport-ui::passport-ui.client_resource.form.wizard.steps.client.description')
                     )
-                    ->schema([
-                        GrantTypeSelect::make('grant_type')
-                            ->live(),
-                        Grid::make()
-                            ->schema([
-                                NameInput::make(),
-                                OwnerSelect::make()
-                                    ->required(function (Get $get): bool {
-                                        $grantType = $get('grant_type');
-
-                                        if ($grantType === null) {
-                                            return false;
-                                        }
-
-                                        return app(NeedsUserPermissionState::class)
-                                            ->execute($grantType);
-                                    }),
-                            ]),
-                    ]),
+                    ->schema($this->getClientComponents()),
                 Wizard\Step::make('user_permission')
                     ->visible(fn(Get $get) => app(NeedsUserPermissionState::class)->execute($get('grant_type')))
                     ->label(
@@ -57,18 +55,39 @@ class CreateClientForm implements FormInterface
                             'filament-passport-ui::passport-ui.client_resource.form.wizard.steps.user_permission.description'
                         )
                     )
-                    ->schema([
-
-                    ]),
+                    ->schema($this->getUserPermissionComponents()),
             ])->persistStepInQueryString()
                 ->columnSpanFull(),
         ];
+    }
 
-        return $schema->components(
-            array_merge(
-                $components,
-                $additionalComponents
-            )
-        );
+    public function getClientComponents(): array
+    {
+        return [
+            GrantTypeSelect::make('grant_type')
+                ->live(),
+            Grid::make()
+                ->schema([
+                    NameInput::make(),
+                    OwnerSelect::make()
+                        ->required(function (Get $get): bool {
+                            $grantType = $get('grant_type');
+
+                            if ($grantType === null) {
+                                return false;
+                            }
+
+                            return app(NeedsUserPermissionState::class)
+                                ->execute($grantType);
+                        }),
+                ]),
+        ];
+    }
+
+    public function getUserPermissionComponents(): array
+    {
+        return [
+            // Define user permission related components here
+        ];
     }
 }
