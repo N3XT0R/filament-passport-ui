@@ -40,11 +40,14 @@ Filament Passport UI adds an administration layer on top of Laravel Passport:
 - Enable or revoke clients via UI
 - Structure scopes (not ad-hoc strings)
 - Full visibility into authorization state
+- Explicit client-level and user-level scope assignment
+- Enforce Least Privilege: user scopes are always a strict subset of client scopes
 
 ### Filament v4 Integration
 
 - Native Filament Resources and Pages
 - Consistent UX aligned with Filament conventions
+- Multi-step wizard for client creation with contextual steps based on grant type
 - No custom panels required
 
 ### Auditability & Compliance
