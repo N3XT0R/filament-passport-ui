@@ -1,5 +1,13 @@
 laravel: '@testbench'
 
+providers:
+  - App\Providers\WorkbenchServiceProvider
+  - \Laravel\Passport\PassportServiceProvider
+  - \Spatie\Activitylog\ActivitylogServiceProvider
+  - \N3XT0R\LaravelPassportAuthorizationCore\LaravelPassportAuthorizationCoreServiceProvider
+  - \N3XT0R\FilamentPassportUi\FilamentPassportUiServiceProvider
+  - App\Providers\Filament\AdminPanelProvider
+
 migrations:
   - vendor/laravel/passport/database/migrations
   - workbench/database/migrations
