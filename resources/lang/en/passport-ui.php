@@ -34,6 +34,10 @@ return [
                         'label' => 'Client Details',
                         'description' => 'Fill in the client details.',
                     ],
+                    'user_permission' => [
+                        'label' => 'User Permission',
+                        'description' => 'Assign user permissions to the client.',
+                    ],
                 ],
             ],
         ],
