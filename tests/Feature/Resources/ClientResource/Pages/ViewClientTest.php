@@ -8,6 +8,7 @@ use App\Models\User;
 use Livewire\Livewire;
 use N3XT0R\FilamentPassportUi\Database\Factories\ClientFactory;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages\ViewClient;
+use N3XT0R\FilamentPassportUi\Support\Cache\CacheFlasher;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
@@ -24,11 +25,12 @@ class ViewClientTest extends DatabaseTestCase
         $client = ClientFactory::new()->create();
 
         $secret = 'plain-secret-from-session';
+        CacheFlasher::put('passport.client.secret', $client->getKey(), $secret);
         session()->put('new_client_secret_' . $client->getKey(), $secret);
 
         $component = Livewire::test(ViewClient::class, ['record' => $client->getKey()]);
 
         $component->assertSet('data.secret', $secret);
-        $this->assertNull(session()->get('new_client_secret_' . $client->getKey()));
+        $this->assertNull(CacheFlasher::pull('passport.client.secret', $client->getKey()));
     }
 }
