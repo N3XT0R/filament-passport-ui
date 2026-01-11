@@ -12,6 +12,9 @@ use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGran
 use N3XT0R\LaravelPassportAuthorizationCore\Services\GrantService;
 use N3XT0R\LaravelPassportAuthorizationCore\Services\Scopes\ScopeRegistryService;
 
+/**
+ * @deprecated
+ */
 readonly class ScopeFormSectionBuilder
 {
     public function __construct(
