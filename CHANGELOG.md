@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   correct delegation semantics directly in the UI.
 - Established a clearer boundary between domain logic and UI concerns by moving scope grouping and rendering
   responsibilities into purpose-built components rather than form builders.
+- Added a generic `CacheFlasher` support utility to safely transfer short-lived, one-time values across redirect and
+  lifecycle boundaries without relying on sessions or persistent storage, providing a deterministic and
+  security-conscious alternative for ephemeral state handoff.
 
 ### Changed
 
