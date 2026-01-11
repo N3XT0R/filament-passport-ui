@@ -16,7 +16,7 @@ class ResourceCheckboxList
      * @param string $resource
      * @param Collection<ScopeDTO> $scopes
      * @param Collection<string>|null $granted
-     * @param Collection<string>|null $disabled
+     * @param Collection<string>|null $allowed
      * @param string $statePath
      * @return Field
      */
@@ -24,15 +24,18 @@ class ResourceCheckboxList
         string $resource,
         Collection $scopes,
         ?Collection $granted = null,
-        ?Collection $disabled = null,
+        ?Collection $allowed = null,
         string $statePath = 'scopes'
     ): Field {
         $granted ??= collect();
-        $disabled ??= collect();
+        // By default, all scopes are selectable
+        $selectableScopes = $scopes;
 
-        $selectableScopes = $scopes->reject(
-            fn(ScopeDTO $dto) => $disabled->contains($dto->scope)
-        );
+        if ($allowed !== null) {
+            $selectableScopes = $scopes->filter(
+                fn(ScopeDTO $dto) => $allowed->contains($dto->scope)
+            );
+        }
 
         return CheckboxList::make("scopes_$resource")
             ->statePath("$statePath.$resource")
