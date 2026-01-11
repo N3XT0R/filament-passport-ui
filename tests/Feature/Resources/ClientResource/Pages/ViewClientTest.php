@@ -26,7 +26,6 @@ class ViewClientTest extends DatabaseTestCase
 
         $secret = 'plain-secret-from-session';
         CacheFlasher::put('passport.client.secret', $client->getKey(), $secret);
-        session()->put('new_client_secret_' . $client->getKey(), $secret);
 
         $component = Livewire::test(ViewClient::class, ['record' => $client->getKey()]);
 
