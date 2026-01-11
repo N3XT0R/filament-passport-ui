@@ -29,7 +29,7 @@ class ScopeCheckboxList
      * @return Section
      */
     public static function make(
-        string $name = 'scopes',
+        string $name,
         ?HasPassportScopeGrantsInterface $record = null,
         string $statePath = 'scopes',
         array|Collection|null $allowed = null,
