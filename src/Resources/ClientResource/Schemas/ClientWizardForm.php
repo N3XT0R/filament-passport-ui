@@ -104,12 +104,13 @@ class ClientWizardForm implements FormInterface
 
         if ($dbScopesRequired) {
             $components[] = Grid::make()
-                ->schema([
+                ->schema(fn(Get $get) => [
                     ScopeCheckboxList::make(
                         context: 'client',
                         name: 'client_scopes',
-                        record: $client,
+                        record: $this->resolveOwner($client, $get),
                         statePath: 'client_scopes',
+                        contextClient: $this->resolveClient($client, $get),
                     )
                 ])
                 ->columnSpanFull();
@@ -142,6 +143,7 @@ class ClientWizardForm implements FormInterface
                         name: 'user_scopes',
                         record: $this->resolveOwner($client, $get),
                         statePath: 'user_scopes',
+                        contextClient: $this->resolveClient($client, $get),
                         allowed: collect($get('client_scopes') ?? [])
                             ->flatten()
                             ->filter()
@@ -156,16 +158,29 @@ class ClientWizardForm implements FormInterface
         ?Client $client,
         Get $get
     ): ?Model {
+        if ($ownerId = $get('owner')) {
+            return app(GetOwnerState::class)->execute($ownerId);
+        }
+
         if ($ownerId = $get('owner_select')) {
             return app(GetOwnerState::class)->execute($ownerId);
         }
 
-        $userId = $client?->getAttribute('owner_id');
-
-        if ($userId) {
+        if ($userId = $client?->getAttribute('owner_id')) {
             return app(GetOwnerState::class)->execute($userId);
         }
 
         return null;
+    }
+
+    private function resolveClient(
+        ?Client $client,
+        Get $get
+    ): ?Client {
+        if ($id = $get('id')) {
+            return Client::find($id);
+        }
+
+        return $client;
     }
 }

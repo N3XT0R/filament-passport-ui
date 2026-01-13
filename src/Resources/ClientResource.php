@@ -13,14 +13,12 @@ use Filament\Tables\Table;
 use Laravel\Passport\Passport;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Actions\DeleteAction;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
-use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientResourceForm;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientResourceTable;
-use N3XT0R\FilamentPassportUi\Traits\HasResourceFormComponents;
+use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientWizardForm;
 use N3XT0R\LaravelPassportAuthorizationCore\Repositories\ClientRepository;
 
 class ClientResource extends BaseManagementResource
 {
-    use HasResourceFormComponents;
 
     protected static ?string $recordTitleAttribute = 'name';
     protected static string|\UnitEnum|null $navigationGroup = 'filament-passport-ui::passport-ui.navigation.group';
@@ -45,10 +43,7 @@ class ClientResource extends BaseManagementResource
      */
     public static function form(Schema $schema): Schema
     {
-        return ClientResourceForm::configure(
-            $schema,
-            static::getAdditionalFormComponents($schema)
-        );
+        return ClientWizardForm::configure($schema);
     }
 
     /**
