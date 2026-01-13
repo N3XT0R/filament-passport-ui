@@ -10,6 +10,7 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\GetOwnerState;
@@ -70,7 +71,7 @@ class ClientWizardForm implements FormInterface
                         'filament-passport-ui::passport-ui.client_resource.form.wizard.steps.user_permission.description'
                     )
                 )
-                ->schema($this->getUserPermissionComponents());
+                ->schema($this->getUserPermissionComponents($client));
         }
 
 
@@ -123,7 +124,7 @@ class ClientWizardForm implements FormInterface
         ];
     }
 
-    private function getUserPermissionComponents(): array
+    private function getUserPermissionComponents(?Client $client = null): array
     {
         return [
             OwnerSelect::make()
@@ -139,7 +140,7 @@ class ClientWizardForm implements FormInterface
                     ScopeCheckboxList::make(
                         context: 'user',
                         name: 'user_scopes',
-                        record: app(GetOwnerState::class)->execute($get('owner_select')),
+                        record: $this->resolveOwner($client, $get),
                         statePath: 'user_scopes',
                         allowed: collect($get('client_scopes') ?? [])
                             ->flatten()
@@ -149,5 +150,22 @@ class ClientWizardForm implements FormInterface
                 ])
                 ->columnSpanFull()
         ];
+    }
+
+    private function resolveOwner(
+        ?Client $client,
+        Get $get
+    ): ?Model {
+        if ($ownerId = $get('owner_select')) {
+            return app(GetOwnerState::class)->execute($ownerId);
+        }
+
+        $userId = $client?->getAttribute('owner_id');
+
+        if ($userId) {
+            return app(GetOwnerState::class)->execute($userId);
+        }
+
+        return null;
     }
 }
