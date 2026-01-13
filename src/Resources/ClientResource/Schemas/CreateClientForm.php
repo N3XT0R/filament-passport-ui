@@ -112,7 +112,7 @@ class CreateClientForm implements FormInterface
         ];
     }
 
-    public function getUserPermissionComponents(): array
+    private function getUserPermissionComponents(): array
     {
         return [
             OwnerSelect::make()
