@@ -12,6 +12,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
+use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\GetOwnerState;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Components\ScopeCheckboxList;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
@@ -69,7 +70,7 @@ class ClientWizardForm implements FormInterface
                         'filament-passport-ui::passport-ui.client_resource.form.wizard.steps.user_permission.description'
                     )
                 )
-                ->schema($this->getUserPermissionComponents($client));
+                ->schema($this->getUserPermissionComponents());
         }
 
 
@@ -122,7 +123,7 @@ class ClientWizardForm implements FormInterface
         ];
     }
 
-    private function getUserPermissionComponents(?Client $client = null): array
+    private function getUserPermissionComponents(): array
     {
         return [
             OwnerSelect::make()
@@ -138,7 +139,7 @@ class ClientWizardForm implements FormInterface
                     ScopeCheckboxList::make(
                         context: 'user',
                         name: 'user_scopes',
-                        record: $client?->owner,
+                        record: app(GetOwnerState::class)->execute($get('owner_select')),
                         statePath: 'user_scopes',
                         allowed: collect($get('client_scopes') ?? [])
                             ->flatten()
