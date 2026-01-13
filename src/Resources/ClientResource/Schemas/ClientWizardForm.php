@@ -18,7 +18,6 @@ use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelect;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
 
 class ClientWizardForm implements FormInterface
 {
@@ -34,8 +33,7 @@ class ClientWizardForm implements FormInterface
 
     public static function configure(
         Schema $schema,
-        ?Client $client = null,
-        ?HasPassportScopeGrantsInterface $record = null
+        ?Client $client = null
     ): Schema {
         return static::getInstance()->configureComponents($schema);
     }
@@ -46,8 +44,7 @@ class ClientWizardForm implements FormInterface
     }
 
     public function getComponents(
-        ?Client $client = null,
-        ?HasPassportScopeGrantsInterface $record = null
+        ?Client $client = null
     ): array {
         $dbScopesRequired = $this->configRepository->isUsingDatabaseScopes();
         $steps = [
@@ -72,7 +69,7 @@ class ClientWizardForm implements FormInterface
                         'filament-passport-ui::passport-ui.client_resource.form.wizard.steps.user_permission.description'
                     )
                 )
-                ->schema($this->getUserPermissionComponents($record));
+                ->schema($this->getUserPermissionComponents($client));
         }
 
 
@@ -125,7 +122,7 @@ class ClientWizardForm implements FormInterface
         ];
     }
 
-    private function getUserPermissionComponents(?HasPassportScopeGrantsInterface $record = null): array
+    private function getUserPermissionComponents(?Client $client = null): array
     {
         return [
             OwnerSelect::make()
@@ -141,7 +138,7 @@ class ClientWizardForm implements FormInterface
                     ScopeCheckboxList::make(
                         context: 'user',
                         name: 'user_scopes',
-                        record: $record,
+                        record: $client->owner,
                         statePath: 'user_scopes',
                         allowed: collect($get('client_scopes') ?? [])
                             ->flatten()
