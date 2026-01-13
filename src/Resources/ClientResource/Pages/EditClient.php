@@ -53,4 +53,13 @@ class EditClient extends EditRecord
 
         return $result;
     }
+
+    private function flattenScopes(array $scopes): array
+    {
+        return collect($scopes)
+            ->flatten()
+            ->unique()
+            ->values()
+            ->all();
+    }
 }
