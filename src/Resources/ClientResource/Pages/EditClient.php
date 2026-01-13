@@ -44,7 +44,7 @@ class EditClient extends EditRecord
         if (!empty($data['owner'] ?? null) && !empty($userScopes)) {
             app(UpsertGrantsForTokenableUseCase::class)->execute(
                 ownerId: $data['owner'],
-                contextClientId: $result->client->getKey(),
+                contextClientId: $result->getKey(),
                 scopes: $userScopes,
                 actor: $actor,
             );
