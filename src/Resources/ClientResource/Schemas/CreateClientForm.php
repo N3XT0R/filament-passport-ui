@@ -10,6 +10,7 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Components\ScopeCheckboxList;
@@ -17,6 +18,7 @@ use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelect;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
 
 class CreateClientForm implements FormInterface
 {
@@ -24,10 +26,18 @@ class CreateClientForm implements FormInterface
     {
     }
 
-
-    public static function configure(Schema $schema): Schema
+    public static function getInstance(): static
     {
-        return app(static::class)->configureComponents($schema);
+        return app(static::class);
+    }
+
+
+    public static function configure(
+        Schema $schema,
+        ?Client $client = null,
+        ?HasPassportScopeGrantsInterface $record = null
+    ): Schema {
+        return static::getInstance()->configureComponents($schema);
     }
 
     public function configureComponents(Schema $schema): Schema
@@ -35,8 +45,10 @@ class CreateClientForm implements FormInterface
         return $schema->components($this->getComponents());
     }
 
-    public function getComponents(): array
-    {
+    public function getComponents(
+        ?Client $client = null,
+        ?HasPassportScopeGrantsInterface $record = null
+    ): array {
         $dbScopesRequired = $this->configRepository->isUsingDatabaseScopes();
         $steps = [
             Wizard\Step::make('client')
@@ -45,7 +57,7 @@ class CreateClientForm implements FormInterface
                 ->description(
                     __('filament-passport-ui::passport-ui.client_resource.form.wizard.steps.client.description')
                 )
-                ->schema($this->getClientComponents())
+                ->schema($this->getClientComponents($client))
         ];
 
         if ($dbScopesRequired) {
@@ -60,7 +72,7 @@ class CreateClientForm implements FormInterface
                         'filament-passport-ui::passport-ui.client_resource.form.wizard.steps.user_permission.description'
                     )
                 )
-                ->schema($this->getUserPermissionComponents());
+                ->schema($this->getUserPermissionComponents($record));
         }
 
 
@@ -72,7 +84,7 @@ class CreateClientForm implements FormInterface
         ];
     }
 
-    public function getClientComponents(): array
+    public function getClientComponents(?Client $client = null): array
     {
         $dbScopesRequired = $this->configRepository->isUsingDatabaseScopes();
         $components = [
@@ -97,6 +109,7 @@ class CreateClientForm implements FormInterface
                     ScopeCheckboxList::make(
                         context: 'client',
                         name: 'client_scopes',
+                        record: $client,
                         statePath: 'client_scopes',
                     )
                 ])
@@ -112,7 +125,7 @@ class CreateClientForm implements FormInterface
         ];
     }
 
-    private function getUserPermissionComponents(): array
+    private function getUserPermissionComponents(?HasPassportScopeGrantsInterface $record = null): array
     {
         return [
             OwnerSelect::make()
@@ -128,6 +141,7 @@ class CreateClientForm implements FormInterface
                     ScopeCheckboxList::make(
                         context: 'user',
                         name: 'user_scopes',
+                        record: $record,
                         statePath: 'user_scopes',
                         allowed: collect($get('client_scopes') ?? [])
                             ->flatten()
