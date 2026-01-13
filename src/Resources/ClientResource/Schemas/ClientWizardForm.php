@@ -138,7 +138,7 @@ class ClientWizardForm implements FormInterface
                     ScopeCheckboxList::make(
                         context: 'user',
                         name: 'user_scopes',
-                        record: $client->owner,
+                        record: $client?->owner,
                         statePath: 'user_scopes',
                         allowed: collect($get('client_scopes') ?? [])
                             ->flatten()
