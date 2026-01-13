@@ -9,6 +9,7 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource;
 use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Client\EditClientUseCase;
+use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Tokenable\UpsertGrantsForTokenableUseCase;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 class EditClient extends EditRecord
@@ -21,19 +22,35 @@ class EditClient extends EditRecord
             throw new \RuntimeException('Record is not an instance of Client model.');
         }
 
-        if (isset($data['scopes']) && is_array($data['scopes'])) {
-            $data['scopes'] = collect($data['scopes'])
-                ->flatten()
-                ->unique()
-                ->values()
-                ->all();
+        $actor = Filament::auth()->user();
+        $userScopes = [];
+
+        if (isset($data['client_scopes']) && is_array($data['client_scopes'])) {
+            $data['scopes'] = $this->flattenScopes($data['client_scopes']);
+        }
+
+        if (isset($data['user_scopes']) && is_array($data['user_scopes'])) {
+            $userScopes = $this->flattenScopes($data['user_scopes']);
+            unset($data['user_scopes']);
         }
 
 
-        return app(EditClientUseCase::class)->execute(
+        $result = app(EditClientUseCase::class)->execute(
             client: $record,
             data: $data,
-            actor: Filament::auth()->user(),
+            actor: $actor,
         );
+
+        if (!empty($data['owner'] ?? null) && !empty($userScopes)) {
+            app(UpsertGrantsForTokenableUseCase::class)->execute(
+                ownerId: $data['owner'],
+                contextClientId: $result->client->getKey(),
+                scopes: $userScopes,
+                actor: $actor,
+            );
+        }
+
+
+        return $result;
     }
 }
