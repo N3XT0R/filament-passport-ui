@@ -20,7 +20,7 @@ use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelect;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
 
-class CreateClientForm implements FormInterface
+class ClientWizardForm implements FormInterface
 {
     public function __construct(protected ConfigRepository $configRepository)
     {

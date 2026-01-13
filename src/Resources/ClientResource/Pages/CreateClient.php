@@ -20,7 +20,7 @@ class CreateClient extends CreateRecord
 
     public function form(Schema $schema): Schema
     {
-        return ClientResource\Schemas\CreateClientForm::configure(
+        return ClientResource\Schemas\ClientWizardForm::configure(
             $schema,
         );
     }
