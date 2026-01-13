@@ -6,10 +6,13 @@ namespace N3XT0R\FilamentPassportUi\Traits;
 
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Support\Builder\ScopeFormSectionBuilder;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
 
+/**
+ * @deprecated Use \N3XT0R\FilamentPassportUi\Resources\BaseResource\Components\ScopeCheckboxList
+ */
 trait HasResourceFormComponents
 {
     public static function isResourceFormComponentsEnabled(): bool
