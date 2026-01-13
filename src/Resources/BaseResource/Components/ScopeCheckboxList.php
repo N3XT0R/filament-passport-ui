@@ -6,6 +6,7 @@ namespace N3XT0R\FilamentPassportUi\Resources\BaseResource\Components;
 
 use Filament\Schemas\Components\Section;
 use Illuminate\Support\Collection;
+use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\Fields\ResourceCheckboxList;
 use N3XT0R\FilamentPassportUi\Support\Scopes\GrantedScopesByResourceProvider;
 use N3XT0R\FilamentPassportUi\Support\Scopes\GroupedScopesProvider;
@@ -26,6 +27,7 @@ class ScopeCheckboxList
      * @param string $name
      * @param HasPassportScopeGrantsInterface|null $record
      * @param string $statePath
+     * @param Client|null $contextClient
      * @param array|Collection|null $allowed
      * @return Section
      */
@@ -34,6 +36,7 @@ class ScopeCheckboxList
         string $name,
         ?HasPassportScopeGrantsInterface $record = null,
         string $statePath = 'scopes',
+        ?Client $contextClient = null,
         array|Collection|null $allowed = null,
     ): Section {
         return app(static::class)->configure(
@@ -41,6 +44,7 @@ class ScopeCheckboxList
             name: $name,
             record: $record,
             statePath: $statePath,
+            contextClient: $contextClient,
             allowed: collect($allowed ?? [])
         );
     }
@@ -51,6 +55,7 @@ class ScopeCheckboxList
      * @param string $name
      * @param HasPassportScopeGrantsInterface|null $record
      * @param string $statePath
+     * @param Client|null $contextClient
      * @param Collection|null $allowed
      * @return Section
      */
@@ -59,6 +64,7 @@ class ScopeCheckboxList
         string $name,
         ?HasPassportScopeGrantsInterface $record,
         string $statePath = 'scopes',
+        ?Client $contextClient = null,
         ?Collection $allowed = null,
     ): Section {
         return Section::make($name)
@@ -68,6 +74,7 @@ class ScopeCheckboxList
                     context: $context,
                     record: $record,
                     statePath: $statePath,
+                    contextClient: $contextClient,
                     allowedByResource: $allowed
                 )
             )
@@ -81,6 +88,7 @@ class ScopeCheckboxList
      * @param string $context
      * @param HasPassportScopeGrantsInterface|null $record
      * @param string $statePath
+     * @param Client|null $contextClient
      * @param Collection|null $allowedByResource
      * @return array
      */
@@ -88,11 +96,12 @@ class ScopeCheckboxList
         string $context,
         ?HasPassportScopeGrantsInterface $record,
         string $statePath = 'scopes',
+        ?Client $contextClient = null,
         ?Collection $allowedByResource = null,
     ): array {
         $allowedByResource ??= collect();
         $groups = $this->groupedScopesProvider->get();
-        $grantedByResource = $this->grantedScopesByResourceProvider->get($record);
+        $grantedByResource = $this->grantedScopesByResourceProvider->get($record, $contextClient);
 
 
         return $groups->map(function (
