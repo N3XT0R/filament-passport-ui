@@ -11,7 +11,6 @@ use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Passport\Client;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\GetOwnerState;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
@@ -20,6 +19,7 @@ use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelect;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 class ClientWizardForm implements FormInterface
 {
@@ -108,11 +108,12 @@ class ClientWizardForm implements FormInterface
                     ScopeCheckboxList::make(
                         context: 'client',
                         name: 'client_scopes',
-                        record: $this->resolveOwner($client, $get),
+                        record: $this->resolveClient($client, $get),
                         statePath: 'client_scopes',
                         contextClient: $this->resolveClient($client, $get),
                     )
                 ])
+                ->key('client_scopes')
                 ->columnSpanFull();
         }
 
@@ -150,6 +151,7 @@ class ClientWizardForm implements FormInterface
                             ->values()
                     ),
                 ])
+                ->key('user_scopes')
                 ->columnSpanFull()
         ];
     }
