@@ -27,6 +27,7 @@ class EditClient extends EditRecord
 
         if (isset($data['client_scopes']) && is_array($data['client_scopes'])) {
             $data['scopes'] = $this->flattenScopes($data['client_scopes']);
+            unset($data['client_scopes']);
         }
 
         if (isset($data['user_scopes']) && is_array($data['user_scopes'])) {
@@ -44,7 +45,7 @@ class EditClient extends EditRecord
         if (!empty($data['owner'] ?? null) && !empty($userScopes)) {
             app(UpsertGrantsForTokenableUseCase::class)->execute(
                 ownerId: $data['owner'],
-                contextClientId: $result->getKey(),
+                contextClientId: $record->getKey(),
                 scopes: $userScopes,
                 actor: $actor,
             );
