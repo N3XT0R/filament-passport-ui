@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added support for **Filament v5** while maintaining compatibility with **Filament v4**.
+- Added official support for **PHP 8.5**.
 
 ## [2.1.0] - 2026-01-18
 
