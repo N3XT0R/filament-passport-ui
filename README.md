@@ -12,7 +12,7 @@
 ![Filament Passport UI Logo](art/logo.png)
 
 **Filament Passport UI** provides a structured administrative interface for managing **Laravel Passport** OAuth
-resources using **Filament v4**.
+resources using **Filament**.
 
 This package focuses on **administration, visibility, and governance** not on implementing or enforcing OAuth flows.
 
@@ -97,10 +97,10 @@ Essential for systems with multiple integrations or teams managing OAuth access.
 
 ## Requirements
 
-- PHP ^8.4
+- PHP ^8.4 / PHP ^8.5
 - Laravel ^12
 - Laravel Passport ^13
-- Filament v4
+- Filament v4 / Filament v5
 
 ## Installation
 
