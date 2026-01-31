@@ -9,6 +9,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/n3xt0r/filament-passport-ui/php-code-style.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/n3xt0r/filament-passport-ui/actions?query=workflow%3A"PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/n3xt0r/filament-passport-ui.svg?style=flat-square)](https://packagist.org/packages/n3xt0r/filament-passport-ui)
 ![Filament 4/5](https://img.shields.io/badge/Filament-4%2F5-FDAE4B?style=flat-square)
+![PHP 8.4/8.5](https://img.shields.io/badge/PHP-8.4%2F8.5-777BB4?style=flat-square)
 
 ![Filament Passport UI Logo](art/logo.png)
 
