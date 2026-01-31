@@ -1,6 +1,6 @@
 {
     "name": "n3xt0r/filament-passport-ui",
-    "description": "Filament v4 admin resources for managing Laravel Passport OAuth2 clients, tokens, and scopes with full auditability.",
+    "description": "Filament v4/v5 admin resources for managing Laravel Passport OAuth2 clients, tokens, and scopes with full auditability.",
     "keywords": [
       "laravel",
       "filament",
