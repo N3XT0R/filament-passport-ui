@@ -36,8 +36,8 @@
         }
     ],
     "require": {
-        "php": "^8.4",
-        "filament/filament": "^4.0",
+        "php": "^8.4|^8.5",
+        "filament/filament": "^4.0|^5.0",
         "n3xt0r/laravel-passport-authorization-core": "^1.0",
         "n3xt0r/laravel-passport-modern-scopes": "^2.0",
         "spatie/laravel-package-tools": "^1.15.0"
