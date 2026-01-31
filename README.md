@@ -43,7 +43,7 @@ Filament Passport UI adds an administration layer on top of Laravel Passport:
 - Explicit client-level and user-level scope assignment
 - Enforce Least Privilege: user scopes are always a strict subset of client scopes
 
-### Filament v4 Integration
+### Filament Integration
 
 - Native Filament Resources and Pages
 - Consistent UX aligned with Filament conventions
