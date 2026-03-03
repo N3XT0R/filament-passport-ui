@@ -47,7 +47,7 @@ jobs:
       - name: Execute tests
         run: vendor/bin/paratest --coverage-clover=coverage/clover.xml --coverage-html=report
       - name: Upload HTML coverage report
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report-${{ matrix.laravel_label }}-${{ matrix.php }}
           path: report/
