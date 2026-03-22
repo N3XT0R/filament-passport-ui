@@ -100,7 +100,7 @@ Essential for systems with multiple integrations or teams managing OAuth access.
 ## Requirements
 
 - PHP ^8.4 / PHP ^8.5
-- Laravel ^12
+- Laravel ^12 / Laravel ^13
 - Laravel Passport ^13
 - Filament v4 / Filament v5
 
