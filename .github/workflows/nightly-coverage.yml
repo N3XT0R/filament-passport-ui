@@ -11,12 +11,17 @@ jobs:
       fail-fast: true
       matrix:
         php: [ 8.4, 8.5 ]
-        laravel: [ "12.*" ]
+        laravel: [ "12.*", "13.*" ]
         stability: [ prefer-stable ]
         include:
           - laravel: 12.*
             laravel_label: "12"
             testbench: 10.*
+            carbon: 3.*
+            collision: 8.*
+          - laravel: 13.*
+            laravel_label: "13"
+            testbench: 11.*
             carbon: 3.*
             collision: 8.*
 
