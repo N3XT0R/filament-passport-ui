@@ -11,7 +11,11 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/n3xt0r/filament-passport-ui/php-code-style.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/n3xt0r/filament-passport-ui/actions?query=workflow%3A"PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/n3xt0r/filament-passport-ui.svg?style=flat-square)](https://packagist.org/packages/n3xt0r/filament-passport-ui)
 
-![Filament Passport UI Logo](art/logo.png)
+<img
+src="art/logo.png"
+alt="Filament Passport UI Logo"
+class="filament-hidden"
+/>
 
 **Filament Passport UI** provides a structured administrative interface for managing **Laravel Passport** OAuth
 resources using **Filament**.
