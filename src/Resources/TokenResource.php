@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources;
 
+use Filament\Facades\Filament;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Passport\Passport;
+use N3XT0R\FilamentPassportUi\FilamentPassportUiPlugin;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Pages;
 use N3XT0R\FilamentPassportUi\Resources\TokenResource\Schemas\TokenTable;
 use N3XT0R\LaravelPassportAuthorizationCore\Repositories\TokenRepository;
@@ -24,6 +27,16 @@ class TokenResource extends BaseManagementResource
             ->defaultSort('updated_at', 'desc');
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        if (FilamentPassportUiPlugin::get()->isSelfService()) {
+            $query->where('user_id', Filament::auth()->id());
+        }
+
+        return $query;
+    }
 
     /**
      * Get the model class for the token from Passport.

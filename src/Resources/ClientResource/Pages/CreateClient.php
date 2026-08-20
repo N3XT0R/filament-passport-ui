@@ -9,6 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
+use N3XT0R\FilamentPassportUi\FilamentPassportUiPlugin;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource;
 use N3XT0R\FilamentPassportUi\Support\Cache\CacheFlasher;
 use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Client\CreateClientUseCase;
@@ -29,6 +30,11 @@ class CreateClient extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         $actor = Filament::auth()->user();
+
+        if (FilamentPassportUiPlugin::get()->isSelfService()) {
+            $data['owner'] = $actor?->getKey();
+        }
+
         $userScopes = [];
 
         if (isset($data['client_scopes']) && is_array($data['client_scopes'])) {

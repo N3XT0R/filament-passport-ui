@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- New self-service mode: `FilamentPassportUiPlugin::make()->selfService()` restricts `ClientResource`/`TokenResource` to records owned by the currently authenticated user, and locks the client-creation form's owner field to that user server-side. Intended for panels where non-admin users manage their own OAuth clients/tokens without seeing other users' data.
+
 ### Fixed
 
 - `FilamentPassportUiPlugin` read `config('filament-passport-ui.enable_scopes_management')`, but the package publishes its config under the `passport-ui` namespace (`hasConfigFile('passport-ui')`). The option was therefore never actually configurable — it always fell back to its `true` default regardless of what was published. Fixed to read `config('passport-ui.enable_scopes_management')`, and the key is now defined (default `true`) in the package's own `config/passport-ui.php`.

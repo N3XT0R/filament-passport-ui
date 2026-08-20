@@ -7,10 +7,13 @@ namespace N3XT0R\FilamentPassportUi\Resources;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Facades\Filament;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Passport\Passport;
+use N3XT0R\FilamentPassportUi\FilamentPassportUiPlugin;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Actions\DeleteAction;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\ClientResourceTable;
@@ -63,6 +66,21 @@ class ClientResource extends BaseManagementResource
                 DeleteBulkAction::make()
                     ->requiresConfirmation(),
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        if (FilamentPassportUiPlugin::get()->isSelfService()) {
+            $user = Filament::auth()->user();
+
+            $query
+                ->where('owner_id', $user?->getKey())
+                ->where('owner_type', $user?->getMorphClass());
+        }
+
+        return $query;
     }
 
     /**

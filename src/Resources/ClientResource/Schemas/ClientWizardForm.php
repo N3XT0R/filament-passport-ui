@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas;
 
+use Filament\Facades\Filament;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
@@ -13,6 +14,7 @@ use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\GetOwnerState;
+use N3XT0R\FilamentPassportUi\FilamentPassportUiPlugin;
 use N3XT0R\FilamentPassportUi\Repositories\ConfigRepository;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Components\ScopeCheckboxList;
 use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
@@ -90,6 +92,12 @@ class ClientWizardForm implements FormInterface
             NameInput::make()
                 ->unique('oauth_clients', 'name'),
             OwnerSelect::make()
+                ->disabled(fn(): bool => FilamentPassportUiPlugin::get()->isSelfService())
+                ->default(
+                    fn(): int|string|null => FilamentPassportUiPlugin::get()->isSelfService()
+                        ? Filament::auth()->id()
+                        : null
+                )
                 ->required(function (Get $get): bool {
                     $grantType = $get('grant_type');
 

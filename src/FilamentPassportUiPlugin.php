@@ -7,9 +7,28 @@ use Filament\Panel;
 
 class FilamentPassportUiPlugin implements FilamentPlugin
 {
+    protected bool $selfService = false;
+
     public function getId(): string
     {
         return 'filament-passport-ui';
+    }
+
+    /**
+     * Restrict ClientResource/TokenResource to records owned by the
+     * currently authenticated user, instead of the full admin-style
+     * management view.
+     */
+    public function selfService(bool $condition = true): static
+    {
+        $this->selfService = $condition;
+
+        return $this;
+    }
+
+    public function isSelfService(): bool
+    {
+        return $this->selfService;
     }
 
     public function register(Panel $panel): void
