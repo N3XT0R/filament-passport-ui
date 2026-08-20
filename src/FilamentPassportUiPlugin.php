@@ -24,7 +24,7 @@ class FilamentPassportUiPlugin implements FilamentPlugin
             Resources\TokenResource::class,
         ];
 
-        if (config('filament-passport-ui.enable_scopes_management', true)) {
+        if (config('passport-ui.enable_scopes_management', true)) {
             $resources[] = Resources\PassportScopeResourceResource::class;
             $resources[] = Resources\PassportScopeActionsResource::class;
         }

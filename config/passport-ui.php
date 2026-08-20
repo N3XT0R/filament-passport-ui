@@ -20,4 +20,16 @@ return [
             'icon' => Heroicon::OutlinedKey,
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Scope Management
+    |--------------------------------------------------------------------------
+    |
+    | Whether the PassportScopeResource/PassportScopeAction management
+    | resources are registered alongside ClientResource/TokenResource.
+    |
+    */
+
+    'enable_scopes_management' => true,
 ];
