@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-08-20
+
 ### Added
 
 - New self-service mode: `FilamentPassportUiPlugin::make()->selfService()` restricts `ClientResource`/`TokenResource` to records owned by the currently authenticated user, and locks the client-creation form's owner field to that user server-side. Intended for panels where non-admin users manage their own OAuth clients/tokens without seeing other users' data.
