@@ -74,4 +74,64 @@ class ClientResourceTest extends DatabaseTestCase
 
         $this->assertCount(2, ClientResource::getEloquentQuery()->get());
     }
+
+    public function testGetEloquentQueryReturnsNoRowsWhenSelfServiceEnabledAndNoAuthenticatedUser(): void
+    {
+        config()->set('passport-authorization-core.use_database_scopes', false);
+
+        // An ownerless (client_credentials) client. Without the defensive
+        // fallback, `where('owner_id', null)` degrades to `whereNull`,
+        // which would match this row instead of returning zero rows.
+        ClientFactory::new()->create([
+            'owner_id' => null,
+            'owner_type' => null,
+        ]);
+
+        $panel = \Filament\Panel::make()->id('client-self-service-no-user-test');
+        $panel->plugin(FilamentPassportUiPlugin::make()->selfService());
+        \Filament\Facades\Filament::setCurrentPanel($panel);
+
+        // Deliberately no `actingAs()` call: Filament::auth()->user() is null.
+
+        $this->assertCount(0, ClientResource::getEloquentQuery()->get());
+    }
+
+    public function testNavigationBadgeScopesToOwnerCountWhenSelfServiceEnabled(): void
+    {
+        config()->set('passport-authorization-core.use_database_scopes', false);
+
+        $owner = User::factory()->create();
+        $otherOwner = User::factory()->create();
+
+        ClientFactory::new()->create(['owner_id' => $owner->getKey(), 'owner_type' => $owner->getMorphClass()]);
+        ClientFactory::new()->create(['owner_id' => $otherOwner->getKey(), 'owner_type' => $otherOwner->getMorphClass()]);
+        ClientFactory::new()->create(['owner_id' => $otherOwner->getKey(), 'owner_type' => $otherOwner->getMorphClass()]);
+
+        $panel = \Filament\Panel::make()->id('client-self-service-badge-test');
+        $panel->plugin(FilamentPassportUiPlugin::make()->selfService());
+        \Filament\Facades\Filament::setCurrentPanel($panel);
+
+        $this->actingAs($owner, 'web');
+
+        $this->assertSame('1', ClientResource::getNavigationBadge());
+    }
+
+    public function testNavigationBadgeReturnsGlobalCountWhenSelfServiceDisabled(): void
+    {
+        config()->set('passport-authorization-core.use_database_scopes', false);
+
+        $owner = User::factory()->create();
+        $otherOwner = User::factory()->create();
+
+        ClientFactory::new()->create(['owner_id' => $owner->getKey(), 'owner_type' => $owner->getMorphClass()]);
+        ClientFactory::new()->create(['owner_id' => $otherOwner->getKey(), 'owner_type' => $otherOwner->getMorphClass()]);
+
+        $panel = \Filament\Panel::make()->id('client-admin-badge-test');
+        $panel->plugin(FilamentPassportUiPlugin::make());
+        \Filament\Facades\Filament::setCurrentPanel($panel);
+
+        $this->actingAs($owner, 'web');
+
+        $this->assertSame('2', ClientResource::getNavigationBadge());
+    }
 }

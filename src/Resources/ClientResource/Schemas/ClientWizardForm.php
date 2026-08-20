@@ -12,6 +12,7 @@ use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\GetOwnerState;
 use N3XT0R\FilamentPassportUi\FilamentPassportUiPlugin;
@@ -21,7 +22,9 @@ use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelect;
+use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
+use N3XT0R\LaravelPassportAuthorizationCore\Services\GrantService;
 
 class ClientWizardForm implements FormInterface
 {
@@ -119,6 +122,7 @@ class ClientWizardForm implements FormInterface
                         record: $this->resolveClient($client, $get),
                         statePath: 'client_scopes',
                         contextClient: $this->resolveClient($client, $get),
+                        allowed: $this->resolveClientScopesAllowedForActor(),
                     )
                 ])
                 ->key('client_scopes')
@@ -132,6 +136,29 @@ class ClientWizardForm implements FormInterface
             Grid::make()
                 ->schema($components),
         ];
+    }
+
+    /**
+     * In self-service mode, the client-step scope checkbox list must only
+     * offer scopes the acting user already holds themselves, so a
+     * self-service user cannot declare a client capability beyond their
+     * own grants. In admin (non-self-service) mode, no restriction is
+     * applied and admins can define a client's declared capability freely.
+     * @return Collection<int, string>|null
+     */
+    private function resolveClientScopesAllowedForActor(): ?Collection
+    {
+        if (!FilamentPassportUiPlugin::get()->isSelfService()) {
+            return null;
+        }
+
+        $actingUser = Filament::auth()->user();
+
+        if (!$actingUser instanceof HasPassportScopeGrantsInterface) {
+            return collect();
+        }
+
+        return app(GrantService::class)->getTokenableGrantsAsScopes($actingUser);
     }
 
     private function getUserPermissionComponents(?Client $client = null): array

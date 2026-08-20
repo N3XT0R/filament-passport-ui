@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace N3XT0R\FilamentPassportUi\Tests\Feature\Resources\ClientResource\Pages;
 
 use App\Models\User;
+use Filament\Facades\Filament;
 use Livewire\Livewire;
 use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeActionFactory;
 use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeResourceFactory;
@@ -12,6 +13,7 @@ use N3XT0R\FilamentPassportUi\FilamentPassportUiPlugin;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages\CreateClient;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
+use N3XT0R\LaravelPassportAuthorizationCore\Services\GrantService;
 
 class CreateClientTest extends DatabaseTestCase
 {
@@ -93,5 +95,141 @@ class CreateClientTest extends DatabaseTestCase
         $client = \N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client::where('name', 'My Self-Service Client')->firstOrFail();
 
         $this->assertSame($owner->getKey(), $client->owner_id);
+    }
+
+    public function testSelfServiceModeOnlyOffersActingUsersOwnScopesInClientStepCheckboxList(): void
+    {
+        config()->set('passport-authorization-core.use_database_scopes', true);
+
+        $ordersResource = PassportScopeResourceFactory::new()->create(['name' => 'orders']);
+        $paymentsResource = PassportScopeResourceFactory::new()->create(['name' => 'payments']);
+
+        PassportScopeActionFactory::new()->withResource($ordersResource)->create(['name' => 'read']);
+        PassportScopeActionFactory::new()->withResource($ordersResource)->create(['name' => 'write']);
+        PassportScopeActionFactory::new()->withResource($paymentsResource)->create(['name' => 'view']);
+
+        $owner = User::factory()->create();
+        app(GrantService::class)->grantScopeToTokenable($owner, 'orders', 'read');
+
+        $panel = Filament::getPanel('admin');
+        $panel->plugin(FilamentPassportUiPlugin::make()->selfService());
+        Filament::setCurrentPanel($panel);
+
+        $this->actingAs($owner, 'web');
+
+        $component = Livewire::test(CreateClient::class);
+
+        $component->assertSeeText('orders:read');
+        $component->assertDontSeeText('orders:write');
+        $component->assertDontSeeText('payments:view');
+    }
+
+    public function testAdminModeOffersAllScopesInClientStepCheckboxListRegardlessOfActingUsersGrants(): void
+    {
+        config()->set('passport-authorization-core.use_database_scopes', true);
+
+        $ordersResource = PassportScopeResourceFactory::new()->create(['name' => 'orders']);
+
+        PassportScopeActionFactory::new()->withResource($ordersResource)->create(['name' => 'read']);
+        PassportScopeActionFactory::new()->withResource($ordersResource)->create(['name' => 'write']);
+
+        // The acting admin has no scope grants of their own at all.
+        $admin = User::factory()->create();
+        $this->actingAs($admin, 'web');
+
+        $component = Livewire::test(CreateClient::class);
+
+        $component->assertSeeText('orders:read');
+        $component->assertSeeText('orders:write');
+    }
+
+    public function testSelfServiceModeFiltersOutUngrantedScopesFromSubmittedClientAndUserScopes(): void
+    {
+        config()->set('passport-authorization-core.use_database_scopes', true);
+
+        $ordersResource = PassportScopeResourceFactory::new()->create(['name' => 'orders']);
+        $paymentsResource = PassportScopeResourceFactory::new()->create(['name' => 'payments']);
+
+        PassportScopeActionFactory::new()->withResource($ordersResource)->create(['name' => 'read']);
+        PassportScopeActionFactory::new()->withResource($paymentsResource)->create(['name' => 'write']);
+
+        $owner = User::factory()->create();
+        app(GrantService::class)->grantScopeToTokenable($owner, 'orders', 'read');
+
+        $panel = Filament::getPanel('admin');
+        $panel->plugin(FilamentPassportUiPlugin::make()->selfService());
+        Filament::setCurrentPanel($panel);
+
+        $this->actingAs($owner, 'web');
+
+        // Simulate a tampered/bypassed request: both the client-level and
+        // user-level scope submissions contain a scope ("payments:write")
+        // the acting user was never granted themselves, alongside one they
+        // do hold ("orders:read"). This bypasses the UI-level `allowed`
+        // restriction entirely (fillForm sets Livewire state directly),
+        // exercising the actual server-side security boundary.
+        Livewire::test(CreateClient::class)
+            ->fillForm([
+                'name' => 'Tampered Scope Client',
+                'grant_type' => 'personal_access',
+                'owner' => $owner->getKey(),
+                'client_scopes' => [
+                    'orders' => ['orders:read'],
+                    'payments' => ['payments:write'],
+                ],
+                'user_scopes' => [
+                    'orders' => ['orders:read'],
+                    'payments' => ['payments:write'],
+                ],
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $client = Client::where('name', 'Tampered Scope Client')->firstOrFail();
+
+        $grantService = app(GrantService::class);
+
+        $clientOwnScopes = $grantService->getTokenableGrantsAsScopes($client, $client)->all();
+        $this->assertContains('orders:read', $clientOwnScopes);
+        $this->assertNotContains('payments:write', $clientOwnScopes);
+
+        $userScopesForClient = $grantService->getTokenableGrantsAsScopes($owner, $client)->all();
+        $this->assertContains('orders:read', $userScopesForClient);
+        $this->assertNotContains('payments:write', $userScopesForClient);
+    }
+
+    public function testAdminModeAllowsGrantingAnyScopeRegardlessOfActingUsersOwnGrants(): void
+    {
+        config()->set('passport-authorization-core.use_database_scopes', true);
+
+        $ordersResource = PassportScopeResourceFactory::new()->create(['name' => 'orders']);
+
+        PassportScopeActionFactory::new()->withResource($ordersResource)->create(['name' => 'read']);
+
+        $admin = User::factory()->create();
+        $owner = User::factory()->create();
+        $this->actingAs($admin, 'web');
+
+        Livewire::test(CreateClient::class)
+            ->fillForm([
+                'name' => 'Admin Granted Client',
+                'grant_type' => 'personal_access',
+                'owner' => $owner->getKey(),
+                'client_scopes' => [
+                    'orders' => ['orders:read'],
+                ],
+                'user_scopes' => [
+                    'orders' => ['orders:read'],
+                ],
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $client = Client::where('name', 'Admin Granted Client')->firstOrFail();
+
+        $grantService = app(GrantService::class);
+        $userScopesForClient = $grantService->getTokenableGrantsAsScopes($owner, $client)->all();
+
+        $this->assertContains('orders:read', $userScopesForClient);
     }
 }
