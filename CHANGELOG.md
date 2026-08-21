@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.1] - 2026-08-21
+
 ### Fixed
 
 - **(Critical, security)** In self-service mode, a plain user could grant themselves arbitrary OAuth scopes, including ones nobody assigned them. `ClientWizardForm::getClientComponents()` built the client-step scope checkbox list without any `allowed` restriction, so every scope in the entire taxonomy was selectable by every user, and `CreateClient::handleRecordCreation()` persisted whatever `client_scopes`/`user_scopes` were submitted as real `PassportScopeGrant` rows, with only the owner forced to the acting user. Fixed by (1) restricting the client-step checkbox list, in self-service mode only, to the acting user's own existing granted scopes (admin mode is unaffected — client capability declaration stays unrestricted there), and (2), as the actual enforcement boundary, filtering both the submitted client-level and user-level scopes against the acting user's own granted-scopes set on the server before any grant is created, silently intersecting rather than hard-failing so a stray unchecked box or a UI bug can never result in over-granting.
