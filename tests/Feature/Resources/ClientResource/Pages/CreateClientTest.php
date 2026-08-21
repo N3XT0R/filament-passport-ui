@@ -124,6 +124,33 @@ class CreateClientTest extends DatabaseTestCase
         $component->assertDontSeeText('payments:view');
     }
 
+    public function testSelfServiceModeWithNoScopeGrantsOffersNoSelectableScopesInClientStepCheckboxList(): void
+    {
+        config()->set('passport-authorization-core.use_database_scopes', true);
+
+        $ordersResource = PassportScopeResourceFactory::new()->create(['name' => 'orders']);
+        $paymentsResource = PassportScopeResourceFactory::new()->create(['name' => 'payments']);
+
+        PassportScopeActionFactory::new()->withResource($ordersResource)->create(['name' => 'read']);
+        PassportScopeActionFactory::new()->withResource($ordersResource)->create(['name' => 'write']);
+        PassportScopeActionFactory::new()->withResource($paymentsResource)->create(['name' => 'view']);
+
+        // A freshly onboarded self-service user: zero scope grants of their own.
+        $owner = User::factory()->create();
+
+        $panel = Filament::getPanel('admin');
+        $panel->plugin(FilamentPassportUiPlugin::make()->selfService());
+        Filament::setCurrentPanel($panel);
+
+        $this->actingAs($owner, 'web');
+
+        $component = Livewire::test(CreateClient::class);
+
+        $component->assertDontSeeText('orders:read');
+        $component->assertDontSeeText('orders:write');
+        $component->assertDontSeeText('payments:view');
+    }
+
     public function testAdminModeOffersAllScopesInClientStepCheckboxListRegardlessOfActingUsersGrants(): void
     {
         config()->set('passport-authorization-core.use_database_scopes', true);

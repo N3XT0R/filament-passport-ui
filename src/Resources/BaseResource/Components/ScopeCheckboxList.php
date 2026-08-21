@@ -45,7 +45,7 @@ class ScopeCheckboxList
             record: $record,
             statePath: $statePath,
             contextClient: $contextClient,
-            allowed: collect($allowed ?? [])
+            allowed: $allowed === null ? null : collect($allowed)
         );
     }
 
@@ -99,7 +99,6 @@ class ScopeCheckboxList
         ?Client $contextClient = null,
         ?Collection $allowedByResource = null,
     ): array {
-        $allowedByResource ??= collect();
         $groups = $this->groupedScopesProvider->get();
         $grantedByResource = $this->grantedScopesByResourceProvider->get($record, $contextClient);
 
@@ -122,11 +121,20 @@ class ScopeCheckboxList
 
     /**
      * Group allowed scopes by resource.
-     * @param Collection $allowed
-     * @return Collection
+     *
+     * Preserves the null-vs-empty distinction: `null` means "no
+     * restriction" and must stay `null`; a non-null (possibly empty)
+     * collection means "restrict to these scopes" (an empty collection
+     * therefore means "restrict to nothing").
+     * @param Collection|null $allowed
+     * @return Collection|null
      */
-    private function groupAllowedByResource(Collection $allowed): Collection
+    private function groupAllowedByResource(?Collection $allowed): ?Collection
     {
+        if ($allowed === null) {
+            return null;
+        }
+
         return $allowed
             ->filter(fn(string $scope) => str_contains($scope, ':'))
             ->groupBy(fn(string $scope) => explode(':', $scope, 2)[0])

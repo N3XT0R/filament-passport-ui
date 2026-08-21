@@ -161,6 +161,25 @@ class ClientWizardForm implements FormInterface
         return app(GrantService::class)->getTokenableGrantsAsScopes($actingUser);
     }
 
+    /**
+     * The user-step scope checkbox list is meant to be restricted to the
+     * scopes chosen on the preceding client step. When no client scopes
+     * have been selected yet (or the field is simply empty), there is no
+     * restriction basis, so this returns null ("no restriction") rather
+     * than an empty collection ("restrict to nothing") — the two carry
+     * different meaning throughout the ScopeCheckboxList call chain.
+     * @return Collection<int, string>|null
+     */
+    private function resolveUserScopesAllowedByClientStep(Get $get): ?Collection
+    {
+        $clientScopes = collect($get('client_scopes') ?? [])
+            ->flatten()
+            ->filter()
+            ->values();
+
+        return $clientScopes->isEmpty() ? null : $clientScopes;
+    }
+
     private function getUserPermissionComponents(?Client $client = null): array
     {
         return [
@@ -180,10 +199,7 @@ class ClientWizardForm implements FormInterface
                         record: $this->resolveOwner($client, $get),
                         statePath: 'user_scopes',
                         contextClient: $this->resolveClient($client, $get),
-                        allowed: collect($get('client_scopes') ?? [])
-                            ->flatten()
-                            ->filter()
-                            ->values()
+                        allowed: $this->resolveUserScopesAllowedByClientStep($get),
                     ),
                 ])
                 ->key('user_scopes')
