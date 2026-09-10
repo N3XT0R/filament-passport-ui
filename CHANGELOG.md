@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Self-service users could no longer select any scope for their own OAuth client. Since 2.4.0 the
+  allow-list was the acting user's own `passport_scope_grant` rows, but nothing in a typical
+  application ever creates those, so the list was empty. An empty allow-list means "restrict to
+  nothing", which hides the scope selection entirely and silently drops any submitted scope. That
+  is a bootstrap deadlock: only someone who already has scopes could get scopes.
+- Which scopes a user may put on their own client is an application concern (roles, permissions,
+  plan, tenant), so it is no longer decided in this package. Applications implement
+  `Contracts\SelfServiceScopeResolver` and register it under
+  `passport-ui.self_service_scope_resolver`. Without a resolver, self-service users may choose
+  freely from the configured taxonomy, which is the 2.3.0 behaviour.
+- The server-side enforcement in `CreateClient`/`EditClient` is unchanged in spirit: submitted
+  scopes are still intersected with the allow-list, it is only sourced from the application now.
+  Self-service owner forcing and the owner scoping of the Client/Token queries from 2.4.0 stay.
+
 ## [2.4.1] - 2026-08-21
 
 ### Fixed

@@ -9,11 +9,10 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use N3XT0R\FilamentPassportUi\FilamentPassportUiPlugin;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource;
+use N3XT0R\FilamentPassportUi\Support\Scopes\SelfServiceScopes;
 use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Client\EditClientUseCase;
 use N3XT0R\LaravelPassportAuthorizationCore\Application\UseCases\Tokenable\UpsertGrantsForTokenableUseCase;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
-use N3XT0R\LaravelPassportAuthorizationCore\Services\GrantService;
 
 class EditClient extends EditRecord
 {
@@ -44,17 +43,16 @@ class EditClient extends EditRecord
             unset($data['user_scopes']);
         }
 
-        $hasSubmittedScopes = (isset($data['scopes']) && is_array($data['scopes']) && $data['scopes'] !== [])
-            || $userScopes !== [];
+        $allowedScopes = SelfServiceScopes::allowedFor($actor);
 
-        if ($isSelfService && $hasSubmittedScopes) {
-            $grantedScopes = $this->resolveActorGrantedScopes($actor);
+        if ($allowedScopes !== null) {
+            $allowed = $allowedScopes->all();
 
             if (isset($data['scopes']) && is_array($data['scopes'])) {
-                $data['scopes'] = array_values(array_intersect($data['scopes'], $grantedScopes));
+                $data['scopes'] = array_values(array_intersect($data['scopes'], $allowed));
             }
 
-            $userScopes = array_values(array_intersect($userScopes, $grantedScopes));
+            $userScopes = array_values(array_intersect($userScopes, $allowed));
         }
 
 
@@ -84,23 +82,5 @@ class EditClient extends EditRecord
             ->unique()
             ->values()
             ->all();
-    }
-
-    /**
-     * Resolve the scopes the acting user is themselves granted, to be
-     * used as an allow-list boundary for self-service scope submissions.
-     * This is the actual security boundary: a UI bug or a tampered
-     * request must never result in a scope grant beyond what the acting
-     * user already has.
-     * @param mixed $actor
-     * @return array<int, string>
-     */
-    private function resolveActorGrantedScopes(mixed $actor): array
-    {
-        if (!$actor instanceof HasPassportScopeGrantsInterface) {
-            return [];
-        }
-
-        return app(GrantService::class)->getTokenableGrantsAsScopes($actor)->all();
     }
 }

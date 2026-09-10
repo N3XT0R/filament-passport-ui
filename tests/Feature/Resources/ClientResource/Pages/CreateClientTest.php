@@ -12,6 +12,7 @@ use N3XT0R\FilamentPassportUi\Database\Factories\PassportScopeResourceFactory;
 use N3XT0R\FilamentPassportUi\FilamentPassportUiPlugin;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Pages\CreateClient;
 use N3XT0R\FilamentPassportUi\Tests\DatabaseTestCase;
+use N3XT0R\FilamentPassportUi\Tests\Fixtures\ConfigurableScopeResolver;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 use N3XT0R\LaravelPassportAuthorizationCore\Services\GrantService;
 
@@ -109,7 +110,8 @@ class CreateClientTest extends DatabaseTestCase
         PassportScopeActionFactory::new()->withResource($paymentsResource)->create(['name' => 'view']);
 
         $owner = User::factory()->create();
-        app(GrantService::class)->grantScopeToTokenable($owner, 'orders', 'read');
+        config()->set('passport-ui.self_service_scope_resolver', ConfigurableScopeResolver::class);
+        config()->set('passport-ui.test_allowed_scopes', ['orders:read']);
 
         $panel = Filament::getPanel('admin');
         $panel->plugin(FilamentPassportUiPlugin::make()->selfService());
@@ -124,7 +126,7 @@ class CreateClientTest extends DatabaseTestCase
         $component->assertDontSeeText('payments:view');
     }
 
-    public function testSelfServiceModeWithNoScopeGrantsOffersNoSelectableScopesInClientStepCheckboxList(): void
+    public function testSelfServiceModeOffersNoSelectableScopesWhenTheApplicationAllowsNone(): void
     {
         config()->set('passport-authorization-core.use_database_scopes', true);
 
@@ -135,7 +137,10 @@ class CreateClientTest extends DatabaseTestCase
         PassportScopeActionFactory::new()->withResource($ordersResource)->create(['name' => 'write']);
         PassportScopeActionFactory::new()->withResource($paymentsResource)->create(['name' => 'view']);
 
-        // A freshly onboarded self-service user: zero scope grants of their own.
+        // The application says this user is entitled to no scope at all.
+        config()->set('passport-ui.self_service_scope_resolver', ConfigurableScopeResolver::class);
+        config()->set('passport-ui.test_allowed_scopes', []);
+
         $owner = User::factory()->create();
 
         $panel = Filament::getPanel('admin');
@@ -181,7 +186,8 @@ class CreateClientTest extends DatabaseTestCase
         PassportScopeActionFactory::new()->withResource($paymentsResource)->create(['name' => 'write']);
 
         $owner = User::factory()->create();
-        app(GrantService::class)->grantScopeToTokenable($owner, 'orders', 'read');
+        config()->set('passport-ui.self_service_scope_resolver', ConfigurableScopeResolver::class);
+        config()->set('passport-ui.test_allowed_scopes', ['orders:read']);
 
         $panel = Filament::getPanel('admin');
         $panel->plugin(FilamentPassportUiPlugin::make()->selfService());

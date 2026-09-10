@@ -22,9 +22,8 @@ use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelect;
-use N3XT0R\LaravelPassportAuthorizationCore\Models\Concerns\HasPassportScopeGrantsInterface;
+use N3XT0R\FilamentPassportUi\Support\Scopes\SelfServiceScopes;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
-use N3XT0R\LaravelPassportAuthorizationCore\Services\GrantService;
 
 class ClientWizardForm implements FormInterface
 {
@@ -139,26 +138,15 @@ class ClientWizardForm implements FormInterface
     }
 
     /**
-     * In self-service mode, the client-step scope checkbox list must only
-     * offer scopes the acting user already holds themselves, so a
-     * self-service user cannot declare a client capability beyond their
-     * own grants. In admin (non-self-service) mode, no restriction is
-     * applied and admins can define a client's declared capability freely.
+     * In self-service mode the application decides which scopes the acting
+     * user may put on their own client, through the configured
+     * SelfServiceScopeResolver. Without a resolver, and in admin mode, no
+     * restriction is applied and the full scope taxonomy is offered.
      * @return Collection<int, string>|null
      */
     private function resolveClientScopesAllowedForActor(): ?Collection
     {
-        if (!FilamentPassportUiPlugin::get()->isSelfService()) {
-            return null;
-        }
-
-        $actingUser = Filament::auth()->user();
-
-        if (!$actingUser instanceof HasPassportScopeGrantsInterface) {
-            return collect();
-        }
-
-        return app(GrantService::class)->getTokenableGrantsAsScopes($actingUser);
+        return SelfServiceScopes::allowedFor(Filament::auth()->user());
     }
 
     /**
