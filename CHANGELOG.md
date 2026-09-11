@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.5.0] - 2026-09-11
+
+### Added
+
+- `Contracts\SelfServiceScopeResolver` plus the `passport-ui.self_service_scope_resolver` config
+  key, so the host application decides which scopes a self-service user may put on their own
+  OAuth client. Which scopes a user is entitled to depends on roles, permissions, plan or tenant,
+  which this package cannot know. With no resolver configured, self-service users choose freely
+  from the configured taxonomy, which is the behaviour up to and including 2.3.0.
 
 ### Fixed
 
@@ -14,14 +22,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   application ever creates those, so the list was empty. An empty allow-list means "restrict to
   nothing", which hides the scope selection entirely and silently drops any submitted scope. That
   is a bootstrap deadlock: only someone who already has scopes could get scopes.
-- Which scopes a user may put on their own client is an application concern (roles, permissions,
-  plan, tenant), so it is no longer decided in this package. Applications implement
-  `Contracts\SelfServiceScopeResolver` and register it under
-  `passport-ui.self_service_scope_resolver`. Without a resolver, self-service users may choose
-  freely from the configured taxonomy, which is the 2.3.0 behaviour.
-- The server-side enforcement in `CreateClient`/`EditClient` is unchanged in spirit: submitted
-  scopes are still intersected with the allow-list, it is only sourced from the application now.
-  Self-service owner forcing and the owner scoping of the Client/Token queries from 2.4.0 stay.
+
+### Unchanged
+
+- The server-side boundary still holds: `CreateClient` and `EditClient` intersect submitted scopes
+  with the allow-list, so a tampered request cannot exceed it. Only the source of that list moved.
+  Self-service owner forcing, the owner scoping of the Client and Token queries, the navigation
+  badge and the null-versus-empty distinction in the checkbox lists all stay as they were in 2.4.x.
 
 ## [2.4.1] - 2026-08-21
 
