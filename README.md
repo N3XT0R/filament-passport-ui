@@ -170,7 +170,14 @@ composer test       # Run tests
 composer serve      # Start local dev server
 ```
 
-Access admin at `http://localhost:8000/admin`  
+The workbench ships two panels against the same user, so both modes of the plugin can be
+exercised for real:
+
+| Panel | URL | Mode |
+| --- | --- | --- |
+| Admin | `http://localhost:8000/admin` | full client and token management |
+| User | `http://localhost:8000/user` | `->selfService()`: own clients only, scope choice through the configured resolver |
+
 Login: `test@example.com` / `password`
 
 ## Documentation & Status

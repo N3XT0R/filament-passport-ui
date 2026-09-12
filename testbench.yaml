@@ -7,6 +7,7 @@ providers:
   - \N3XT0R\LaravelPassportAuthorizationCore\LaravelPassportAuthorizationCoreServiceProvider
   - \N3XT0R\FilamentPassportUi\FilamentPassportUiServiceProvider
   - App\Providers\Filament\AdminPanelProvider
+  - App\Providers\Filament\UserPanelProvider
 
 migrations:
   - vendor/laravel/passport/database/migrations
