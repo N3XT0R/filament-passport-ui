@@ -5,7 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.5.0] - 2026-09-11
+
+### Added
+
+- The generated client secret is shown again after creating a client. `SecretInput` is back in
+  the wizard's client step, disabled and copyable, and appears only while there is a secret to
+  show, which is the single request right after creation. The field was lost in `3eef21f` when
+  the resource form moved to the wizard, so since then the secret was flashed into the form state
+  but never rendered: there was no way to learn it from the UI at all.
+- `Contracts\SelfServiceScopeResolver` plus the `passport-ui.self_service_scope_resolver` config
+  key, so the host application decides which scopes a self-service user may put on their own
+  OAuth client. Which scopes a user is entitled to depends on roles, permissions, plan or tenant,
+  which this package cannot know. With no resolver configured, self-service users choose freely
+  from the configured taxonomy, which is the behaviour up to and including 2.3.0.
+
+### Fixed
+
+- The English `secret_description` translation key was missing, the file only carried an unused
+  `secret_helper_text`, so the secret field's hint fell back to the raw key in English.
+- Self-service users could no longer select any scope for their own OAuth client. Since 2.4.0 the
+  allow-list was the acting user's own `passport_scope_grant` rows, but nothing in a typical
+  application ever creates those, so the list was empty. An empty allow-list means "restrict to
+  nothing", which hides the scope selection entirely and silently drops any submitted scope. That
+  is a bootstrap deadlock: only someone who already has scopes could get scopes.
+
+### Unchanged
+
+- The server-side boundary still holds: `CreateClient` and `EditClient` intersect submitted scopes
+  with the allow-list, so a tampered request cannot exceed it. Only the source of that list moved.
+  Self-service owner forcing, the owner scoping of the Client and Token queries, the navigation
+  badge and the null-versus-empty distinction in the checkbox lists all stay as they were in 2.4.x.
+
+## [2.4.1] - 2026-08-21
+
+### Fixed
+
+- **(Critical, security)** In self-service mode, a plain user could grant themselves arbitrary OAuth scopes, including ones nobody assigned them. `ClientWizardForm::getClientComponents()` built the client-step scope checkbox list without any `allowed` restriction, so every scope in the entire taxonomy was selectable by every user, and `CreateClient::handleRecordCreation()` persisted whatever `client_scopes`/`user_scopes` were submitted as real `PassportScopeGrant` rows, with only the owner forced to the acting user. Fixed by (1) restricting the client-step checkbox list, in self-service mode only, to the acting user's own existing granted scopes (admin mode is unaffected — client capability declaration stays unrestricted there), and (2), as the actual enforcement boundary, filtering both the submitted client-level and user-level scopes against the acting user's own granted-scopes set on the server before any grant is created, silently intersecting rather than hard-failing so a stray unchecked box or a UI bug can never result in over-granting.
+- **(Important, security)** `EditClient::handleRecordUpdate()` had no equivalent server-side owner/scope enforcement to `CreateClient`'s. Owner reassignment on edit was defended only by a disabled (client-side only) form field, and because the owner field is not dehydrated in self-service mode on the edit form, the guard that triggers `UpsertGrantsForTokenableUseCase` was always false — so scope-grant updates silently never applied for self-service users editing their own client (success toast, no actual change), on top of the same missing-server-side-enforcement gap as Finding 1. Fixed by forcing `owner` to the acting user server-side and applying the same granted-scopes intersection as `CreateClient` before calling `UpsertGrantsForTokenableUseCase`.
+- **(Important, security)** The Standard panel exposed the global scope-taxonomy CRUD (`PassportScopeResourceResource`, `PassportScopeActionsResource`) to every self-service user, because `enable_scopes_management` is a global config key with no awareness of per-panel self-service mode, and there are no Filament policies guarding these models — so Filament's default "allow when no policy exists" behavior gave any authenticated self-service user full control of the taxonomy. Fixed: `FilamentPassportUiPlugin::registerResources()` now never registers these two resources when self-service mode is active, regardless of `enable_scopes_management`. Non-self-service (admin) behavior is unchanged.
+- **(Important)** `ClientResource`/`TokenResource` navigation badges showed the system-wide record count instead of the current self-service user's own count, because `getNavigationBadge()` bypassed `getEloquentQuery()` and queried the repositories directly. Fixed to route through `getEloquentQuery()->count()` when self-service mode is active; the repository-based (potentially cached/optimized) counts are unchanged for the non-self-service path.
+- **(Minor, hardening)** `ClientResource::getEloquentQuery()` scoped clients by `where('owner_id', $user?->getKey())->where('owner_type', $user?->getMorphClass())` in self-service mode. If `Filament::auth()->user()` were ever null while self-service is active, Laravel's query builder turns `where($col, null)` into `whereNull($col)`, which would match ownerless (`client_credentials`) clients instead of returning zero rows. Unreachable in practice behind Filament's `Authenticate` middleware, but now explicitly returns zero rows in that case instead of relying on the null-to-`whereNull` fallthrough.
+- **(Minor)** `ClientWizardForm::resolveClientScopesAllowedForActor()` correctly returned `null` for "no restriction" (admin mode) versus a `Collection` for "restrict to these scopes" (self-service mode) — but that distinction was lost on the way to the checkbox list: `ScopeCheckboxList::make()`/`buildSections()` coerced `null` into an empty `Collection`, and `ResourceCheckboxList::make()`'s `$allowed !== null && $allowed->isNotEmpty()` check then treated a genuinely empty-but-non-null collection the same as "no restriction". The practical effect: a self-service user with zero existing scope grants (the normal state for a freshly onboarded user) saw every scope in the checkbox list as selectable, instead of none — the opposite of the intended restriction, though never an actual security hole, since the server-side intersection in `CreateClient`/`EditClient` already reduced any submitted scopes to zero regardless of what the UI offered. Fixed by preserving the null-vs-empty distinction through `ScopeCheckboxList::make()`, `configure()`, `buildSections()`, and `groupAllowedByResource()`, and by correcting `ResourceCheckboxList::make()`'s check to `$allowed !== null` so a non-null empty collection now correctly hides the checkbox section instead of falling back to "show everything". `ClientWizardForm::getUserPermissionComponents()`'s own `allowed` (derived from the client-step's selected scopes) now explicitly resolves to `null` — not an empty collection — when no client scopes are selected yet, preserving its existing "no restriction until a client scope is chosen" behavior unchanged.
 
 ## [2.4.0] - 2026-08-20
 

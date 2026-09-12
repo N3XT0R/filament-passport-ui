@@ -32,4 +32,36 @@ class ViewClientTest extends DatabaseTestCase
         $component->assertSet('data.secret', $secret);
         $this->assertNull(CacheFlasher::pull('passport.client.secret', $client->getKey()));
     }
+
+    public function testTheGeneratedSecretIsShownInAFieldTheUserCanCopy(): void
+    {
+        config()->set('passport-authorization-core.use_database_scopes', false);
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        /** @var Client $client */
+        $client = ClientFactory::new()->create();
+        CacheFlasher::put('passport.client.secret', $client->getKey(), 'plain-secret-to-copy');
+
+        Livewire::test(ViewClient::class, ['record' => $client->getKey()])
+            ->assertFormFieldExists('secret')
+            ->assertFormFieldVisible('secret')
+            ->assertFormSet(['secret' => 'plain-secret-to-copy']);
+    }
+
+    public function testTheSecretFieldStaysHiddenWhenThereIsNoSecretToShow(): void
+    {
+        config()->set('passport-authorization-core.use_database_scopes', false);
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        /** @var Client $client */
+        $client = ClientFactory::new()->create();
+
+        // No flashed secret: any visit after the first one, and every edit.
+        Livewire::test(ViewClient::class, ['record' => $client->getKey()])
+            ->assertFormFieldHidden('secret');
+    }
 }

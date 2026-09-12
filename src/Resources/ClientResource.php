@@ -75,9 +75,20 @@ class ClientResource extends BaseManagementResource
         if (FilamentPassportUiPlugin::get()->isSelfService()) {
             $user = Filament::auth()->user();
 
+            if ($user === null) {
+                // Defensive hardening: without an authenticated user there is
+                // no owner to scope to. Laravel's query builder would turn
+                // where(column, null) into whereNull(column), which would
+                // match ownerless (client_credentials) clients instead of
+                // returning zero rows. This branch is unreachable in
+                // practice since Filament's Authenticate middleware sits in
+                // front of every panel route, but we harden it anyway.
+                return $query->whereRaw('1 = 0');
+            }
+
             $query
-                ->where('owner_id', $user?->getKey())
-                ->where('owner_type', $user?->getMorphClass());
+                ->where('owner_id', $user->getKey())
+                ->where('owner_type', $user->getMorphClass());
         }
 
         return $query;
@@ -115,6 +126,10 @@ class ClientResource extends BaseManagementResource
      */
     public static function getNavigationBadge(): ?string
     {
+        if (FilamentPassportUiPlugin::get()->isSelfService()) {
+            return (string)static::getEloquentQuery()->count();
+        }
+
         return (string)app(ClientRepository::class)->count();
     }
 }

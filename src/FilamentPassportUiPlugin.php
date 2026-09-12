@@ -43,7 +43,13 @@ class FilamentPassportUiPlugin implements FilamentPlugin
             Resources\TokenResource::class,
         ];
 
-        if (config('passport-ui.enable_scopes_management', true)) {
+        // The global scope taxonomy (PassportScopeResource/PassportScopeAction)
+        // is an admin-only concern. Self-service panels never get CRUD over it,
+        // regardless of the enable_scopes_management config, because there are
+        // no Filament policies guarding these models and Filament's default
+        // "allow when no policy exists" behavior would otherwise give every
+        // authenticated self-service user full control of it.
+        if (!$this->isSelfService() && config('passport-ui.enable_scopes_management', true)) {
             $resources[] = Resources\PassportScopeResourceResource::class;
             $resources[] = Resources\PassportScopeActionsResource::class;
         }

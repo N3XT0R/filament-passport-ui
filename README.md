@@ -82,6 +82,30 @@ Filament Passport UI adds an administration layer on top of Laravel Passport:
 
 Authorization logic is the responsibility of the application and its developers.
 
+### Self-Service Scope Allow-List
+
+In self-service mode, which scopes a user may put on their own OAuth client is exactly such an
+application-specific rule: it depends on roles, permissions, plan or tenant. Implement
+`N3XT0R\FilamentPassportUi\Contracts\SelfServiceScopeResolver` and register it:
+
+```php
+// config/passport-ui.php
+'self_service_scope_resolver' => \App\Services\OAuth\YourScopeResolver::class,
+```
+
+```php
+public function allowedScopesFor(?Authenticatable $actor): ?Collection
+{
+    // null  = no restriction
+    // empty = the actor is entitled to nothing, the scope selection is hidden
+    return collect(['videos:read', 'videos:write']);
+}
+```
+
+`CreateClient` and `EditClient` intersect every submitted scope with this list server-side, so the
+resolver is a real boundary and not just a UI filter. Leave the config key at `null` to let
+self-service users choose freely from the configured scope taxonomy.
+
 ## Why This Exists
 
 Laravel Passport is standards-compliant but intentionally stays neutral on administration and governance. In real-world
@@ -146,7 +170,14 @@ composer test       # Run tests
 composer serve      # Start local dev server
 ```
 
-Access admin at `http://localhost:8000/admin`  
+The workbench ships two panels against the same user, so both modes of the plugin can be
+exercised for real:
+
+| Panel | URL | Mode |
+| --- | --- | --- |
+| Admin | `http://localhost:8000/admin` | full client and token management |
+| User | `http://localhost:8000/user` | `->selfService()`: own clients only, scope choice through the configured resolver |
+
 Login: `test@example.com` / `password`
 
 ## Documentation & Status

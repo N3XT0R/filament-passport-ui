@@ -56,6 +56,10 @@ class TokenResource extends BaseManagementResource
 
     public static function getNavigationBadge(): ?string
     {
+        if (FilamentPassportUiPlugin::get()->isSelfService()) {
+            return (string)static::getEloquentQuery()->count();
+        }
+
         return (string)app(TokenRepository::class)->notExpiredCount();
     }
 }

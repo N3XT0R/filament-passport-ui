@@ -32,7 +32,12 @@ class ResourceCheckboxList
         // By default, all scopes are selectable
         $selectableScopes = $scopes;
 
-        if ($allowed !== null && $allowed->isNotEmpty()) {
+        // `$allowed === null` means "no restriction" (e.g. admin mode).
+        // A non-null `$allowed` means "restrict to these scopes" — and an
+        // empty-but-non-null collection means "restrict to nothing" (e.g.
+        // a self-service user with zero scope grants of their own), which
+        // must NOT be treated the same as "no restriction".
+        if ($allowed !== null) {
             $allowedFlat = $allowed->flatten();
             $selectableScopes = $scopes->filter(
                 fn(ScopeDTO $dto) => $allowedFlat->contains($dto->scope)

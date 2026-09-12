@@ -12,6 +12,7 @@ use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\GrantType\NeedsUserPermissionState;
 use N3XT0R\FilamentPassportUi\Application\StateResolvers\Token\GetOwnerState;
 use N3XT0R\FilamentPassportUi\FilamentPassportUiPlugin;
@@ -21,6 +22,8 @@ use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelect;
+use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\SecretInput;
+use N3XT0R\FilamentPassportUi\Support\Scopes\SelfServiceScopes;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
 class ClientWizardForm implements FormInterface
@@ -119,6 +122,7 @@ class ClientWizardForm implements FormInterface
                         record: $this->resolveClient($client, $get),
                         statePath: 'client_scopes',
                         contextClient: $this->resolveClient($client, $get),
+                        allowed: $this->resolveClientScopesAllowedForActor(),
                     )
                 ])
                 ->key('client_scopes')
@@ -127,11 +131,48 @@ class ClientWizardForm implements FormInterface
 
 
         return [
+            // The plain secret exists for one request after the client was
+            // created, flashed by CreateClient and picked up by ViewClient.
+            // It is shown at the top because that is the only chance the user
+            // gets to copy it, and hidden whenever there is nothing to show.
+            SecretInput::make()
+                ->visible(fn(Get $get): bool => filled($get('secret'))),
             GrantTypeSelect::make('grant_type')
                 ->live(),
             Grid::make()
                 ->schema($components),
         ];
+    }
+
+    /**
+     * In self-service mode the application decides which scopes the acting
+     * user may put on their own client, through the configured
+     * SelfServiceScopeResolver. Without a resolver, and in admin mode, no
+     * restriction is applied and the full scope taxonomy is offered.
+     * @return Collection<int, string>|null
+     */
+    private function resolveClientScopesAllowedForActor(): ?Collection
+    {
+        return SelfServiceScopes::allowedFor(Filament::auth()->user());
+    }
+
+    /**
+     * The user-step scope checkbox list is meant to be restricted to the
+     * scopes chosen on the preceding client step. When no client scopes
+     * have been selected yet (or the field is simply empty), there is no
+     * restriction basis, so this returns null ("no restriction") rather
+     * than an empty collection ("restrict to nothing") — the two carry
+     * different meaning throughout the ScopeCheckboxList call chain.
+     * @return Collection<int, string>|null
+     */
+    private function resolveUserScopesAllowedByClientStep(Get $get): ?Collection
+    {
+        $clientScopes = collect($get('client_scopes') ?? [])
+            ->flatten()
+            ->filter()
+            ->values();
+
+        return $clientScopes->isEmpty() ? null : $clientScopes;
     }
 
     private function getUserPermissionComponents(?Client $client = null): array
@@ -153,10 +194,7 @@ class ClientWizardForm implements FormInterface
                         record: $this->resolveOwner($client, $get),
                         statePath: 'user_scopes',
                         contextClient: $this->resolveClient($client, $get),
-                        allowed: collect($get('client_scopes') ?? [])
-                            ->flatten()
-                            ->filter()
-                            ->values()
+                        allowed: $this->resolveUserScopesAllowedByClientStep($get),
                     ),
                 ])
                 ->key('user_scopes')

@@ -76,4 +76,39 @@ class TokenResourceTest extends DatabaseTestCase
 
         $this->assertCount(2, TokenResource::getEloquentQuery()->get());
     }
+
+    public function testNavigationBadgeScopesToOwnerCountWhenSelfServiceEnabled(): void
+    {
+        $owner = User::factory()->create();
+        $otherOwner = User::factory()->create();
+
+        TokenFactory::new()->withUserId($owner->getKey())->create();
+        TokenFactory::new()->withUserId($otherOwner->getKey())->create();
+        TokenFactory::new()->withUserId($otherOwner->getKey())->create();
+
+        $panel = Panel::make()->id('token-self-service-badge-test');
+        $panel->plugin(FilamentPassportUiPlugin::make()->selfService());
+        Filament::setCurrentPanel($panel);
+
+        $this->actingAs($owner, 'web');
+
+        $this->assertSame('1', TokenResource::getNavigationBadge());
+    }
+
+    public function testNavigationBadgeReturnsGlobalNonExpiredCountWhenSelfServiceDisabled(): void
+    {
+        $owner = User::factory()->create();
+        $otherOwner = User::factory()->create();
+
+        TokenFactory::new()->withUserId($owner->getKey())->create();
+        TokenFactory::new()->withUserId($otherOwner->getKey())->create();
+
+        $panel = Panel::make()->id('token-admin-badge-test');
+        $panel->plugin(FilamentPassportUiPlugin::make());
+        Filament::setCurrentPanel($panel);
+
+        $this->actingAs($owner, 'web');
+
+        $this->assertSame('2', TokenResource::getNavigationBadge());
+    }
 }
