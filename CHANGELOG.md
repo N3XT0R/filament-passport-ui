@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- The generated client secret is shown again after creating a client. `SecretInput` is back in
+  the wizard's client step, disabled and copyable, and appears only while there is a secret to
+  show, which is the single request right after creation. The field was lost in `3eef21f` when
+  the resource form moved to the wizard, so since then the secret was flashed into the form state
+  but never rendered: there was no way to learn it from the UI at all.
 - `Contracts\SelfServiceScopeResolver` plus the `passport-ui.self_service_scope_resolver` config
   key, so the host application decides which scopes a self-service user may put on their own
   OAuth client. Which scopes a user is entitled to depends on roles, permissions, plan or tenant,
@@ -17,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The English `secret_description` translation key was missing, the file only carried an unused
+  `secret_helper_text`, so the secret field's hint fell back to the raw key in English.
 - Self-service users could no longer select any scope for their own OAuth client. Since 2.4.0 the
   allow-list was the acting user's own `passport_scope_grant` rows, but nothing in a typical
   application ever creates those, so the list was empty. An empty allow-list means "restrict to

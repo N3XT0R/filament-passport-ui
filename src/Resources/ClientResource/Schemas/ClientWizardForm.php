@@ -22,6 +22,7 @@ use N3XT0R\FilamentPassportUi\Resources\BaseResource\Schemas\FormInterface;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\GrantTypeSelect;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\NameInput;
 use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\OwnerSelect;
+use N3XT0R\FilamentPassportUi\Resources\ClientResource\Schemas\Fields\SecretInput;
 use N3XT0R\FilamentPassportUi\Support\Scopes\SelfServiceScopes;
 use N3XT0R\LaravelPassportAuthorizationCore\Models\Passport\Client;
 
@@ -130,6 +131,12 @@ class ClientWizardForm implements FormInterface
 
 
         return [
+            // The plain secret exists for one request after the client was
+            // created, flashed by CreateClient and picked up by ViewClient.
+            // It is shown at the top because that is the only chance the user
+            // gets to copy it, and hidden whenever there is nothing to show.
+            SecretInput::make()
+                ->visible(fn(Get $get): bool => filled($get('secret'))),
             GrantTypeSelect::make('grant_type')
                 ->live(),
             Grid::make()
