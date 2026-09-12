@@ -29,13 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   application ever creates those, so the list was empty. An empty allow-list means "restrict to
   nothing", which hides the scope selection entirely and silently drops any submitted scope. That
   is a bootstrap deadlock: only someone who already has scopes could get scopes.
-
-### Unchanged
-
-- The server-side boundary still holds: `CreateClient` and `EditClient` intersect submitted scopes
-  with the allow-list, so a tampered request cannot exceed it. Only the source of that list moved.
-  Self-service owner forcing, the owner scoping of the Client and Token queries, the navigation
-  badge and the null-versus-empty distinction in the checkbox lists all stay as they were in 2.4.x.
+  Only the source of the allow-list moved: `CreateClient` and `EditClient` still intersect
+  submitted scopes with it, so a tampered request cannot exceed it. Self-service owner forcing,
+  the owner scoping of the Client and Token queries, the navigation badge and the
+  null-versus-empty distinction in the checkbox lists stay as they were in 2.4.x.
 
 ## [2.4.1] - 2026-08-21
 
