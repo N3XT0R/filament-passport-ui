@@ -55,9 +55,7 @@ The UI package no longer owns or defines these concerns.
 All database tables related to authorization are now defined and versioned by the **core
 package**.
 
-These migrations are **not published automatically** and must be published explicitly.
-
-Run the following commands:
+`filament-passport-ui:install` publishes them into `database/migrations`. To publish them on their own:
 
 ```bash
 php artisan vendor:publish --tag=passport-authorization-core-migrations

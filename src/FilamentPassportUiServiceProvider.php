@@ -34,7 +34,14 @@ class FilamentPassportUiServiceProvider extends PackageServiceProvider
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
-                    ->publishMigrations()
+                    ->startWith(function (InstallCommand $command) {
+                        // Schema lives in laravel-passport-authorization-core. This package
+                        // has no migrations of its own, so publishMigrations() would no-op.
+                        $command->comment('Publishing migrations...');
+                        $command->callSilently('vendor:publish', [
+                            '--tag' => 'passport-authorization-core-migrations',
+                        ]);
+                    })
                     ->askToRunMigrations()
                     ->endWith(function (InstallCommand $command) {
                         if (!$command->confirm(
