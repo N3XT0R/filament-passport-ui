@@ -25,8 +25,8 @@ php artisan filament-passport-ui:install
 The installer performs the following tasks:
 
 - publishes the Filament Passport UI configuration file
+- publishes the authorization core migrations into `database/migrations`
 - triggers required seeders
-- ensures required core package assets are available
 
 > Note:  
 > Core-related migrations and configuration are owned by

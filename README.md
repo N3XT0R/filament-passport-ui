@@ -157,7 +157,7 @@ The API remains stable while authorization logic evolves in the core package.
 Starting with v2, Filament Passport UI uses the
 **[Laravel Passport Authorization Core](https://github.com/N3XT0R/laravel-passport-authorization-core)** package.
 
-Database schema and optional configuration are managed by the core package and not published automatically.
+Database schema and optional configuration are managed by the core package. The install command publishes the core migrations.
 
 See **[Migration to v2](https://github.com/N3XT0R/filament-passport-ui/blob/main/docs/migration-to-v2.md)** for detailed
 instructions.
