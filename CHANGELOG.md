@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.1] - 2026-10-30
+
+### Fixed
+
+- `filament-passport-ui:install` published no migrations into `database/migrations`
+  ([#43](https://github.com/N3XT0R/filament-passport-ui/issues/43)). Since v2 the database schema
+  lives in `laravel-passport-authorization-core`, but the installer still called
+  `publishMigrations()`, which only looks for this package's own (no longer existing) migrations
+  and so did nothing. The installer now publishes the `passport-authorization-core-migrations`
+  tag before asking to run the migrations. Thanks to @skillbobby for the fix in
+  [#44](https://github.com/N3XT0R/filament-passport-ui/pull/44).
+
 ## [2.5.0] - 2026-09-12
 
 ### Added
